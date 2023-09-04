@@ -22,11 +22,12 @@ class ViewController: UITabBarController {
     }
     
     func setTabControllers() {
-        let MainVC = MainViewController(nibName: "MainViewController", bundle: nil)
+        let mainVC = MainViewController(nibName: "MainViewController", bundle: nil)
+        let naviMainVC = UINavigationController(rootViewController: mainVC)
         let MyPageVC = MyPageViewController(nibName: "MyPageViewController", bundle: nil)
        
         // init tabbar controller
-        let controllers = [MainVC, MyPageVC]
+        let controllers = [naviMainVC, MyPageVC]
         self.viewControllers = controllers
         
         self.tabBar.layer.borderWidth = 1

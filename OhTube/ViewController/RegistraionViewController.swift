@@ -9,7 +9,6 @@ import UIKit
 
 class RegistraionViewController: UIViewController {
     static let identifier = "RegistraionViewController"
-    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var idTextField: UITextField!

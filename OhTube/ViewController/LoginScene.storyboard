@@ -78,7 +78,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="idTextField" destination="twU-vO-UOo" id="YVV-Xq-fk1"/>
                         <outlet property="loginButton" destination="sze-Eo-yUw" id="zs7-Ok-KUW"/>
+                        <outlet property="passWordTextField" destination="nXc-Iw-Bx0" id="idl-wd-YjP"/>
                         <outlet property="registrationButton" destination="2eN-Dd-gsd" id="KNZ-My-Ay8"/>
                     </connections>
                 </viewController>

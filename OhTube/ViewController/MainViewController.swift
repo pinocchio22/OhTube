@@ -11,19 +11,22 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        naviBarSetting()
         // Do any additional setup after loading the view.
     }
 
+    private func naviBarSetting() {
+        let appearance = UINavigationBarAppearance()
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .blue
+        appearance.shadowColor = .none
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.topItem?.title = "Video Search"
+//        navigationController?.navigationItem.searchController = searchController
+        navigationController?.navigationItem.hidesSearchBarWhenScrolling = false
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
     }
-    */
-
 }
