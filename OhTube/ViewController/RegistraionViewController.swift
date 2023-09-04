@@ -7,8 +7,11 @@
 
 import UIKit
 
-class RegistraionViewController: UIViewController {
+final class RegistraionViewController: UIViewController {
+    // MARK: - Properties
+    static let storyboardName = "RegistraionScene"
     static let identifier = "RegistraionViewController"
+    private let dataManager = DataManager.shared
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var idTextField: UITextField!
@@ -16,12 +19,13 @@ class RegistraionViewController: UIViewController {
     @IBOutlet weak var passWordTextField: UITextField!
     @IBOutlet weak var checkPassWordTextField: UITextField!
     
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        idTextField.delegate = self
     }
     
+    // MARK: - Configure
     private func configureUI() {
         configure(backButton)
         configure(startButton)
@@ -44,17 +48,28 @@ class RegistraionViewController: UIViewController {
         button.layer.cornerRadius = 5
     }
     
+    private func register() {
+        guard let id = idTextField.text,
+        let nickNmae = nickNameTextField.text,
+        let passWord = passWordTextField.text else { return }
+        let user = User(id: id, nickName: nickNmae, passWord: passWord)
+        dataManager.createUser(user)
+    }
+    
+    // MARK: - Action
     @IBAction func backButtonTapped(_ sender: UIButton) {
         dismiss(animated: true)
     }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
+        register()
         let moveVC = ViewController()
         moveVC.modalPresentationStyle = .fullScreen
         present(moveVC, animated: true)
     }
 }
 
+// MARK: - UITextField Delegate
 extension RegistraionViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 1
