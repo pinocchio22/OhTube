@@ -12,6 +12,7 @@
 		055A8FAB2AA5E7D4001BDF87 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A8FAA2AA5E7D4001BDF87 /* LoginViewController.swift */; };
 		055A8FAE2AA5F45C001BDF87 /* RegistrationScene.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 055A8FAD2AA5F45C001BDF87 /* RegistrationScene.storyboard */; };
 		055A8FB02AA5F478001BDF87 /* RegistraionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A8FAF2AA5F478001BDF87 /* RegistraionViewController.swift */; };
+		63926FF92AA6247D005696B1 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */; };
 		FF1D43242AA5B68E008F0ABF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D43232AA5B68E008F0ABF /* User.swift */; };
 		FF1D43262AA5B6AA008F0ABF /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D43252AA5B6AA008F0ABF /* Video.swift */; };
 		FF1D43282AA5B718008F0ABF /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D43272AA5B718008F0ABF /* Comment.swift */; };
@@ -33,6 +34,7 @@
 		055A8FAA2AA5E7D4001BDF87 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		055A8FAD2AA5F45C001BDF87 /* RegistrationScene.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegistrationScene.storyboard; sourceTree = "<group>"; };
 		055A8FAF2AA5F478001BDF87 /* RegistraionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistraionViewController.swift; sourceTree = "<group>"; };
+		63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		FF1D43232AA5B68E008F0ABF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = OhTube/Model/User.swift; sourceTree = SOURCE_ROOT; };
 		FF1D43252AA5B6AA008F0ABF /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Video.swift; path = OhTube/Model/Video.swift; sourceTree = SOURCE_ROOT; };
 		FF1D43272AA5B718008F0ABF /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Comment.swift; path = OhTube/Model/Comment.swift; sourceTree = SOURCE_ROOT; };
@@ -131,6 +133,7 @@
 				055A8FAA2AA5E7D4001BDF87 /* LoginViewController.swift */,
 				055A8FAD2AA5F45C001BDF87 /* RegistrationScene.storyboard */,
 				055A8FAF2AA5F478001BDF87 /* RegistraionViewController.swift */,
+				63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				FF579FCF2AA57A4D00DEA36F /* AppDelegate.swift in Sources */,
 				FF579FD12AA57A4D00DEA36F /* SceneDelegate.swift in Sources */,
 				FF1D43262AA5B6AA008F0ABF /* Video.swift in Sources */,
+				63926FF92AA6247D005696B1 /* MainCollectionViewCell.swift in Sources */,
 				FF579FE52AA5801F00DEA36F /* MainViewController.swift in Sources */,
 				FF1D43282AA5B718008F0ABF /* Comment.swift in Sources */,
 				055A8FAB2AA5E7D4001BDF87 /* LoginViewController.swift in Sources */,
