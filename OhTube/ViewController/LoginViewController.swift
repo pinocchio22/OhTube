@@ -29,6 +29,9 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
+        let moveVC = ViewController()
+        moveVC.modalPresentationStyle = .fullScreen
+        present(moveVC, animated: true)
     }
     
     @IBAction func registrationButtonTapped(_ sender: UIButton) {

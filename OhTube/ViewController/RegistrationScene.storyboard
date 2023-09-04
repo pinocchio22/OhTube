@@ -31,6 +31,7 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="아이디를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7qh-QQ-aGD">
                                                 <rect key="frame" x="0.0" y="26.666666666666657" width="353" height="45"/>
+                                                <color key="tintColor" systemColor="systemPinkColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="6Iy-Dj-NKd"/>
                                                 </constraints>
@@ -50,6 +51,7 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="닉네임을 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wKA-d0-8Ee">
                                                 <rect key="frame" x="0.0" y="26.666666666666629" width="353" height="45"/>
+                                                <color key="tintColor" systemColor="systemPinkColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="vga-IB-5wR"/>
                                                 </constraints>
@@ -69,6 +71,7 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S8W-tJ-zgW">
                                                 <rect key="frame" x="0.0" y="26.666666666666686" width="353" height="45"/>
+                                                <color key="tintColor" systemColor="systemPinkColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="Pei-nL-nBk"/>
                                                 </constraints>
@@ -88,6 +91,7 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호를 재입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="foj-XE-ejz">
                                                 <rect key="frame" x="0.0" y="26.666666666666686" width="353" height="45"/>
+                                                <color key="tintColor" systemColor="systemPinkColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="mPl-7r-CNI"/>
                                                 </constraints>
@@ -99,7 +103,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="aUz-2d-P8m">
-                                <rect key="frame" x="20" y="546.66666666666663" width="353" height="100"/>
+                                <rect key="frame" x="20" y="688" width="353" height="100"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23i-pn-yHM">
                                         <rect key="frame" x="0.0" y="0.0" width="353" height="45"/>
@@ -145,7 +149,7 @@
                         <constraints>
                             <constraint firstItem="WrN-Jf-Woy" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="EQQ-Ra-L1w"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="aUz-2d-P8m" secondAttribute="trailing" constant="20" id="Uuy-NQ-BHc"/>
-                            <constraint firstItem="aUz-2d-P8m" firstAttribute="top" secondItem="AI4-Pw-O5p" secondAttribute="bottom" constant="45" id="aQ0-OX-Psp"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="aUz-2d-P8m" secondAttribute="bottom" constant="30" id="WMc-fc-BjL"/>
                             <constraint firstItem="aUz-2d-P8m" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="ce1-w3-F18"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="WrN-Jf-Woy" secondAttribute="trailing" constant="20" id="eoA-Fx-9iU"/>
                             <constraint firstItem="AI4-Pw-O5p" firstAttribute="top" secondItem="WrN-Jf-Woy" secondAttribute="bottom" constant="45" id="nSk-5K-cmr"/>
@@ -156,6 +160,10 @@
                     </view>
                     <connections>
                         <outlet property="backButton" destination="k6a-9p-7jc" id="7bh-y6-8sy"/>
+                        <outlet property="checkPassWordTextField" destination="foj-XE-ejz" id="LLY-8h-u0x"/>
+                        <outlet property="idTextField" destination="7qh-QQ-aGD" id="z7Z-9t-doA"/>
+                        <outlet property="nickNameTextField" destination="wKA-d0-8Ee" id="6Wo-0P-nsJ"/>
+                        <outlet property="passWordTextField" destination="S8W-tJ-zgW" id="PHL-fN-fui"/>
                         <outlet property="startButton" destination="23i-pn-yHM" id="Vpa-cI-4H1"/>
                     </connections>
                 </viewController>
