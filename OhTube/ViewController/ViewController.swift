@@ -43,7 +43,6 @@ class ViewController: UITabBarController {
         self.tabBar.items![1].image = UIImage(systemName: "video")?.withRenderingMode(.alwaysOriginal)
         self.tabBar.items![1].selectedImage = UIImage(systemName: "video.fill")?.withRenderingMode(.alwaysOriginal)
         self.tabBar.items![1].title = "마이페이지"
-     
     }
 
 }
