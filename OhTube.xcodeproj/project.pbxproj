@@ -1,0 +1,387 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FF579FCF2AA57A4D00DEA36F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF579FCE2AA57A4D00DEA36F /* AppDelegate.swift */; };
+		FF579FD12AA57A4D00DEA36F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF579FD02AA57A4D00DEA36F /* SceneDelegate.swift */; };
+		FF579FD32AA57A4D00DEA36F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF579FD22AA57A4D00DEA36F /* ViewController.swift */; };
+		FF579FD62AA57A4D00DEA36F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF579FD42AA57A4D00DEA36F /* Main.storyboard */; };
+		FF579FD82AA57A4D00DEA36F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF579FD72AA57A4D00DEA36F /* Assets.xcassets */; };
+		FF579FDB2AA57A4D00DEA36F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF579FD92AA57A4D00DEA36F /* LaunchScreen.storyboard */; };
+		FF579FE52AA5801F00DEA36F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF579FE32AA5801F00DEA36F /* MainViewController.swift */; };
+		FF579FE62AA5801F00DEA36F /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF579FE42AA5801F00DEA36F /* MainViewController.xib */; };
+		FF579FE92AA5803000DEA36F /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF579FE72AA5803000DEA36F /* MyPageViewController.swift */; };
+		FF579FEA2AA5803000DEA36F /* MyPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF579FE82AA5803000DEA36F /* MyPageViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FF579FCB2AA57A4D00DEA36F /* OhTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OhTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF579FCE2AA57A4D00DEA36F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FF579FD02AA57A4D00DEA36F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		FF579FD22AA57A4D00DEA36F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FF579FD52AA57A4D00DEA36F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FF579FD72AA57A4D00DEA36F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF579FDA2AA57A4D00DEA36F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FF579FDC2AA57A4D00DEA36F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF579FE32AA5801F00DEA36F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		FF579FE42AA5801F00DEA36F /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		FF579FE72AA5803000DEA36F /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		FF579FE82AA5803000DEA36F /* MyPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyPageViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF579FC82AA57A4D00DEA36F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF579FC22AA57A4D00DEA36F = {
+			isa = PBXGroup;
+			children = (
+				FF579FCD2AA57A4D00DEA36F /* OhTube */,
+				FF579FCC2AA57A4D00DEA36F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FF579FCC2AA57A4D00DEA36F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF579FCB2AA57A4D00DEA36F /* OhTube.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF579FCD2AA57A4D00DEA36F /* OhTube */ = {
+			isa = PBXGroup;
+			children = (
+				FF579FE22AA57FF000DEA36F /* ViewController */,
+				FF579FCE2AA57A4D00DEA36F /* AppDelegate.swift */,
+				FF579FD02AA57A4D00DEA36F /* SceneDelegate.swift */,
+				FF579FD42AA57A4D00DEA36F /* Main.storyboard */,
+				FF579FD72AA57A4D00DEA36F /* Assets.xcassets */,
+				FF579FD92AA57A4D00DEA36F /* LaunchScreen.storyboard */,
+				FF579FDC2AA57A4D00DEA36F /* Info.plist */,
+			);
+			path = OhTube;
+			sourceTree = "<group>";
+		};
+		FF579FE22AA57FF000DEA36F /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FF579FD22AA57A4D00DEA36F /* ViewController.swift */,
+				FF579FE32AA5801F00DEA36F /* MainViewController.swift */,
+				FF579FE42AA5801F00DEA36F /* MainViewController.xib */,
+				FF579FE72AA5803000DEA36F /* MyPageViewController.swift */,
+				FF579FE82AA5803000DEA36F /* MyPageViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF579FCA2AA57A4D00DEA36F /* OhTube */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF579FDF2AA57A4D00DEA36F /* Build configuration list for PBXNativeTarget "OhTube" */;
+			buildPhases = (
+				FF579FC72AA57A4D00DEA36F /* Sources */,
+				FF579FC82AA57A4D00DEA36F /* Frameworks */,
+				FF579FC92AA57A4D00DEA36F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OhTube;
+			productName = OhTube;
+			productReference = FF579FCB2AA57A4D00DEA36F /* OhTube.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF579FC32AA57A4D00DEA36F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					FF579FCA2AA57A4D00DEA36F = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = FF579FC62AA57A4D00DEA36F /* Build configuration list for PBXProject "OhTube" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FF579FC22AA57A4D00DEA36F;
+			productRefGroup = FF579FCC2AA57A4D00DEA36F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF579FCA2AA57A4D00DEA36F /* OhTube */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF579FC92AA57A4D00DEA36F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF579FEA2AA5803000DEA36F /* MyPageViewController.xib in Resources */,
+				FF579FDB2AA57A4D00DEA36F /* LaunchScreen.storyboard in Resources */,
+				FF579FD82AA57A4D00DEA36F /* Assets.xcassets in Resources */,
+				FF579FD62AA57A4D00DEA36F /* Main.storyboard in Resources */,
+				FF579FE62AA5801F00DEA36F /* MainViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF579FC72AA57A4D00DEA36F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF579FE92AA5803000DEA36F /* MyPageViewController.swift in Sources */,
+				FF579FD32AA57A4D00DEA36F /* ViewController.swift in Sources */,
+				FF579FCF2AA57A4D00DEA36F /* AppDelegate.swift in Sources */,
+				FF579FD12AA57A4D00DEA36F /* SceneDelegate.swift in Sources */,
+				FF579FE52AA5801F00DEA36F /* MainViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FF579FD42AA57A4D00DEA36F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF579FD52AA57A4D00DEA36F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FF579FD92AA57A4D00DEA36F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF579FDA2AA57A4D00DEA36F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FF579FDD2AA57A4D00DEA36F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FF579FDE2AA57A4D00DEA36F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF579FE02AA57A4D00DEA36F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = USP329MK32;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OhTube/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = pinocchio22.OhTube;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF579FE12AA57A4D00DEA36F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = USP329MK32;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OhTube/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = pinocchio22.OhTube;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF579FC62AA57A4D00DEA36F /* Build configuration list for PBXProject "OhTube" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF579FDD2AA57A4D00DEA36F /* Debug */,
+				FF579FDE2AA57A4D00DEA36F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF579FDF2AA57A4D00DEA36F /* Build configuration list for PBXNativeTarget "OhTube" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF579FE02AA57A4D00DEA36F /* Debug */,
+				FF579FE12AA57A4D00DEA36F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF579FC32AA57A4D00DEA36F /* Project object */;
+}
