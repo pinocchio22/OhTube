@@ -22,11 +22,12 @@ class ViewController: UITabBarController {
     }
     
     func setTabControllers() {
-        let MainVC = MainViewController(nibName: "MainViewController", bundle: nil)
+        let mainVC = MainViewController(nibName: "MainViewController", bundle: nil)
+        let naviMainVC = UINavigationController(rootViewController: mainVC)
         let MyPageVC = MyPageViewController(nibName: "MyPageViewController", bundle: nil)
        
         // init tabbar controller
-        let controllers = [MainVC, MyPageVC]
+        let controllers = [naviMainVC, MyPageVC]
         self.viewControllers = controllers
         
         self.tabBar.layer.borderWidth = 1
@@ -34,14 +35,14 @@ class ViewController: UITabBarController {
 
         // Main
         self.tabBar.items![0].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
-        self.tabBar.items![0].image = UIImage(systemName: "person.crop.circle")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
-        self.tabBar.items![0].selectedImage = UIImage(systemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
+        self.tabBar.items![0].image = UIImage(systemName: "video")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
+        self.tabBar.items![0].selectedImage = UIImage(systemName: "video.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
         self.tabBar.items![0].title = "동영상"
         
         // MyPage
         self.tabBar.items![1].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
-        self.tabBar.items![1].image = UIImage(systemName: "video")?.withRenderingMode(.alwaysOriginal)
-        self.tabBar.items![1].selectedImage = UIImage(systemName: "video.fill")?.withRenderingMode(.alwaysOriginal)
+        self.tabBar.items![1].image = UIImage(systemName: "person.crop.circle")?.withRenderingMode(.alwaysOriginal)
+        self.tabBar.items![1].selectedImage = UIImage(systemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysOriginal)
         self.tabBar.items![1].title = "마이페이지"
     }
 
