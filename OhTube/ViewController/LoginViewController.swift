@@ -25,13 +25,17 @@ class LoginViewController: UIViewController {
     private func configure(_ button: UIButton) {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.systemPink.cgColor
-        button.layer.cornerRadius = 8
+        button.layer.cornerRadius = 5
     }
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
     }
     
     @IBAction func registrationButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "RegistrationScene", bundle: nil)
+        let moveVC = storyboard.instantiateViewController(withIdentifier: RegistraionViewController.identifier)
+        moveVC.modalPresentationStyle = .fullScreen
+        present(moveVC, animated: true)
     }
     
 }
