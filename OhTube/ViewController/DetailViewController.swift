@@ -42,10 +42,10 @@ class DetailViewController: UIViewController {
         return label
     }()
     
-    var videoUView: UILabel = {
-        var label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    var videoWebView: UIWebView = {
+        var view = UIWebView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     var infoView: UIView = {
@@ -174,15 +174,18 @@ class DetailViewController: UIViewController {
     }
     
     func setVideoUView() {
-        view.addSubview(videoUView)
-        videoUView.backgroundColor = .systemGreen
+        view.addSubview(videoWebView)
+        
         NSLayoutConstraint.activate([
-            videoUView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            videoWebView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             //            videoUView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             //            videoUView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            videoUView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-            videoUView.heightAnchor.constraint(equalToConstant: 250)
+            videoWebView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+            videoWebView.heightAnchor.constraint(equalToConstant: 250)
         ])
+        
+//        guard let url = URL(string: "https://www.youtube.com/embed/\(videoKey)") else { return  }
+//        videoWebView.loadRequest(URLRequest(url: url))
     }
     
     func setInfoView() {
@@ -193,7 +196,7 @@ class DetailViewController: UIViewController {
         setLikeButton()
         
         NSLayoutConstraint.activate([
-            infoView.topAnchor.constraint(equalTo: videoUView.bottomAnchor, constant: 10),
+            infoView.topAnchor.constraint(equalTo: videoWebView.bottomAnchor, constant: 10),
             infoView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             infoView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
         ])
@@ -281,7 +284,7 @@ class DetailViewController: UIViewController {
         NSLayoutConstraint.activate([
             editCommentContent.topAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.topAnchor, constant: 10),
             editCommentContent.leadingAnchor.constraint(equalTo: editCommentName.safeAreaLayoutGuide.trailingAnchor, constant: 10),
-//            editCommentContent.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            //            editCommentContent.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             editCommentContent.bottomAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.topAnchor, constant: 10),
         ])
     }
