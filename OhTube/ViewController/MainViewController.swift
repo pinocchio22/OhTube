@@ -42,8 +42,8 @@ final class MainViewController: UIViewController {
         self.title = "Video Search"
         let appearance = UINavigationBarAppearance()
 
-        //appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .clear
+        //appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .white
         appearance.shadowColor = .none
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
@@ -88,6 +88,9 @@ extension MainViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.identifier, for: indexPath) as! MainCollectionViewCell
         
+        cell.channelImage.contentMode = .scaleAspectFill
+        cell.channelImage.layer.cornerRadius = cell.channelImage.frame.width / 2
+        cell.channelImage.clipsToBounds = true
         
         return cell
     }
@@ -102,17 +105,14 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     
     // 셀 간의 위아래 간격을 10포인트로 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 15 // 셀 간의 위아래 간격을 10포인트로 설정
+        return 20 // 셀 간의 위아래 간격을 10포인트로 설정
     }
     
     // 셀 크기 수정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
         let collectionViewHeight = collectionView.bounds.height
-        return CGSize(width: collectionViewWidth, height: (collectionViewHeight - 30)/3)
-        // 빼기 10은 간격을 고려한 값(열에 2개씩 나옴)
-        // ❗️여기서 열마다 개수를 더 넣고 싶을 때는 분모에 +1씩 해주고 빼기도 -10씩 같이 해주면 열에 3개, 4개 넣을 수 있음
-        
+        return CGSize(width: collectionViewWidth, height: (collectionViewHeight - 40)/3)
     }
 }
 

@@ -9,41 +9,87 @@ import UIKit
 
 class MainCollectionViewCell: UICollectionViewCell {
     
-    static let identifier: String = "DummyCollectionViewCell"
+    static let identifier: String = "MainCollectionViewCell"
     
-    var nameLabel: UILabel = {
-        let name = UILabel()
-        name.font = .systemFont(ofSize: 16)
-        name.textColor = .black
-        name.numberOfLines = 0
-        name.translatesAutoresizingMaskIntoConstraints = false
-        return name
+    var videoThumbnailImage: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
     }()
     
-    var ageLabel: UILabel = {
-        let age = UILabel()
-        age.font = .systemFont(ofSize: 14)
-        age.textColor = .black
-        age.numberOfLines = 0
-        age.translatesAutoresizingMaskIntoConstraints = false
-        return age
+    var channelImage: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = .blue
+        image.layer.borderWidth = 2.0 // 테두리 두께 설정
+        image.layer.borderColor = UIColor.blue.cgColor // 테두리 색상 설정
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
     }()
     
-    var addressLabel: UILabel = {
-        let address = UILabel()
-        address.font = .systemFont(ofSize: 12)
-        address.textColor = .black
-        address.numberOfLines = 0
-        address.translatesAutoresizingMaskIntoConstraints = false
-        return address
+    var videoTitleLabel: UILabel = {
+        let title = UILabel()
+        title.font = Font.mainTitleFont
+        title.textColor = .black
+        title.numberOfLines = 0
+        title.layer.borderWidth = 2.0 // 테두리 두께 설정
+        title.layer.borderColor = UIColor.red.cgColor // 테두리 색상 설정
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
     }()
     
-    lazy var stackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [nameLabel, ageLabel, addressLabel])
-        stack.axis = .vertical
-        stack.spacing = 10
-        stack.alignment = .center
+    var channelNameLabel: UILabel = {
+        let title = UILabel()
+        title.font = Font.contentFont
+        title.textColor = .black
+        title.numberOfLines = 0
+        title.layer.borderWidth = 2.0 // 테두리 두께 설정
+        title.layer.borderColor = UIColor.green.cgColor // 테두리 색상 설정
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
+    
+    var videoViewCountLabel: UILabel = {
+        let title = UILabel()
+        title.font = Font.contentFont
+        title.textColor = .black
+        title.numberOfLines = 0
+        title.layer.borderWidth = 2.0 // 테두리 두께 설정
+        title.layer.borderColor = UIColor.yellow.cgColor // 테두리 색상 설정
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
+    
+    var videoLikeCountLabel: UILabel = {
+        let title = UILabel()
+        title.font = Font.contentFont
+        title.textColor = .black
+        title.numberOfLines = 0
+        title.layer.borderWidth = 2.0 // 테두리 두께 설정
+        title.layer.borderColor = UIColor.magenta.cgColor // 테두리 색상 설정
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
+    
+    lazy var labelCountstackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [channelNameLabel, videoViewCountLabel, videoLikeCountLabel])
+        stack.axis = .horizontal
+        stack.spacing = 20
+        stack.alignment = .fill
         stack.distribution = .fill
+        stack.layer.borderWidth = 2.0 // 테두리 두께 설정
+        stack.layer.borderColor = UIColor.purple.cgColor // 테두리 색상 설정
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    lazy var labelsStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [videoTitleLabel, labelCountstackView])
+        stack.axis = .vertical
+        stack.spacing = 5
+        stack.alignment = .fill
+        stack.distribution = .fill
+        stack.layer.borderWidth = 2.0 // 테두리 두께 설정
+        stack.layer.borderColor = UIColor.systemPink.cgColor // 테두리 색상 설정
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -59,9 +105,17 @@ class MainCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        channelImage.contentMode = .scaleAspectFill
+        self.channelImage.layer.cornerRadius = self.channelImage.frame.width / 2
+        self.channelImage.clipsToBounds = true
+        print(channelImage.bounds.width)
+    }
+
     
     func cellSetting() {
-        self.addSubview(stackView)
+        
         
         self.layer.borderWidth = 1.0 // 테두리 두께
         self.layer.borderColor = UIColor.black.cgColor // 테두리 색상
@@ -71,15 +125,35 @@ class MainCollectionViewCell: UICollectionViewCell {
     
     
     func makeCollectionViewUI() {
+        self.contentView.addSubview(videoThumbnailImage)
+        self.contentView.addSubview(labelCountstackView)
+        self.contentView.addSubview(labelsStackView)
+        self.contentView.addSubview(channelImage)
+        
         
         NSLayoutConstraint.activate([
-            stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            videoThumbnailImage.widthAnchor.constraint(equalToConstant: self.contentView.bounds.width),
+            videoThumbnailImage.heightAnchor.constraint(equalToConstant: 200),
+            videoThumbnailImage.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
             
             
-            nameLabel.heightAnchor.constraint(equalToConstant: 20),
-            ageLabel.heightAnchor.constraint(equalToConstant: 20),
-            addressLabel.heightAnchor.constraint(equalToConstant: 20)
+            channelImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
+            channelImage.topAnchor.constraint(equalTo: self.videoThumbnailImage.bottomAnchor, constant: 10),
+            channelImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+            channelImage.widthAnchor.constraint(equalTo: channelImage.heightAnchor),// 이미지 뷰를 정사각형 모양으로 설정
+            channelImage.heightAnchor.constraint(equalTo: channelImage.widthAnchor),
+            // channelImage를 원형 모양으로 만들기 위해 cornerRadius 설정
+            
+            
+            labelsStackView.leadingAnchor.constraint(equalTo: channelImage.trailingAnchor, constant: 5),
+            labelsStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 0),
+            labelsStackView.topAnchor.constraint(equalTo: self.channelImage.topAnchor),
+            labelsStackView.bottomAnchor.constraint(equalTo: self.channelImage.bottomAnchor),
+            
+            
+            videoTitleLabel.heightAnchor.constraint(equalToConstant: 28),
+            //channelNameLabel.heightAnchor.constraint(equalToConstant: 20),
+            //labelCountstackView.heightAnchor.constraint(equalToConstant: 20)
         ])
         
     }
