@@ -73,8 +73,9 @@ final class RegistraionViewController: UIViewController {
         dataManager.createUser(user)
     }
     
-    private func updateForm() {
-        startButton.backgroundColor = startButtonBackgroundColor
+    private func updateForm(button: UIButton) {
+        button.backgroundColor = startButtonBackgroundColor
+        button.isEnabled.toggle()
     }
     
     // MARK: - Action
@@ -83,7 +84,7 @@ final class RegistraionViewController: UIViewController {
         if textField == nickNameTextField { self.nickName = nickNameTextField.text }
         if textField == passWordTextField { self.passWord = passWordTextField.text }
         if textField == checkPassWordTextField { self.checkedPassWord = checkPassWordTextField.text }
-        updateForm()
+        updateForm(button: startButton)
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -91,10 +92,9 @@ final class RegistraionViewController: UIViewController {
     }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
-        register()
         let moveVC = ViewController()
-        moveVC.modalPresentationStyle = .fullScreen
-        present(moveVC, animated: true)
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+        sceneDelegate.changeRootViewController(moveVC, animation: true)
     }
 }
 

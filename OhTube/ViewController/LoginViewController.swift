@@ -52,15 +52,16 @@ final class LoginViewController: UIViewController {
         loginButton.layer.borderColor = UIColor.clear.cgColor
     }
     
-    private func updateForm() {
-        loginButton.backgroundColor = loginButtonBackgroundColor
+    private func updateForm(button: UIButton) {
+        button.backgroundColor = loginButtonBackgroundColor
+        button.isEnabled.toggle()
     }
     
     // MARK: - Action
     @objc func textDidChange(_ textField: UITextField) {
         if textField == idTextField { self.id = idTextField.text }
         if textField == passWordTextField { self.password = passWordTextField.text }
-        updateForm()
+        updateForm(button: loginButton)
     }
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
