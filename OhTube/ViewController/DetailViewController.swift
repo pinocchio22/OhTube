@@ -26,11 +26,10 @@ class DetailViewController: UIViewController {
         var image = UIImageView()
         image.image = UIImage(systemName: "photo")
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.layer.cornerRadius = image.frame.width/2
+//        image.layer.cornerRadius = image.layer.bounds.width / 2
+//        image.clipsToBounds = true
         image.layer.borderWidth = 1
         image.layer.borderColor = UIColor.clear.cgColor
-        image.layer.masksToBounds = true
-        image.clipsToBounds = true
         return image
     }()
     
@@ -185,7 +184,7 @@ class DetailViewController: UIViewController {
         ])
         
 //        guard let url = URL(string: "https://www.youtube.com/embed/\(videoKey)") else { return  }
-//        videoWebView.loadRequest(URLRequest(url: url))
+        videoWebView.loadRequest(URLRequest(url: URL(string: "https://www.google.com/search?q=%EB%A7%A8%EC%B2%B4%EC%8A%A4%ED%84%B0+%EC%8B%9C%ED%8B%B0+%ED%8A%B8%EB%A0%88%EB%B8%94&sca_esv=562659405&rlz=1C5CHFA_enKR1065KR1065&ei=W7f2ZP1MxPyHA8DZrqAJ&ved=0ahUKEwi95qG62ZKBAxVE_mEKHcCsC5QQ4dUDCA8&uact=5&oq=%EB%A7%A8%EC%B2%B4%EC%8A%A4%ED%84%B0+%EC%8B%9C%ED%8B%B0+%ED%8A%B8%EB%A0%88%EB%B8%94&gs_lp=Egxnd3Mtd2l6LXNlcnAaAhgCIh3rp6jssrTsiqTthLAg7Iuc7YuwIO2KuOugiOu4lDIFEAAYgARIqzRQvA9Y8jJwCXgBkAEFmAG4AaAB6huqAQQwLjI3uAEDyAEA-AEBwgIKEAAYRxjWBBiwA8ICCBAuGLEDGIAEwgILEC4YgAQYsQMYgwHCAgQQABgDwgIEEC4YA8ICCxAAGIAEGLEDGIMBwgIXEC4YsQMYgAQYlwUY3AQY3gQY4ATYAQHCAhEQLhixAxiABBiLAxioAxibA8ICExAuGIoFGEMYiwMYqAMYnQMYogXCAgcQABiKBRhDwgIKEAAYigUYQxiLA8ICCBAAGIAEGIsDwgIOEC4YgAQYiwMYqAMYpAPCAggQLhiABBixA8ICBRAuGIAEwgIEEAAYHsICBhAAGB4YD8ICBhAAGAgYHsICChAAGIAEGEYY_QHCAggQABgIGB4YD-IDBBgAIEGIBgGQBgq6BgYIARABGBQ&sclient=gws-wiz-serp")!))
     }
     
     func setInfoView() {
@@ -245,7 +244,13 @@ class DetailViewController: UIViewController {
             likeButton.widthAnchor.constraint(equalToConstant: 60),
             likeButton.heightAnchor.constraint(equalToConstant: 60)
         ])
-        likeButton.backgroundColor = .cyan
+        
+        likeButton.layer.cornerRadius = likeButton.layer.bounds.width
+        likeButton.clipsToBounds = true
+        likeButton.layer.borderWidth = 1
+        likeButton.layer.borderColor = UIColor.black.cgColor
+//        likeButton.clipsToBounds = true
+//        likeButton.contentMode = .scaleAspectFit
         
         likeButton.addTarget(self, action: #selector(tappedLikeButton), for: .touchUpInside)
     }
