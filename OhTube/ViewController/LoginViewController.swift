@@ -61,7 +61,7 @@ final class LoginViewController: UIViewController {
         if formIsValid == false { button.isEnabled = false}
     }
     
-    private func validation() -> Bool {
+    private func userValidation() -> Bool {
         let userList = dataManager.getUserList()
         for user in userList {
             if user.id == self.id && user.passWord == self.passWord {
