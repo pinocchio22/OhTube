@@ -8,7 +8,7 @@
 import Foundation
 
 struct Comment {
-    var id: UUID
+    var id: String
     var nickName: String
     var content: String
     var date: String

@@ -12,6 +12,7 @@
 		055A8FAB2AA5E7D4001BDF87 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A8FAA2AA5E7D4001BDF87 /* LoginViewController.swift */; };
 		055A8FAE2AA5F45C001BDF87 /* RegistrationScene.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 055A8FAD2AA5F45C001BDF87 /* RegistrationScene.storyboard */; };
 		055A8FB02AA5F478001BDF87 /* RegistraionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A8FAF2AA5F478001BDF87 /* RegistraionViewController.swift */; };
+		FF054DFA2AA6195A000756A0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF054DF92AA6195A000756A0 /* DetailViewController.swift */; };
 		FF1D43242AA5B68E008F0ABF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D43232AA5B68E008F0ABF /* User.swift */; };
 		FF1D43262AA5B6AA008F0ABF /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D43252AA5B6AA008F0ABF /* Video.swift */; };
 		FF1D43282AA5B718008F0ABF /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D43272AA5B718008F0ABF /* Comment.swift */; };
@@ -25,6 +26,7 @@
 		FF579FE62AA5801F00DEA36F /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF579FE42AA5801F00DEA36F /* MainViewController.xib */; };
 		FF579FE92AA5803000DEA36F /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF579FE72AA5803000DEA36F /* MyPageViewController.swift */; };
 		FF579FEA2AA5803000DEA36F /* MyPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF579FE82AA5803000DEA36F /* MyPageViewController.xib */; };
+		FFB189552AA6B3C200AE2871 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB189542AA6B3C200AE2871 /* CommentTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,7 @@
 		055A8FAA2AA5E7D4001BDF87 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		055A8FAD2AA5F45C001BDF87 /* RegistrationScene.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegistrationScene.storyboard; sourceTree = "<group>"; };
 		055A8FAF2AA5F478001BDF87 /* RegistraionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistraionViewController.swift; sourceTree = "<group>"; };
+		FF054DF92AA6195A000756A0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FF1D43232AA5B68E008F0ABF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = OhTube/Model/User.swift; sourceTree = SOURCE_ROOT; };
 		FF1D43252AA5B6AA008F0ABF /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Video.swift; path = OhTube/Model/Video.swift; sourceTree = SOURCE_ROOT; };
 		FF1D43272AA5B718008F0ABF /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Comment.swift; path = OhTube/Model/Comment.swift; sourceTree = SOURCE_ROOT; };
@@ -48,6 +51,7 @@
 		FF579FE42AA5801F00DEA36F /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		FF579FE72AA5803000DEA36F /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		FF579FE82AA5803000DEA36F /* MyPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyPageViewController.xib; sourceTree = "<group>"; };
+		FFB189542AA6B3C200AE2871 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +135,8 @@
 				055A8FAA2AA5E7D4001BDF87 /* LoginViewController.swift */,
 				055A8FAD2AA5F45C001BDF87 /* RegistrationScene.storyboard */,
 				055A8FAF2AA5F478001BDF87 /* RegistraionViewController.swift */,
+				FF054DF92AA6195A000756A0 /* DetailViewController.swift */,
+				FFB189542AA6B3C200AE2871 /* CommentTableViewCell.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -213,10 +219,12 @@
 				055A8FB02AA5F478001BDF87 /* RegistraionViewController.swift in Sources */,
 				FF579FE92AA5803000DEA36F /* MyPageViewController.swift in Sources */,
 				FF579FD32AA57A4D00DEA36F /* ViewController.swift in Sources */,
+				FF054DFA2AA6195A000756A0 /* DetailViewController.swift in Sources */,
 				055A8FA22AA5AEF4001BDF87 /* Constans.swift in Sources */,
 				FF579FCF2AA57A4D00DEA36F /* AppDelegate.swift in Sources */,
 				FF579FD12AA57A4D00DEA36F /* SceneDelegate.swift in Sources */,
 				FF1D43262AA5B6AA008F0ABF /* Video.swift in Sources */,
+				FFB189552AA6B3C200AE2871 /* CommentTableViewCell.swift in Sources */,
 				FF579FE52AA5801F00DEA36F /* MainViewController.swift in Sources */,
 				FF1D43282AA5B718008F0ABF /* Comment.swift in Sources */,
 				055A8FAB2AA5E7D4001BDF87 /* LoginViewController.swift in Sources */,
