@@ -29,13 +29,13 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="아이디를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7qh-QQ-aGD">
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="아이디를 입력해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7qh-QQ-aGD">
                                                 <rect key="frame" x="0.0" y="26.666666666666657" width="353" height="45"/>
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="6Iy-Dj-NKd"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <nil key="textColor"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -165,6 +165,7 @@
                         <outlet property="nickNameTextField" destination="wKA-d0-8Ee" id="6Wo-0P-nsJ"/>
                         <outlet property="passWordTextField" destination="S8W-tJ-zgW" id="PHL-fN-fui"/>
                         <outlet property="startButton" destination="23i-pn-yHM" id="Vpa-cI-4H1"/>
+                        <outlet property="titleLabel" destination="WrN-Jf-Woy" id="1mq-Jm-dco"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

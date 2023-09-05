@@ -23,12 +23,14 @@ final class RegistraionViewController: UIViewController {
         passWordIsValid == true }
     private var passWordIsValid: Bool { passWord == checkedPassWord }
     private var startButtonBackgroundColor: UIColor { formIsValid ? UIColor.systemPink : UIColor.lightGray }
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var startButton: UIButton!
+    
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var nickNameTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
     @IBOutlet weak var checkPassWordTextField: UITextField!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var startButton: UIButton!
     
     // MARK: - Life Cycle
     override func viewDidLoad() {

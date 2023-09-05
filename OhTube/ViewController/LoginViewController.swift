@@ -9,10 +9,12 @@ import UIKit
 
 final class LoginViewController: UIViewController {
     // MARK: - Properties
+    static let storyboardName = "LoginScene"
     static let identifier = "LoginViewController"
+    private let dataManager = DataManager.shared
     private var id: String?
-    private var password: String?
-    private var formIsValid: Bool { id?.isEmpty == false && password?.isEmpty == false }
+    private var passWord: String?
+    private var formIsValid: Bool { id?.isEmpty == false && passWord?.isEmpty == false }
     private var loginButtonBackgroundColor: UIColor { formIsValid ? UIColor.systemPink : UIColor.lightGray }
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
@@ -23,6 +25,7 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        print(loginButton.isEnabled)
     }
     
     deinit {
@@ -54,20 +57,36 @@ final class LoginViewController: UIViewController {
     
     private func updateForm(button: UIButton) {
         button.backgroundColor = loginButtonBackgroundColor
-        button.isEnabled.toggle()
+        if formIsValid { button.isEnabled = true }
+        if formIsValid == false { button.isEnabled = false}
+    }
+    
+    private func validation() -> Bool {
+        let userList = dataManager.getUserList()
+        for user in userList {
+            if user.id == self.id && user.passWord == self.passWord {
+                return true
+            }
+        }
+        return false
     }
     
     // MARK: - Action
-    @objc func textDidChange(_ textField: UITextField) {
+    @objc private func textDidChange(_ textField: UITextField) {
         if textField == idTextField { self.id = idTextField.text }
-        if textField == passWordTextField { self.password = passWordTextField.text }
+        if textField == passWordTextField { self.passWord = passWordTextField.text }
         updateForm(button: loginButton)
     }
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
-        let moveVC = ViewController()
-        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-        sceneDelegate.changeRootViewController(moveVC, animation: true)
+        if validation() {
+            let moveVC = ViewController()
+            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+            sceneDelegate.changeRootViewController(moveVC, animation: true)
+        }
+        if validation() == false {
+            print("아이디와 비밀번호가 맞지않습니다.")
+        }
     }
     
     @IBAction func registrationButtonTapped(_ sender: UIButton) {
