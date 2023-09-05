@@ -116,21 +116,21 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension MainViewController: UICollectionViewDelegate {
-    //데이터 주고 싶을 때 (디테일 페이지로 이동할 때)
+   
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 셀 선택에 대한 처리
         
-        // 선택한 셀의 데이터 또는 인덱스를 얻을 수 있음.
+        
+        
         //let selectedData = 데이터모델에서 받은배열변수[indexPath.item]
         
         // 새로운 뷰 컨트롤러를 생성하거나 스토리보드에서 식별자로 가져옴.
-        //let 디테일페이지컨트롤러변수 = 디테일페이지컨트롤러()
+        let detailViewController = DetailViewController()
         
         // 새로운 뷰 컨트롤러에 선택한 데이터를 전달. (선택한 데이터에 맞게 구현)
         // 디테일페이지컨트롤러변수.디테일페이지컨트롤러의 데이터 전달받을 변수 = selectedData
         
         // UINavigationController를 사용하여 새로운 뷰 컨트롤러로 이동.
-        //self.navigationController?.pushViewController(디테일페이지컨트롤러변수, animated: true)
+        self.navigationController?.pushViewController(detailViewController, animated: true)
         
         // 또는 모달 방식으로 표시 가능
         // self.present(디테일페이지컨트롤러변수, animated: true, completion: nil)

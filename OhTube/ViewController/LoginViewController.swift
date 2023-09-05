@@ -79,14 +79,17 @@ final class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
-        if userValidation() {
-            let moveVC = ViewController()
-            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-            sceneDelegate.changeRootViewController(moveVC, animation: true)
-        }
-        if userValidation() == false {
-            print("아이디와 비밀번호가 맞지않습니다.")
-        }
+//        if userValidation() {
+//            let moveVC = ViewController()
+//            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+//            sceneDelegate.changeRootViewController(moveVC, animation: true)
+//        }
+//        if userValidation() == false {
+//            print("아이디와 비밀번호가 맞지않습니다.")
+//        }
+        let moveVC = ViewController()
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+        sceneDelegate.changeRootViewController(moveVC, animation: true)
     }
     
     @IBAction func registrationButtonTapped(_ sender: UIButton) {
