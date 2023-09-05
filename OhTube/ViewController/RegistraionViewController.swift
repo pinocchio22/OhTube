@@ -77,7 +77,7 @@ final class RegistraionViewController: UIViewController {
     
     private func updateForm(button: UIButton) {
         button.backgroundColor = startButtonBackgroundColor
-        button.isEnabled.toggle()
+//        button.isEnabled.toggle()
     }
     
     // MARK: - Action
@@ -86,6 +86,7 @@ final class RegistraionViewController: UIViewController {
         if textField == nickNameTextField { self.nickName = nickNameTextField.text }
         if textField == passWordTextField { self.passWord = passWordTextField.text }
         if textField == checkPassWordTextField { self.checkedPassWord = checkPassWordTextField.text }
+        startButton.isEnabled = true
         updateForm(button: startButton)
     }
     
