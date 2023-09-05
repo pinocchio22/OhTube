@@ -16,6 +16,29 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var nickNameLabel: UILabel!
     
+    @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton!
+    
+    private func customButton() {
+        profileButton.layer.borderWidth = 1
+        logoutButton.layer.borderWidth = 1
+        
+    }
+    
+    private func shadowButton() {
+        profileButton.layer.shadowColor = UIColor.black.cgColor
+        profileButton.layer.masksToBounds = false
+        profileButton.layer.shadowRadius = 3
+        profileButton.layer.shadowOpacity = 0.4
+        profileButton.layer.shadowOffset = CGSize(width: 0, height: 4)
+        
+        logoutButton.layer.shadowColor = UIColor.blue.cgColor
+        logoutButton.layer.masksToBounds = false
+        logoutButton.layer.shadowRadius = 3
+        logoutButton.layer.shadowOpacity = 0.4
+        logoutButton.layer.shadowOffset = CGSize(width: 0, height: 4)
+    }
+    
     @IBAction func idEditButtonTapped(_ sender: Any) {
         
         let storyBoard = UIStoryboard(name: "RegistrationScene", bundle: nil)
@@ -33,11 +56,12 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
         moveVC.modalTransitionStyle = .crossDissolve
         self.present(moveVC, animated: true, completion: nil)
     }
-    @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        shadowButton()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -58,9 +82,5 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageTableViewCell", for: indexPath) as! MyPageTableViewCell
         return cell
     }
-    
-    
-    
-    
 
 }

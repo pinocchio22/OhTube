@@ -12,7 +12,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyPageViewController" customModule="OhTube" customModuleProvider="target">
             <connections>
                 <outlet property="idLabel" destination="3ww-Ak-Lc7" id="tI6-3U-c3n"/>
+                <outlet property="logoutButton" destination="uqQ-Aq-otQ" id="gGk-GH-9aF"/>
                 <outlet property="nickNameLabel" destination="TAo-B3-BwY" id="fxC-Y6-O9G"/>
+                <outlet property="profileButton" destination="cEy-9B-89X" id="hpz-72-DyC"/>
                 <outlet property="profileImage" destination="ISh-bW-MZe" id="muG-vW-6vK"/>
                 <outlet property="tableView" destination="QyZ-bh-ewz" id="4BI-pz-geD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
