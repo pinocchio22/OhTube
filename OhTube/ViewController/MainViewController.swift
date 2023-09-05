@@ -8,7 +8,8 @@
 import UIKit
 
 final class MainViewController: UIViewController {
-
+    
+    
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색어를 입력해주세요"
@@ -36,6 +37,7 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
+ 
     }
 
     private func naviBarSetting() {
@@ -87,10 +89,7 @@ extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.identifier, for: indexPath) as! MainCollectionViewCell
-        
-        cell.channelImage.contentMode = .scaleAspectFill
-        cell.channelImage.layer.cornerRadius = cell.channelImage.frame.width / 2
-        cell.channelImage.clipsToBounds = true
+
         
         return cell
     }

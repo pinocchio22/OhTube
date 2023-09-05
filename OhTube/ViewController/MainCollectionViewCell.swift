@@ -93,12 +93,13 @@ class MainCollectionViewCell: UICollectionViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        cellSetting() // 셀 오토레이아웃 구현한 함수.
         makeCollectionViewUI()
+        cellSetting() // 셀 오토레이아웃 구현한 함수.
+        
     }
     
     required init?(coder: NSCoder) {
@@ -108,15 +109,12 @@ class MainCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         channelImage.contentMode = .scaleAspectFill
-        self.channelImage.layer.cornerRadius = self.channelImage.frame.width / 2
+        self.channelImage.layer.cornerRadius = 28//self.channelImage.frame.width / 2
         self.channelImage.clipsToBounds = true
-        print(channelImage.bounds.width)
+        print(self.channelImage.frame.width)
     }
-
     
     func cellSetting() {
-        
-        
         self.layer.borderWidth = 1.0 // 테두리 두께
         self.layer.borderColor = UIColor.black.cgColor // 테두리 색상
         self.layer.cornerRadius = 10 // 테두리의 모서리 반경
@@ -139,10 +137,9 @@ class MainCollectionViewCell: UICollectionViewCell {
             
             channelImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
             channelImage.topAnchor.constraint(equalTo: self.videoThumbnailImage.bottomAnchor, constant: 10),
-            channelImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
-            channelImage.widthAnchor.constraint(equalTo: channelImage.heightAnchor),// 이미지 뷰를 정사각형 모양으로 설정
+            channelImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5),
+            channelImage.widthAnchor.constraint(equalTo: channelImage.heightAnchor),
             channelImage.heightAnchor.constraint(equalTo: channelImage.widthAnchor),
-            // channelImage를 원형 모양으로 만들기 위해 cornerRadius 설정
             
             
             labelsStackView.leadingAnchor.constraint(equalTo: channelImage.trailingAnchor, constant: 5),
@@ -152,8 +149,6 @@ class MainCollectionViewCell: UICollectionViewCell {
             
             
             videoTitleLabel.heightAnchor.constraint(equalToConstant: 28),
-            //channelNameLabel.heightAnchor.constraint(equalToConstant: 20),
-            //labelCountstackView.heightAnchor.constraint(equalToConstant: 20)
         ])
         
     }
