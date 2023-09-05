@@ -16,4 +16,5 @@ struct Video {
     var uploadDate: String
     var favorite: Bool
     var comment: Comment
+    
 }
