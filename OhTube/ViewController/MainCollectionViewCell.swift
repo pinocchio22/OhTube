@@ -111,7 +111,7 @@ class MainCollectionViewCell: UICollectionViewCell {
         channelImage.contentMode = .scaleAspectFill
         self.channelImage.layer.cornerRadius = self.channelImage.frame.width / 2
         self.channelImage.clipsToBounds = true
-        print(self.channelImage.frame.width)
+//        print(self.channelImage.frame.width)
     }
     
     func cellSetting() {

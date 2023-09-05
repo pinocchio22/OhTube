@@ -35,7 +35,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="6Iy-Dj-NKd"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -55,7 +55,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="vga-IB-5wR"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -75,7 +75,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="Pei-nL-nBk"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -95,7 +95,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="mPl-7r-CNI"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>

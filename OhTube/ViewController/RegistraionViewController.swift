@@ -77,7 +77,8 @@ final class RegistraionViewController: UIViewController {
     
     private func updateForm(button: UIButton) {
         button.backgroundColor = startButtonBackgroundColor
-//        button.isEnabled.toggle()
+        if formIsValid { button.isEnabled = true }
+        if formIsValid == false { button.isEnabled = false }
     }
     
     // MARK: - Action
@@ -95,6 +96,7 @@ final class RegistraionViewController: UIViewController {
     }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
+        register()
         let moveVC = ViewController()
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
         sceneDelegate.changeRootViewController(moveVC, animation: true)
