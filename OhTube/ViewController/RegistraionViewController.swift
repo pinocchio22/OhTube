@@ -7,21 +7,42 @@
 
 import UIKit
 
-class RegistraionViewController: UIViewController {
+final class RegistraionViewController: UIViewController {
+    // MARK: - Properties
+    static let storyboardName = "RegistrationScene"
     static let identifier = "RegistraionViewController"
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var startButton: UIButton!
+    private let dataManager = DataManager.shared
+    private var id: String?
+    private var nickName: String?
+    private var passWord: String?
+    private var checkedPassWord: String?
+    private var formIsValid: Bool {
+        id?.isEmpty == false &&
+        nickName?.isEmpty == false &&
+        passWord?.isEmpty == false &&
+        passWordIsValid == true }
+    private var passWordIsValid: Bool { passWord == checkedPassWord }
+    private var startButtonBackgroundColor: UIColor { formIsValid ? UIColor.systemPink : UIColor.lightGray }
+    
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var nickNameTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
     @IBOutlet weak var checkPassWordTextField: UITextField!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var startButton: UIButton!
     
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        idTextField.delegate = self
     }
     
+    deinit {
+        print("RegistraionViewController 사라집니다~")
+    }
+    
+    // MARK: - Configure
     private func configureUI() {
         configure(backButton)
         configure(startButton)
@@ -29,13 +50,15 @@ class RegistraionViewController: UIViewController {
         configure(nickNameTextField)
         configure(passWordTextField)
         configure(checkPassWordTextField)
+        startButton.layer.borderColor = UIColor.clear.cgColor
     }
     
     private func configure(_ textField: UITextField) {
         textField.delegate = self
         textField.layer.borderWidth = 0
-        textField.layer.borderColor = UIColor.systemPink.cgColor
+        textField.layer.borderColor = UIColor.black.cgColor
         textField.layer.cornerRadius = 5
+        textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
     private func configure(_ button: UIButton) {
@@ -44,17 +67,40 @@ class RegistraionViewController: UIViewController {
         button.layer.cornerRadius = 5
     }
     
+    private func register() {
+        guard let id = idTextField.text,
+        let nickNmae = nickNameTextField.text,
+        let passWord = passWordTextField.text else { return }
+        let user = User(id: id, nickName: nickNmae, passWord: passWord)
+        dataManager.createUser(user)
+    }
+    
+    private func updateForm(button: UIButton) {
+        button.backgroundColor = startButtonBackgroundColor
+        button.isEnabled.toggle()
+    }
+    
+    // MARK: - Action
+    @objc func textDidChange(_ textField: UITextField) {
+        if textField == idTextField { self.id = idTextField.text }
+        if textField == nickNameTextField { self.nickName = nickNameTextField.text }
+        if textField == passWordTextField { self.passWord = passWordTextField.text }
+        if textField == checkPassWordTextField { self.checkedPassWord = checkPassWordTextField.text }
+        updateForm(button: startButton)
+    }
+    
     @IBAction func backButtonTapped(_ sender: UIButton) {
         dismiss(animated: true)
     }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
         let moveVC = ViewController()
-        moveVC.modalPresentationStyle = .fullScreen
-        present(moveVC, animated: true)
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+        sceneDelegate.changeRootViewController(moveVC, animation: true)
     }
 }
 
+// MARK: - UITextField Delegate
 extension RegistraionViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 1

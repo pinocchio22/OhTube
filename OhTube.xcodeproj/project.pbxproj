@@ -12,6 +12,7 @@
 		055A8FAB2AA5E7D4001BDF87 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A8FAA2AA5E7D4001BDF87 /* LoginViewController.swift */; };
 		055A8FAE2AA5F45C001BDF87 /* RegistrationScene.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 055A8FAD2AA5F45C001BDF87 /* RegistrationScene.storyboard */; };
 		055A8FB02AA5F478001BDF87 /* RegistraionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A8FAF2AA5F478001BDF87 /* RegistraionViewController.swift */; };
+		055A8FB22AA61A23001BDF87 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A8FB12AA61A23001BDF87 /* DataManager.swift */; };
 		63926FF92AA6247D005696B1 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */; };
 		260AD5762AA61BE500AB2D22 /* MyPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260AD5742AA61BE500AB2D22 /* MyPageTableViewCell.swift */; };
 		260AD5772AA61BE500AB2D22 /* MyPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 260AD5752AA61BE500AB2D22 /* MyPageTableViewCell.xib */; };
@@ -36,6 +37,7 @@
 		055A8FAA2AA5E7D4001BDF87 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		055A8FAD2AA5F45C001BDF87 /* RegistrationScene.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegistrationScene.storyboard; sourceTree = "<group>"; };
 		055A8FAF2AA5F478001BDF87 /* RegistraionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistraionViewController.swift; sourceTree = "<group>"; };
+		055A8FB12AA61A23001BDF87 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		260AD5742AA61BE500AB2D22 /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
 		260AD5752AA61BE500AB2D22 /* MyPageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyPageTableViewCell.xib; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				FF1D43232AA5B68E008F0ABF /* User.swift */,
 				FF1D43252AA5B6AA008F0ABF /* Video.swift */,
 				FF1D43272AA5B718008F0ABF /* Comment.swift */,
+				055A8FB12AA61A23001BDF87 /* DataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				055A8FB02AA5F478001BDF87 /* RegistraionViewController.swift in Sources */,
+				055A8FB22AA61A23001BDF87 /* DataManager.swift in Sources */,
 				FF579FE92AA5803000DEA36F /* MyPageViewController.swift in Sources */,
 				FF579FD32AA57A4D00DEA36F /* ViewController.swift in Sources */,
 				055A8FA22AA5AEF4001BDF87 /* Constans.swift in Sources */,
