@@ -9,9 +9,20 @@ import UIKit
 
 final class RegistraionViewController: UIViewController {
     // MARK: - Properties
-    static let storyboardName = "RegistraionScene"
+    static let storyboardName = "RegistrationScene"
     static let identifier = "RegistraionViewController"
     private let dataManager = DataManager.shared
+    private var id: String?
+    private var nickName: String?
+    private var passWord: String?
+    private var checkedPassWord: String?
+    private var formIsValid: Bool {
+        id?.isEmpty == false &&
+        nickName?.isEmpty == false &&
+        passWord?.isEmpty == false &&
+        passWordIsValid == true }
+    private var passWordIsValid: Bool { passWord == checkedPassWord }
+    private var startButtonBackgroundColor: UIColor { formIsValid ? UIColor.systemPink : UIColor.lightGray }
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var idTextField: UITextField!
@@ -25,6 +36,10 @@ final class RegistraionViewController: UIViewController {
         configureUI()
     }
     
+    deinit {
+        print("RegistraionViewController 사라집니다~")
+    }
+    
     // MARK: - Configure
     private func configureUI() {
         configure(backButton)
@@ -33,13 +48,15 @@ final class RegistraionViewController: UIViewController {
         configure(nickNameTextField)
         configure(passWordTextField)
         configure(checkPassWordTextField)
+        startButton.layer.borderColor = UIColor.clear.cgColor
     }
     
     private func configure(_ textField: UITextField) {
         textField.delegate = self
         textField.layer.borderWidth = 0
-        textField.layer.borderColor = UIColor.systemPink.cgColor
+        textField.layer.borderColor = UIColor.black.cgColor
         textField.layer.cornerRadius = 5
+        textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
     private func configure(_ button: UIButton) {
@@ -56,7 +73,19 @@ final class RegistraionViewController: UIViewController {
         dataManager.createUser(user)
     }
     
+    private func updateForm() {
+        startButton.backgroundColor = startButtonBackgroundColor
+    }
+    
     // MARK: - Action
+    @objc func textDidChange(_ textField: UITextField) {
+        if textField == idTextField { self.id = idTextField.text }
+        if textField == nickNameTextField { self.nickName = nickNameTextField.text }
+        if textField == passWordTextField { self.passWord = passWordTextField.text }
+        if textField == checkPassWordTextField { self.checkedPassWord = checkPassWordTextField.text }
+        updateForm()
+    }
+    
     @IBAction func backButtonTapped(_ sender: UIButton) {
         dismiss(animated: true)
     }

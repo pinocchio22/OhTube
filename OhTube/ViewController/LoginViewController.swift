@@ -25,19 +25,22 @@ final class LoginViewController: UIViewController {
         configureUI()
     }
     
+    deinit {
+        print("LoginViewController 사라집니다~")
+    }
+    
     // MARK: - Configure
     private func configureUI() {
         configure(loginButton)
         configure(registrationButton)
         configure(idTextField)
         configure(passWordTextField)
-        loginButton.layer.borderColor = UIColor.clear.cgColor
     }
     
     private func configure(_ textField: UITextField) {
         textField.delegate = self
         textField.layer.borderWidth = 0
-        textField.layer.borderColor = UIColor.systemPink.cgColor
+        textField.layer.borderColor = UIColor.black.cgColor
         textField.layer.cornerRadius = 5
         textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
@@ -46,6 +49,7 @@ final class LoginViewController: UIViewController {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.systemPink.cgColor
         button.layer.cornerRadius = 5
+        loginButton.layer.borderColor = UIColor.clear.cgColor
     }
     
     private func updateForm() {
@@ -53,10 +57,16 @@ final class LoginViewController: UIViewController {
     }
     
     // MARK: - Action
+    @objc func textDidChange(_ textField: UITextField) {
+        if textField == idTextField { self.id = idTextField.text }
+        if textField == passWordTextField { self.password = passWordTextField.text }
+        updateForm()
+    }
+    
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         let moveVC = ViewController()
-        moveVC.modalPresentationStyle = .fullScreen
-        present(moveVC, animated: true)
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+        sceneDelegate.changeRootViewController(moveVC, animation: true)
     }
     
     @IBAction func registrationButtonTapped(_ sender: UIButton) {
@@ -64,12 +74,6 @@ final class LoginViewController: UIViewController {
         let moveVC = storyboard.instantiateViewController(withIdentifier: RegistraionViewController.identifier)
         moveVC.modalPresentationStyle = .fullScreen
         present(moveVC, animated: true)
-    }
-    
-    @objc func textDidChange(_ textField: UITextField) {
-        if textField == idTextField { self.id = idTextField.text }
-        if textField == passWordTextField { self.password = passWordTextField.text }
-        updateForm()
     }
 }
 
