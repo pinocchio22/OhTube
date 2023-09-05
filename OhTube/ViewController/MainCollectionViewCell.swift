@@ -106,10 +106,10 @@ class MainCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         channelImage.contentMode = .scaleAspectFill
-        self.channelImage.layer.cornerRadius = 28//self.channelImage.frame.width / 2
+        self.channelImage.layer.cornerRadius = self.channelImage.frame.width / 2
         self.channelImage.clipsToBounds = true
         print(self.channelImage.frame.width)
     }
@@ -136,19 +136,19 @@ class MainCollectionViewCell: UICollectionViewCell {
             
             
             channelImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
-            channelImage.topAnchor.constraint(equalTo: self.videoThumbnailImage.bottomAnchor, constant: 10),
-            channelImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5),
+            channelImage.topAnchor.constraint(equalTo: self.videoThumbnailImage.bottomAnchor, constant: 5),
+            channelImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
             channelImage.widthAnchor.constraint(equalTo: channelImage.heightAnchor),
             channelImage.heightAnchor.constraint(equalTo: channelImage.widthAnchor),
             
             
             labelsStackView.leadingAnchor.constraint(equalTo: channelImage.trailingAnchor, constant: 5),
-            labelsStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 0),
+            labelsStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5),
             labelsStackView.topAnchor.constraint(equalTo: self.channelImage.topAnchor),
             labelsStackView.bottomAnchor.constraint(equalTo: self.channelImage.bottomAnchor),
             
             
-            videoTitleLabel.heightAnchor.constraint(equalToConstant: 28),
+            videoTitleLabel.heightAnchor.constraint(equalToConstant: 32)
         ])
         
     }
