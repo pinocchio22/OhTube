@@ -9,6 +9,7 @@ import UIKit
 
 final class RegistraionViewController: UIViewController {
     // MARK: - Properties
+    
     var reuseTitle: String? = "회원가입"
     var resueStartButton: String? = "시작하기"
     
