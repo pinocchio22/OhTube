@@ -20,7 +20,7 @@ class DetailViewController: UIViewController {
             titleLabel.text = video?.title
             videoTitle.text = video?.channelId
             uploadDate.text = video?.uploadDateString
-            viewCount.text = "\(video!.viewCount) 조회"
+            viewCount.text = "\(video!.formatViewCount) 조회"
         }
     }
     
