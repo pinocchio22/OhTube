@@ -39,7 +39,7 @@ class CommentTableViewCell: UITableViewCell {
         guard let comment = comment else {
             return
         }
-        commentName.text = "\(comment.userUUId) / \(comment.date)"
+        commentName.text = "\(comment.nickName) / \(comment.date)"
         commentContent.text = comment.content
     }
     
