@@ -84,8 +84,7 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
         profileImage.layer.cornerRadius = 50
         profileImage.layer.masksToBounds = true
         
-        let nibName = UINib(nibName: "MyPageTableViewCell", bundle: nil)
-        tableView.register(nibName, forCellReuseIdentifier: "MyPageTableViewCell")
+        //tableView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: Cell.mainViewIdentifier)
   
     }
     
@@ -94,8 +93,9 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageTableViewCell", for: indexPath) as! MyPageTableViewCell
-        return cell
+//        let cell = tableView.dequeueReusableCell(withReuseIdentifier: Cell.mainViewIdentifier, for: indexPath) as! MainCollectionViewCell
+//        return cell
+        return UITableViewCell()
     }
 
 }
