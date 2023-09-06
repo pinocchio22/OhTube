@@ -47,7 +47,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    var channelName: UILabel = {
+    var videoTitle: UILabel = {
         var label = UILabel()
         label.text = "원훈이와 영식이"
         label.font = Font.contentFont
@@ -58,7 +58,7 @@ class DetailViewController: UIViewController {
     var viewCount: UILabel = {
         var label = UILabel()
         label.text = "15.5만"
-        label.font = Font.contentFont
+        label.font = Font.descriptionFont
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -66,7 +66,15 @@ class DetailViewController: UIViewController {
     var uploadDate: UILabel = {
         var label = UILabel()
         label.text = "20시간 전"
-        label.font = Font.contentFont
+        label.font = Font.descriptionFont
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var videoDescription: UILabel = {
+        var label = UILabel()
+        label.text = "설명입니다."
+        label.font = Font.descriptionFont
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -166,20 +174,21 @@ class DetailViewController: UIViewController {
         profileImage.layer.borderWidth = 1
         profileImage.layer.borderColor = UIColor.clear.cgColor
         
-        profileImage.image = Util.util.imageWith(name: selectedVideo?.channelId)
+//        profileImage.image = Util.util.imageWith(name: selectedVideo?.channelId)
+        profileImage.image = Util.util.imageWith(name: "원훈이와 영식이")
     }
     
     func setTitleLabel() {
         view.addSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor, constant: 10),
             titleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             titleLabel.heightAnchor.constraint(equalToConstant: 60)
         ])
         titleLabel.backgroundColor = .systemGray4
         
-        titleLabel.text = selectedVideo?.title
+//        titleLabel.text = selectedVideo?.title
     }
     
     func setVideoUView() {
@@ -209,6 +218,7 @@ class DetailViewController: UIViewController {
         setViewCount()
         setUploadDate()
         setLikeButton()
+        setVideoDescription()
         
         NSLayoutConstraint.activate([
             infoView.topAnchor.constraint(equalTo: videoWebView.bottomAnchor, constant: 10),
@@ -218,42 +228,54 @@ class DetailViewController: UIViewController {
     }
     
     func setChannelName() {
-        infoView.addSubview(channelName)
+        infoView.addSubview(videoTitle)
         
         NSLayoutConstraint.activate([
-            channelName.topAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.topAnchor, constant: 10),
-            channelName.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            videoTitle.topAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            videoTitle.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
         ])
+        
+//        videoTitle.text = selectedVideo?.channelId
     }
     
     func setViewCount() {
+        infoView.addSubview(videoDescription)
         infoView.addSubview(viewCount)
         
         NSLayoutConstraint.activate([
-            viewCount.topAnchor.constraint(equalTo: channelName.bottomAnchor, constant: 10),
+            viewCount.topAnchor.constraint(equalTo: videoTitle.bottomAnchor, constant: 10),
             viewCount.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            viewCount.trailingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+//            viewCount.trailingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            viewCount.bottomAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.topAnchor, constant: -10),
+            viewCount.widthAnchor.constraint(equalToConstant: 50)
         ])
+        
+//        viewCount.text = selectedVideo?.viewCount
     }
     
     func setUploadDate() {
+        infoView.addSubview(likeButton)
+        
         infoView.addSubview(uploadDate)
+       
         
         NSLayoutConstraint.activate([
-            uploadDate.topAnchor.constraint(equalTo: viewCount.bottomAnchor, constant: 10),
-            uploadDate.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            uploadDate.trailingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            uploadDate.bottomAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            uploadDate.topAnchor.constraint(equalTo: videoTitle.bottomAnchor, constant: 10),
+            uploadDate.leadingAnchor.constraint(equalTo: viewCount.safeAreaLayoutGuide.trailingAnchor, constant: 10),
+            uploadDate.trailingAnchor.constraint(equalTo: likeButton.safeAreaLayoutGuide.leadingAnchor, constant: -10),
+            uploadDate.bottomAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.topAnchor, constant: -10),
         ])
+        
+//        uploadDate.text = selectedVideo?.uploadDate
     }
     
     func setLikeButton() {
-        infoView.addSubview(likeButton)
-        
         NSLayoutConstraint.activate([
-            likeButton.leadingAnchor.constraint(equalTo: channelName.trailingAnchor, constant: 10),
+            likeButton.topAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            likeButton.leadingAnchor.constraint(equalTo: videoTitle.trailingAnchor, constant: 10),
             likeButton.trailingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            likeButton.centerYAnchor.constraint(equalTo: infoView.centerYAnchor),
+            likeButton.bottomAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.topAnchor, constant: -10),
+//            likeButton.centerYAnchor.constraint(equalTo: infoView.centerYAnchor),
             likeButton.widthAnchor.constraint(equalToConstant: 60),
             likeButton.heightAnchor.constraint(equalToConstant: 60),
         ])
@@ -263,6 +285,18 @@ class DetailViewController: UIViewController {
         likeButton.layer.borderColor = UIColor.black.cgColor
         
         likeButton.addTarget(self, action: #selector(tappedLikeButton), for: .touchUpInside)
+    }
+    
+    func setVideoDescription() {
+        
+        
+        NSLayoutConstraint.activate([
+            videoDescription.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            videoDescription.trailingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.trailingAnchor, constant: 10),
+            videoDescription.bottomAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            videoDescription.widthAnchor.constraint(equalTo: infoView.widthAnchor),
+//            videoDescription.heightAnchor.constraint(equalToConstant: 60)
+        ])
     }
     
     // MARK: commentView

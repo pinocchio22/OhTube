@@ -22,7 +22,7 @@ struct Util {
          let nameLabel = UILabel(frame: frame)
          nameLabel.textAlignment = .center
          nameLabel.backgroundColor = .systemGray4
-         nameLabel.textColor = .white
+         nameLabel.textColor = .black
          nameLabel.font = UIFont.boldSystemFont(ofSize: 20)
          nameLabel.text = name
          UIGraphicsBeginImageContext(frame.size)
