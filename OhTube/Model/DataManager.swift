@@ -18,7 +18,6 @@ final class DataManager {
     func getUserList() -> [User] {
         if let encodedUserList = self.userDefaults.object(forKey: userListKey) as? Data,
            let userList = try? JSONDecoder().decode(UserList.self, from: encodedUserList) {
-            print(userList)
             return userList
         }
         return []

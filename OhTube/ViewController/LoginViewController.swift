@@ -38,6 +38,7 @@ final class LoginViewController: UIViewController {
         configure(registrationButton)
         configure(idTextField)
         configure(passWordTextField)
+        configure()
     }
     
     private func configure(_ textField: UITextField) {
@@ -45,6 +46,9 @@ final class LoginViewController: UIViewController {
         textField.layer.borderWidth = 0
         textField.layer.borderColor = UIColor.black.cgColor
         textField.layer.cornerRadius = 5
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
+        textField.spellCheckingType = .no
         textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
@@ -53,6 +57,11 @@ final class LoginViewController: UIViewController {
         button.layer.borderColor = UIColor.systemPink.cgColor
         button.layer.cornerRadius = 5
         loginButton.layer.borderColor = UIColor.clear.cgColor
+    }
+    
+    private func configure() {
+        passWordTextField.isSecureTextEntry = true
+        passWordTextField.textContentType = .newPassword
     }
     
     private func updateForm(button: UIButton) {
@@ -72,28 +81,21 @@ final class LoginViewController: UIViewController {
     }
     
     func showToast(message : String) {
-        let toastLabel = UILabel()
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-        toastLabel.textColor = UIColor.white
-        toastLabel.font = UIFont.systemFont(ofSize: 16)
-        toastLabel.textAlignment = .center
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 5
-        toastLabel.clipsToBounds = true
-        toastLabel.numberOfLines = 2
-        self.view.addSubview(toastLabel)
-        toastLabel.translatesAutoresizingMaskIntoConstraints = false
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        self.view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            toastLabel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50),
-            toastLabel.widthAnchor.constraint(equalToConstant: self.view.frame.size.width / 2),
-            toastLabel.heightAnchor.constraint(equalToConstant: self.view.frame.height / 10)
+            toastView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50),
+            toastView.widthAnchor.constraint(equalToConstant: self.view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: self.view.frame.height / 10)
         ])
         UIView.animate(withDuration: 2.5, delay: 0.2) {
-            toastLabel.alpha = 0
+            toastView.alpha = 0
         } completion: { _ in
-            toastLabel.removeFromSuperview()
+            toastView.removeFromSuperview()
         }
     }
     
