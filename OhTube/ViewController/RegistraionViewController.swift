@@ -9,6 +9,10 @@ import UIKit
 
 final class RegistraionViewController: UIViewController {
     // MARK: - Properties
+    
+    var reuseTitle: String? = "회원가입"
+    var resueStartButton: String? = "시작하기"
+    
     static let storyboardName = "RegistrationScene"
     static let identifier = "RegistraionViewController"
     private let dataManager = DataManager.shared
@@ -36,6 +40,8 @@ final class RegistraionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        titleLabel.text = reuseTitle
+        startButton.setTitle(resueStartButton, for: .normal)
     }
     
     deinit {
