@@ -107,7 +107,7 @@ final class NetworkManager {
     private func videoforEach(video: welcome) -> [Video] {
         var youtubeArray: [Video] = []
         video.items.forEach { result in
-            youtubeArray.append(Video(id: result.id, title: result.snippet.title, thumbNail: result.snippet.thumbnails.thumbnailsDefault.url, description: result.snippet.description, channelId: result.snippet.channelTitle, viewCount: result.statistics.viewCount, uploadDate: result.snippet.publishedAt, favorite: false, comment: Comment(id: "1", nickName: "2", content: "3", date: "4")))
+            youtubeArray.append(Video(id: result.id, title: result.snippet.title, thumbNail: result.snippet.thumbnails.high.url, description: result.snippet.description, channelId: result.snippet.channelTitle, viewCount: result.statistics.viewCount, uploadDate: result.snippet.publishedAt, favorite: false, comment: Comment(id: "1", nickName: "2", content: "3", date: "4")))
         }
         return youtubeArray
     }

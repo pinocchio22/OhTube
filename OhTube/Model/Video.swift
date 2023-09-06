@@ -24,7 +24,7 @@ struct Item: Codable {
 
 // MARK: - Snippet
 struct Snippet: Codable {
-    let publishedAt: Date
+    let publishedAt: String
     let title: String
     let description: String
     let categoryID: String
@@ -61,16 +61,38 @@ struct Statistics: Codable {
 
 //데이터 가공 구조체
 struct Video: Codable {
-  var id: String
-  var title: String
-  var thumbNail: String
-  var description: String
-  var channelId: String
-  var viewCount: String
-  var uploadDate: Date
-  var favorite: Bool
-  var comment: Comment
+    var id: String
+    var title: String
+    var thumbNail: String
+    var description: String
+    var channelId: String
+    var viewCount: String
+    var uploadDate: String
+    var favorite: Bool
+    var comment: Comment
+    
+    
+    var uploadDateString: String {
+        guard let isoDate = ISO8601DateFormatter().date(from: uploadDate ) else {
+            return ""
+        }
+        let currentDate = Date()
+            
+        let dateGap = Calendar.current.dateComponents([.month, .day, .hour], from: isoDate, to: currentDate)
+        
+        if let month = dateGap.month, let day = dateGap.day, let hour = dateGap.hour {
+            if month > 0 {
+                return "\(month)개월 전"
+            } else if day > 0 && day < 28 {
+                return "\(day)일 전"
+            } else if hour > 0 && hour < 24{
+                return "\(hour)시간 전"
+            }
+        }
+        return "방금 전"
+    }
 }
+
 
 //  ▿ OhTube.Video
 //      - id: "LmaXdOKu5Eg"

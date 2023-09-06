@@ -140,6 +140,7 @@
 			children = (
 				FF579FD22AA57A4D00DEA36F /* ViewController.swift */,
 				FF579FE32AA5801F00DEA36F /* MainViewController.swift */,
+				63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */,
 				FF579FE42AA5801F00DEA36F /* MainViewController.xib */,
 				FF579FE72AA5803000DEA36F /* MyPageViewController.swift */,
 				FF579FE82AA5803000DEA36F /* MyPageViewController.xib */,
@@ -151,7 +152,6 @@
 				055A8FAF2AA5F478001BDF87 /* RegistraionViewController.swift */,
 				FF054DF92AA6195A000756A0 /* DetailViewController.swift */,
 				FFB189542AA6B3C200AE2871 /* CommentTableViewCell.swift */,
-				63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
