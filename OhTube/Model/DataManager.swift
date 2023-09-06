@@ -10,22 +10,25 @@ import UIKit
 final class DataManager {
     static let shared = DataManager()
     private let userDefaults = UserDefaults.standard
-    private let userListKey = "UserList"
     typealias UserList = [User]
     
     private init() {}
     
     func getUserList() -> [User] {
-        if let encodedUserList = self.userDefaults.object(forKey: userListKey) as? Data,
+        if let encodedUserList = self.userDefaults.object(forKey: Key.userList) as? Data,
            let userList = try? JSONDecoder().decode(UserList.self, from: encodedUserList) {
             return userList
         }
         return []
     }
     
+    func saveIslogin() {
+        userDefaults.set(true, forKey: Key.isLogin)
+    }
+    
     private func updateUserDefaults(_ userList: UserList) {
         if let encodedUserList = try? JSONEncoder().encode(userList) {
-            self.userDefaults.set(encodedUserList, forKey: userListKey)
+            self.userDefaults.set(encodedUserList, forKey: Key.userList)
         }
     }
     

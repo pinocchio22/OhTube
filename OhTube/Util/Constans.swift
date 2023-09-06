@@ -19,6 +19,17 @@ enum Margin {
     static let spacing: Int = 10
 }
 
+enum Message {
+    static let toast = """
+                                아이디와 비밀번호가
+                                일치하지 않습니다.
+                                """
+}
+
+enum Key {
+    static let isLogin = "IsLogin"
+    static let userList = "UserList"
+}
 
 
 
