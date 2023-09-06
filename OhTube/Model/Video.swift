@@ -70,7 +70,7 @@ struct Video: Codable {
     var viewCount: String
     var uploadDate: String
     var favorite: Bool
-    var comment: [Comment]
+    var comment: [Comment]?
     
     
     var uploadDateString: String {

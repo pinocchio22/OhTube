@@ -18,7 +18,7 @@ class DetailViewController: UIViewController {
     var video: Video? {
         didSet {
             titleLabel.text = video?.title
-            channelName.text = video?.channelId
+            videoTitle.text = video?.channelId
             uploadDate.text = video?.uploadDateString
             viewCount.text = "\(video!.viewCount) 조회"
         }

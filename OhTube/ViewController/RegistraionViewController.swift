@@ -94,7 +94,7 @@ final class RegistraionViewController: UIViewController {
         guard let id = idTextField.text,
         let nickNmae = nickNameTextField.text,
         let passWord = passWordTextField.text else { return }
-        let user = User(id: id, nickName: nickNmae, passWord: passWord, likedVideoList: [Video]())
+//        let user = User(id: id, nickName: nickNmae, passWord: passWord)
         guard let id = self.id,
               let nickNmae = self.nickName,
               let passWord = self.passWord else { return }
