@@ -72,6 +72,19 @@ struct Video: Codable {
     var favorite: Bool
     var comment: [Comment]?
     
+    var formatViewCount: String {
+        var formattedViewCount = ""
+        guard let viewCount = Int(viewCount) else { return viewCount }
+        if viewCount >= 10000 {
+            let roundedValue = round(Double(viewCount) / 10000)
+            formattedViewCount = String(format: "%.0f만", roundedValue)
+        } else if viewCount >= 1000 {
+            let roundedValue = round(Double(viewCount) / 1000)
+            formattedViewCount = String(format: "%.0f천", roundedValue)
+        }
+        return formattedViewCount
+    }
+    
     
     var uploadDateString: String {
         guard let isoDate = ISO8601DateFormatter().date(from: uploadDate ) else {
@@ -94,6 +107,17 @@ struct Video: Codable {
     }
 }
 
+func formatValue(_ value: Int) -> String {
+    var formattedValue = ""
+    if value >= 10000 {
+        let roundedValue = round(Double(value) / 10000)
+        formattedValue = String(format: "%.0f만", roundedValue)
+    } else if value >= 1000 {
+        let roundedValue = round(Double(value) / 1000)
+        formattedValue = String(format: "%.0f천", roundedValue)
+    }
+    return formattedValue
+}
 
 //  ▿ OhTube.Video
 //      - id: "LmaXdOKu5Eg"
