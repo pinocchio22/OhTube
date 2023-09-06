@@ -9,6 +9,16 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    var video: Video? {
+        didSet {
+            titleLabel.text = video?.title
+            channelName.text = video?.channelId
+            uploadDate.text = video?.uploadDateString
+            viewCount.text = "\(video!.viewCount) 조회"
+        }
+    }
+    
+    
     var dummyList = [
         Comment(id: UUID().uuidString, nickName: "1번 이름", content: "1번 내용", date: "1번 날짜"),
         Comment(id: UUID().uuidString, nickName: "5번 이름", content: "5번 내용", date: "5번 날짜"),

@@ -9,7 +9,7 @@ import UIKit
 
 class MainCollectionViewCell: UICollectionViewCell {
     
-    static let identifier: String = "MainCollectionViewCell"
+    
     
     var videoThumbnailImage: UIImageView = {
         let image = UIImageView()
@@ -28,11 +28,10 @@ class MainCollectionViewCell: UICollectionViewCell {
     
     var videoTitleLabel: UILabel = {
         let title = UILabel()
-        title.font = Font.mainTitleFont
+        title.font = UIFont.boldSystemFont(ofSize: 20)
         title.textColor = .black
         title.numberOfLines = 0
-        title.layer.borderWidth = 2.0 // 테두리 두께 설정
-        title.layer.borderColor = UIColor.red.cgColor // 테두리 색상 설정
+        title.sizeToFit()
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
@@ -42,8 +41,7 @@ class MainCollectionViewCell: UICollectionViewCell {
         title.font = Font.contentFont
         title.textColor = .black
         title.numberOfLines = 0
-        title.layer.borderWidth = 2.0 // 테두리 두께 설정
-        title.layer.borderColor = UIColor.green.cgColor // 테두리 색상 설정
+        title.sizeToFit()
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
@@ -53,52 +51,44 @@ class MainCollectionViewCell: UICollectionViewCell {
         title.font = Font.contentFont
         title.textColor = .black
         title.numberOfLines = 0
-        title.layer.borderWidth = 2.0 // 테두리 두께 설정
-        title.layer.borderColor = UIColor.yellow.cgColor // 테두리 색상 설정
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
     
-    var videoLikeCountLabel: UILabel = {
+    var videoDateLabel: UILabel = {
         let title = UILabel()
         title.font = Font.contentFont
         title.textColor = .black
         title.numberOfLines = 0
-        title.layer.borderWidth = 2.0 // 테두리 두께 설정
-        title.layer.borderColor = UIColor.magenta.cgColor // 테두리 색상 설정
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
     
     lazy var labelCountstackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [channelNameLabel, videoViewCountLabel, videoLikeCountLabel])
+        let stack = UIStackView(arrangedSubviews: [videoViewCountLabel, videoDateLabel])
         stack.axis = .horizontal
-        stack.spacing = 20
+        stack.spacing = 5
         stack.alignment = .fill
         stack.distribution = .fill
-        stack.layer.borderWidth = 2.0 // 테두리 두께 설정
-        stack.layer.borderColor = UIColor.purple.cgColor // 테두리 색상 설정
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
     lazy var labelsStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [videoTitleLabel, labelCountstackView])
+        let stack = UIStackView(arrangedSubviews: [videoTitleLabel, channelNameLabel,labelCountstackView])
         stack.axis = .vertical
-        stack.spacing = 5
+        stack.spacing = 2
         stack.alignment = .fill
-        stack.distribution = .fill
-        stack.layer.borderWidth = 2.0 // 테두리 두께 설정
-        stack.layer.borderColor = UIColor.systemPink.cgColor // 테두리 색상 설정
+        stack.distribution = .equalSpacing
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeCollectionViewUI()
-        cellSetting() // 셀 오토레이아웃 구현한 함수.
+        cellSetting()
         
     }
     
@@ -115,10 +105,11 @@ class MainCollectionViewCell: UICollectionViewCell {
     }
     
     func cellSetting() {
-        self.layer.borderWidth = 1.0 // 테두리 두께
-        self.layer.borderColor = UIColor.black.cgColor // 테두리 색상
-        self.layer.cornerRadius = 10 // 테두리의 모서리 반경
-        self.clipsToBounds = true // 테두리가 뷰 내부에 맞게 잘릴지 여부
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.3
+        layer.shadowRadius = 10
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
     }
     
     
@@ -131,13 +122,13 @@ class MainCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             videoThumbnailImage.widthAnchor.constraint(equalToConstant: self.contentView.bounds.width),
-            videoThumbnailImage.heightAnchor.constraint(equalToConstant: 200),
+            videoThumbnailImage.heightAnchor.constraint(equalToConstant: 210),
             videoThumbnailImage.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
             
             
-            channelImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
+            channelImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5),
             channelImage.topAnchor.constraint(equalTo: self.videoThumbnailImage.bottomAnchor, constant: 5),
-            channelImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+            channelImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -2),
             channelImage.widthAnchor.constraint(equalTo: channelImage.heightAnchor),
             channelImage.heightAnchor.constraint(equalTo: channelImage.widthAnchor),
             
@@ -148,7 +139,11 @@ class MainCollectionViewCell: UICollectionViewCell {
             labelsStackView.bottomAnchor.constraint(equalTo: self.channelImage.bottomAnchor),
             
             
-            videoTitleLabel.heightAnchor.constraint(equalToConstant: 32)
+            videoTitleLabel.heightAnchor.constraint(equalToConstant: 28),
+            channelNameLabel.heightAnchor.constraint(equalToConstant: 14),
+            labelCountstackView.heightAnchor.constraint(equalToConstant: 14),
+            
+            labelCountstackView.trailingAnchor.constraint(equalTo: labelsStackView.trailingAnchor, constant: -100)
         ])
         
     }

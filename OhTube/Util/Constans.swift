@@ -20,3 +20,51 @@ enum Margin {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum YouTubeAPI {
+    static let requestUrl = "https://youtube.googleapis.com/youtube/v3/videos?"
+    static let reQuestInfo = "part=snippet%2Cstatistics"
+    static let chart = "chart=mostPopular"
+    static let apiKey = "key=AIzaSyB4mgZGx7am_zDKQr4I75nerrwG0KFZVeE"
+    static let maxResults = "maxResults=40"
+    static let regionCode = "regionCode=KR"
+}
+
+public enum YouTubeApiVideoCategoryId {
+    static let sport = "videoCategoryId=17"
+    static let filmAndAnimation = "videoCategoryId=1"
+    static let music = "videoCategoryId=" //"videoCategoryId=10"
+    static let comedy = "videoCategoryId=23"
+    static let entertainment = "videoCategoryId=24"
+    static let gaming = "videoCategoryId=20"
+}
+
+
+public struct Cell {
+    static let mainViewIdentifier: String = "MainCollectionViewCell"
+}
+
+//https://youtube.googleapis.com/youtube/v3/videos?
+//part=snippet%2Cstatistics
+//&
+//chart=mostPopular
+//&
+//key=AIzaSyB4mgZGx7am_zDKQr4I75nerrwG0KFZVeE
+//&
+//maxResults=50
+//&
+//regionCode=KR
+//&
+//videoCategoryId=17

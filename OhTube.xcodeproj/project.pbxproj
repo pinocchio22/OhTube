@@ -15,6 +15,8 @@
 		055A8FB22AA61A23001BDF87 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A8FB12AA61A23001BDF87 /* DataManager.swift */; };
 		260AD5762AA61BE500AB2D22 /* MyPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260AD5742AA61BE500AB2D22 /* MyPageTableViewCell.swift */; };
 		260AD5772AA61BE500AB2D22 /* MyPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 260AD5752AA61BE500AB2D22 /* MyPageTableViewCell.xib */; };
+
+		6375DAB32AA7590100AADD98 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6375DAB22AA7590100AADD98 /* NetworkManager.swift */; };
 		63926FF92AA6247D005696B1 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */; };
 		FF054DFA2AA6195A000756A0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF054DF92AA6195A000756A0 /* DetailViewController.swift */; };
 		FF1D43242AA5B68E008F0ABF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D43232AA5B68E008F0ABF /* User.swift */; };
@@ -42,6 +44,8 @@
 		055A8FB12AA61A23001BDF87 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		260AD5742AA61BE500AB2D22 /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
 		260AD5752AA61BE500AB2D22 /* MyPageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyPageTableViewCell.xib; sourceTree = "<group>"; };
+
+		6375DAB22AA7590100AADD98 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		FF054DF92AA6195A000756A0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FF1D43232AA5B68E008F0ABF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = OhTube/Model/User.swift; sourceTree = SOURCE_ROOT; };
@@ -84,6 +88,7 @@
 		FF1D43292AA5E66A008F0ABF /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				6375DAB22AA7590100AADD98 /* NetworkManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -137,6 +142,7 @@
 			children = (
 				FF579FD22AA57A4D00DEA36F /* ViewController.swift */,
 				FF579FE32AA5801F00DEA36F /* MainViewController.swift */,
+				63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */,
 				FF579FE42AA5801F00DEA36F /* MainViewController.xib */,
 				FF579FE72AA5803000DEA36F /* MyPageViewController.swift */,
 				FF579FE82AA5803000DEA36F /* MyPageViewController.xib */,
@@ -148,7 +154,6 @@
 				055A8FAF2AA5F478001BDF87 /* RegistraionViewController.swift */,
 				FF054DF92AA6195A000756A0 /* DetailViewController.swift */,
 				FFB189542AA6B3C200AE2871 /* CommentTableViewCell.swift */,
-				63926FF82AA6247D005696B1 /* MainCollectionViewCell.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -239,6 +244,7 @@
 				FF579FD12AA57A4D00DEA36F /* SceneDelegate.swift in Sources */,
 				FF1D43262AA5B6AA008F0ABF /* Video.swift in Sources */,
 				FFB189552AA6B3C200AE2871 /* CommentTableViewCell.swift in Sources */,
+				6375DAB32AA7590100AADD98 /* NetworkManager.swift in Sources */,
 				63926FF92AA6247D005696B1 /* MainCollectionViewCell.swift in Sources */,
 				FF579FE52AA5801F00DEA36F /* MainViewController.swift in Sources */,
 				FF1D43282AA5B718008F0ABF /* Comment.swift in Sources */,
