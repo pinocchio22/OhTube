@@ -106,19 +106,6 @@ struct Video: Codable {
         return "방금 전"
     }
 }
-
-func formatValue(_ value: Int) -> String {
-    var formattedValue = ""
-    if value >= 10000 {
-        let roundedValue = round(Double(value) / 10000)
-        formattedValue = String(format: "%.0f만", roundedValue)
-    } else if value >= 1000 {
-        let roundedValue = round(Double(value) / 1000)
-        formattedValue = String(format: "%.0f천", roundedValue)
-    }
-    return formattedValue
-}
-
 //  ▿ OhTube.Video
 //      - id: "LmaXdOKu5Eg"
 //      - title: "모두가 놀란 그녀의 행동"
