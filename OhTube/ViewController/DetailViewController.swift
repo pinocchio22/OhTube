@@ -15,15 +15,16 @@ class DetailViewController: UIViewController {
     var likedVideoList = [Video]()
     var selectedVideo: Video?
 
-    var video: Video? {
-        didSet {
-            titleLabel.text = video?.title
-            videoTitle.text = video?.channelId
-            uploadDate.text = video?.uploadDateString
-            viewCount.text = "\(video!.formatViewCount) 조회"
-        }
-    }
-    
+
+//    var video: Video? {
+//        didSet {
+//            titleLabel.text = video?.title
+//            videoTitle.text = video?.channelId
+//            uploadDate.text = video?.uploadDateString
+//            viewCount.text = "\(video!.viewCount) 조회"
+//        }
+//    }
+
     var profileImage: UIImageView = {
         var image = UIImageView()
         image.image = UIImage(systemName: "photo")
@@ -149,8 +150,6 @@ class DetailViewController: UIViewController {
         
         // load userDate
         
-        // get selectedVideo
-        
         // commentList = selectedVido.comment
         commentList = DataManager.shared.getCommentList()
         
@@ -183,8 +182,7 @@ class DetailViewController: UIViewController {
         profileImage.layer.borderWidth = 1
         profileImage.layer.borderColor = UIColor.clear.cgColor
         
-//        profileImage.image = Util.util.imageWith(name: selectedVideo?.channelId)
-        profileImage.image = Util.util.imageWith(name: "원훈이와 영식이")
+        profileImage.image = Util.util.imageWith(name: selectedVideo?.channelId)
     }
     
     func setTitleLabel() {
@@ -197,7 +195,7 @@ class DetailViewController: UIViewController {
         ])
         titleLabel.backgroundColor = .systemGray4
         
-//        titleLabel.text = selectedVideo?.title
+        titleLabel.text = selectedVideo?.channelId
     }
     
     func setVideoUView() {
@@ -211,19 +209,21 @@ class DetailViewController: UIViewController {
         
         // connect video in webview
         //        guard let url = URL(string: "https://www.youtube.com/embed/\(videoKey)") else { return  }
-        var url1 = "https://www.youtube.com/watch?v=prjjnxXBkpo"
-        var url2 = "https://www.youtube.com/embed/9bZkp7q19f0"
-        var url3 = "https://www.youtube.com/embed/5t0IwokCKlY"
-        var url4 = "https://www.youtube.com/embed/43FZXOo6oRM"
+//        var url1 = "https://www.youtube.com/watch?v=prjjnxXBkpo"
+//        var url2 = "https://www.youtube.com/embed/9bZkp7q19f0"
+//        var url3 = "https://www.youtube.com/embed/5t0IwokCKlY"
+//        var url4 = "https://www.youtube.com/embed/43FZXOo6oRM"
         
-        videoWebView.loadRequest(URLRequest(url: URL(string: url4)!))
+        videoWebView.allowsInlineMediaPlayback = true
+        guard let url = URL(string: "https://www.youtube.com/embed/\(selectedVideo!.id)") else { return }
+        videoWebView.loadRequest(URLRequest(url: url))
     }
     
     // MARK: infoView
     // set video info group
     func setInfoView() {
         view.addSubview(infoView)
-        setChannelName()
+        setVideoTitle()
         setViewCount()
         setUploadDate()
         setLikeButton()
@@ -236,7 +236,7 @@ class DetailViewController: UIViewController {
         ])
     }
     
-    func setChannelName() {
+    func setVideoTitle() {
         infoView.addSubview(videoTitle)
         
         NSLayoutConstraint.activate([
@@ -244,7 +244,7 @@ class DetailViewController: UIViewController {
             videoTitle.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
         ])
         
-//        videoTitle.text = selectedVideo?.channelId
+        videoTitle.text = selectedVideo?.title
     }
     
     func setViewCount() {
@@ -259,7 +259,7 @@ class DetailViewController: UIViewController {
             viewCount.widthAnchor.constraint(equalToConstant: 50)
         ])
         
-//        viewCount.text = selectedVideo?.viewCount
+        viewCount.text = selectedVideo?.viewCount
     }
     
     func setUploadDate() {
@@ -275,7 +275,7 @@ class DetailViewController: UIViewController {
             uploadDate.bottomAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.topAnchor, constant: -10),
         ])
         
-//        uploadDate.text = selectedVideo?.uploadDate
+        uploadDate.text = selectedVideo?.uploadDateString
     }
     
     func setLikeButton() {
@@ -297,15 +297,14 @@ class DetailViewController: UIViewController {
     }
     
     func setVideoDescription() {
-        
-        
         NSLayoutConstraint.activate([
             videoDescription.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            videoDescription.trailingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.trailingAnchor, constant: 10),
             videoDescription.bottomAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            videoDescription.widthAnchor.constraint(equalTo: infoView.widthAnchor),
+            videoDescription.widthAnchor.constraint(equalTo: infoView.widthAnchor, constant:  -10),
 //            videoDescription.heightAnchor.constraint(equalToConstant: 60)
         ])
+        
+        videoDescription.text = selectedVideo?.description
     }
     
     // MARK: commentView
@@ -382,18 +381,18 @@ class DetailViewController: UIViewController {
     
     
     @objc func tappedEditButton() {
-        guard let content = editCommentContent.text else {
-            // toast 내용을 입력하세요
-            return
+        if let content = editCommentContent.text {
+            // save comment
+            DataManager.shared.createComment(Comment(nickName: "유저 닉네임", content: content, date: Util.util.getDate(), videoId: "비디오 id", userUUId: "유저 id"))
+            
+            // reload tableView
+            commentList.append(Comment(nickName: "유저 닉네임", content: content, date: Util.util.getDate(), videoId: "비디오 id", userUUId: "유저 id"))
+            commentTableView.reloadData()
+            
+            // 완료 Toast
+        } else {
+            // Toast
         }
-        // save comment
-        DataManager.shared.createComment(Comment(nickName: "유저 닉네임", content: content, date: Util.util.getDate(), videoId: "비디오 id", userUUId: "유저 id"))
-        
-        // reload tableView
-        commentList.append(Comment(nickName: "유저 닉네임", content: content, date: Util.util.getDate(), videoId: "비디오 id", userUUId: "유저 id"))
-        commentTableView.reloadData()
-        
-        // 완료 Toast
     }
 }
 
