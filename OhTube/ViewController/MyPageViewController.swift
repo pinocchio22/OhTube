@@ -20,6 +20,7 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var logoutButton: UIButton!
     
     private func customProfileButton() {
+        profileButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         profileButton.backgroundColor = UIColor.lightGray
         profileButton.setTitle("계정 정보 수정", for: .normal)
         profileButton.setTitleColor(UIColor.white, for: .normal)
@@ -36,6 +37,7 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func customLogoutButton() {
+        logoutButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         logoutButton.backgroundColor = UIColor.lightGray
         logoutButton.setTitle("로그아웃", for: .normal)
         logoutButton.setTitleColor(UIColor.white, for: .normal)
