@@ -74,7 +74,7 @@ class MainCollectionViewCell: UICollectionViewCell {
         let stack = UIStackView(arrangedSubviews: [channelNameLabel, videoViewCountLabel, videoLikeCountLabel])
         stack.axis = .horizontal
         stack.spacing = 20
-        stack.alignment = .fill
+        stack.alignment = .leading
         stack.distribution = .fill
         stack.layer.borderWidth = 2.0 // 테두리 두께 설정
         stack.layer.borderColor = UIColor.purple.cgColor // 테두리 색상 설정

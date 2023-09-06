@@ -10,6 +10,8 @@ import UIKit
 final class MainViewController: UIViewController {
     
     
+    var youtubeArray: [Video] = []
+    
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색어를 입력해주세요"
@@ -32,18 +34,37 @@ final class MainViewController: UIViewController {
         naviBarSetting()
         searchBarSetting()
         makeUI()
+        NetworkManager.shared.fetchVideo { result in
+            switch result {
+            case .success(let tubedata):
+                
+                print("데이터 잘 받음")
+                
+                // 데이터(배열)을 받아오고 난 후
+                self.youtubeArray = tubedata
+                dump(self.youtubeArray)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                // 테이블뷰 리로드
+                
+            case .failure(let error):
+                print("데이터 받아오기 에러 ")
+                print(error.localizedDescription)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionView.reloadData()
- 
+        //collectionView.reloadData()
+        
     }
-
+    
     private func naviBarSetting() {
         self.title = "Video Search"
         let appearance = UINavigationBarAppearance()
-
+        
         //appearance.configureWithTransparentBackground()
         appearance.backgroundColor = .white
         appearance.shadowColor = .none
@@ -82,14 +103,16 @@ final class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10 //셀 몇개?
+        return youtubeArray.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.identifier, for: indexPath) as! MainCollectionViewCell
-
+        
+        //cell.channelImage = youtubeArray[indexPath.row].snippet.thumbnails.standard.url
+        cell.channelNameLabel.text = youtubeArray[indexPath.row].channelId
         
         return cell
     }
@@ -98,9 +121,9 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     
     // 셀 간의 양옆 간격을 10포인트로 설정
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 10 // 셀 간의 양옆 간격을 10포인트로 설정
-//    }
+    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    //        return 10 // 셀 간의 양옆 간격을 10포인트로 설정
+    //    }
     
     // 셀 간의 위아래 간격을 10포인트로 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -116,18 +139,16 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension MainViewController: UICollectionViewDelegate {
-   
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+            
         
-        
-        //let selectedData = 데이터모델에서 받은배열변수[indexPath.item]
+        //let selectedData = youtubeArray[indexPath.item]
         
         // 새로운 뷰 컨트롤러를 생성하거나 스토리보드에서 식별자로 가져옴.
         let detailViewController = DetailViewController()
         
-        // 새로운 뷰 컨트롤러에 선택한 데이터를 전달. (선택한 데이터에 맞게 구현)
-        // 디테일페이지컨트롤러변수.디테일페이지컨트롤러의 데이터 전달받을 변수 = selectedData
         
         // UINavigationController를 사용하여 새로운 뷰 컨트롤러로 이동.
         self.navigationController?.pushViewController(detailViewController, animated: true)
