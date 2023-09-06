@@ -13,6 +13,7 @@ final class DataManager {
     private let userListKey = "UserList"
     private let commentListKey = "CommentList"
     private let likedVideoListKey = "LikedVideoList"
+
     typealias UserList = [User]
     typealias CommentList = [Comment]
     typealias LikedVideoList = [Video]
@@ -22,16 +23,20 @@ final class DataManager {
     
     // MARK: User
     func getUserList() -> [User] {
-        if let encodedUserList = self.userDefaults.object(forKey: userListKey) as? Data,
+        if let encodedUserList = self.userDefaults.object(forKey: Key.userList) as? Data,
            let userList = try? JSONDecoder().decode(UserList.self, from: encodedUserList) {
             return userList
         }
         return []
     }
     
+    func saveIslogin() {
+        userDefaults.set(true, forKey: Key.isLogin)
+    }
+    
     private func updateUserDefaults(_ userList: UserList) {
         if let encodedUserList = try? JSONEncoder().encode(userList) {
-            self.userDefaults.set(encodedUserList, forKey: userListKey)
+            self.userDefaults.set(encodedUserList, forKey: Key.userList)
         }
     }
     

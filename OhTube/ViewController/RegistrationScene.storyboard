@@ -35,7 +35,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="6Iy-Dj-NKd"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -55,7 +55,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="vga-IB-5wR"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -75,7 +75,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="Pei-nL-nBk"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -95,9 +95,15 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="mPl-7r-CNI"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="비밀번호가 일치하지 않습니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2M-Fs-cw6">
+                                                <rect key="frame" x="0.0" y="71.666666666666686" width="353" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -161,6 +167,7 @@
                     <connections>
                         <outlet property="backButton" destination="k6a-9p-7jc" id="7bh-y6-8sy"/>
                         <outlet property="checkPassWordTextField" destination="foj-XE-ejz" id="LLY-8h-u0x"/>
+                        <outlet property="checkedPassWordLabel" destination="l2M-Fs-cw6" id="c1g-mH-p4U"/>
                         <outlet property="idTextField" destination="7qh-QQ-aGD" id="z7Z-9t-doA"/>
                         <outlet property="nickNameTextField" destination="wKA-d0-8Ee" id="6Wo-0P-nsJ"/>
                         <outlet property="passWordTextField" destination="S8W-tJ-zgW" id="PHL-fN-fui"/>
@@ -170,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139.69465648854961" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="-505" y="-23"/>
         </scene>
     </scenes>
     <resources>

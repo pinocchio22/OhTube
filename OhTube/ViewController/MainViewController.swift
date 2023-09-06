@@ -4,11 +4,20 @@
 //
 //  Created by t2023-m0056 on 2023/09/04.
 //
+// 해야 할 일
+// 1. 데이터를 컬렉션뷰에서 보여주기
+// 2. 데이터 전달하기
+// 3. 검색 구현
+// 4. 페이지 네이션 구현
+// 5. 카테고리 구현
+
 
 import UIKit
 
 final class MainViewController: UIViewController {
     
+    
+    var youtubeArray: [Video] = []
     
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -32,20 +41,37 @@ final class MainViewController: UIViewController {
         naviBarSetting()
         searchBarSetting()
         makeUI()
+        NetworkManager.shared.fetchVideo { result in
+            switch result {
+            case .success(let tubedata):
+                
+                print("데이터 잘 받음")
+                
+                // 데이터(배열)을 받아오고 난 후
+                self.youtubeArray = tubedata
+                dump(self.youtubeArray)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                // 테이블뷰 리로드
+                
+            case .failure(let error):
+                print("데이터 받아오기 에러 ")
+                print(error.localizedDescription)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
- 
     }
-
+    
     private func naviBarSetting() {
         self.title = "Video Search"
         let appearance = UINavigationBarAppearance()
-
-        //appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .white
+        
+        appearance.backgroundColor = .clear
         appearance.shadowColor = .none
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
@@ -64,7 +90,7 @@ final class MainViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         //셀 등록
-        collectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: MainCollectionViewCell.identifier)
+        collectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: Cell.mainViewIdentifier)
     }
     
     private func makeUI() {
@@ -82,29 +108,30 @@ final class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10 //셀 몇개?
+        return youtubeArray.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.identifier, for: indexPath) as! MainCollectionViewCell
-
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.mainViewIdentifier, for: indexPath) as! MainCollectionViewCell
         
+        let url = URL(string: youtubeArray[indexPath.row].thumbNail)
+        cell.videoThumbnailImage.load(url: url!)
+        cell.channelImage.load(url: url!)
+        cell.videoTitleLabel.text = youtubeArray[indexPath.row].title
+        cell.channelNameLabel.text = youtubeArray[indexPath.row].channelId
+        cell.videoViewCountLabel.text = "\(youtubeArray[indexPath.row].viewCount) 조회"
+        cell.videoDateLabel.text = youtubeArray[indexPath.row].uploadDateString
         return cell
     }
 }
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     
-    // 셀 간의 양옆 간격을 10포인트로 설정
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 10 // 셀 간의 양옆 간격을 10포인트로 설정
-//    }
-    
     // 셀 간의 위아래 간격을 10포인트로 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20 // 셀 간의 위아래 간격을 10포인트로 설정
+        return 20
     }
     
     // 셀 크기 수정
@@ -116,24 +143,18 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension MainViewController: UICollectionViewDelegate {
-   
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+            
         
+        let selectedData = youtubeArray[indexPath.item]
         
-        //let selectedData = 데이터모델에서 받은배열변수[indexPath.item]
-        
-        // 새로운 뷰 컨트롤러를 생성하거나 스토리보드에서 식별자로 가져옴.
         let detailViewController = DetailViewController()
         
-        // 새로운 뷰 컨트롤러에 선택한 데이터를 전달. (선택한 데이터에 맞게 구현)
-        // 디테일페이지컨트롤러변수.디테일페이지컨트롤러의 데이터 전달받을 변수 = selectedData
-        
-        // UINavigationController를 사용하여 새로운 뷰 컨트롤러로 이동.
+        detailViewController.video = selectedData
         self.navigationController?.pushViewController(detailViewController, animated: true)
         
-        // 또는 모달 방식으로 표시 가능
-        // self.present(디테일페이지컨트롤러변수, animated: true, completion: nil)
     }
 }
 
@@ -160,5 +181,20 @@ extension MainViewController: UISearchBarDelegate, UISearchResultsUpdating {
     //검색 결과를 업데이트하는 코드
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         updateSearchResults(for: searchController)
+    }
+}
+
+
+extension UIImageView { 
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
     }
 }
