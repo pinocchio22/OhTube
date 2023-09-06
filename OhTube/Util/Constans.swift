@@ -11,6 +11,7 @@ enum Font {
     static let menuTitleFont = UIFont.boldSystemFont(ofSize: 30)
     static let mainTitleFont = UIFont.boldSystemFont(ofSize: 24)
     static let contentFont = UIFont.systemFont(ofSize: 16)
+    static let descriptionFont = UIFont.systemFont(ofSize: 10)
     static let commentFont = UIFont.systemFont(ofSize: 12)
 }
 

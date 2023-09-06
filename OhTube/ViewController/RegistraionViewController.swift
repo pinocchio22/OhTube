@@ -91,6 +91,10 @@ final class RegistraionViewController: UIViewController {
     }
     
     private func register() {
+        guard let id = idTextField.text,
+        let nickNmae = nickNameTextField.text,
+        let passWord = passWordTextField.text else { return }
+        let user = User(id: id, nickName: nickNmae, passWord: passWord, likedVideoList: [Video]())
         guard let id = self.id,
               let nickNmae = self.nickName,
               let passWord = self.passWord else { return }

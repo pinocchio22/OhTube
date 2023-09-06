@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 //https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2Cstatistics&chart=mostPopular&videoCategoryId=17&key=AIzaSyB4mgZGx7am_zDKQr4I75nerrwG0KFZVeE&maxResults=3&regionCode=KR
 
 
@@ -69,7 +70,7 @@ struct Video: Codable {
     var viewCount: String
     var uploadDate: String
     var favorite: Bool
-    var comment: Comment
+    var comment: [Comment]
     
     
     var uploadDateString: String {

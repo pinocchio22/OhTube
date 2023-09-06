@@ -34,11 +34,12 @@ class CommentTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // set comment in tableView
     func setComment(comment: Comment?) {
         guard let comment = comment else {
             return
         }
-        commentName.text = "\(comment.nickName) / \(comment.date)"
+        commentName.text = "\(comment.userUUId) / \(comment.date)"
         commentContent.text = comment.content
     }
     
