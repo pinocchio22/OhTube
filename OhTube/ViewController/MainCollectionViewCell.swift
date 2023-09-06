@@ -10,7 +10,6 @@ import UIKit
 class MainCollectionViewCell: UICollectionViewCell {
     
     
-    
     var videoThumbnailImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +66,7 @@ class MainCollectionViewCell: UICollectionViewCell {
     lazy var labelCountstackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [videoViewCountLabel, videoDateLabel])
         stack.axis = .horizontal
-        stack.spacing = 5
+        stack.spacing = 1
         stack.alignment = .fill
         stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +76,7 @@ class MainCollectionViewCell: UICollectionViewCell {
     lazy var labelsStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [videoTitleLabel, channelNameLabel,labelCountstackView])
         stack.axis = .vertical
-        stack.spacing = 2
+        stack.spacing = 5
         stack.alignment = .fill
         stack.distribution = .equalSpacing
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -101,7 +100,6 @@ class MainCollectionViewCell: UICollectionViewCell {
         channelImage.contentMode = .scaleAspectFill
         self.channelImage.layer.cornerRadius = self.channelImage.frame.width / 2
         self.channelImage.clipsToBounds = true
-//        print(self.channelImage.frame.width)
     }
     
     func cellSetting() {
@@ -122,7 +120,7 @@ class MainCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             videoThumbnailImage.widthAnchor.constraint(equalToConstant: self.contentView.bounds.width),
-            videoThumbnailImage.heightAnchor.constraint(equalToConstant: 210),
+            videoThumbnailImage.heightAnchor.constraint(equalToConstant: 230),
             videoThumbnailImage.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
             
             
@@ -139,11 +137,11 @@ class MainCollectionViewCell: UICollectionViewCell {
             labelsStackView.bottomAnchor.constraint(equalTo: self.channelImage.bottomAnchor),
             
             
-            videoTitleLabel.heightAnchor.constraint(equalToConstant: 28),
+            videoTitleLabel.heightAnchor.constraint(equalToConstant: 20),
             channelNameLabel.heightAnchor.constraint(equalToConstant: 14),
             labelCountstackView.heightAnchor.constraint(equalToConstant: 14),
             
-            labelCountstackView.trailingAnchor.constraint(equalTo: labelsStackView.trailingAnchor, constant: -100)
+            labelCountstackView.trailingAnchor.constraint(equalTo: labelsStackView.trailingAnchor, constant: -140)
         ])
         
     }

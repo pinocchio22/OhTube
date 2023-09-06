@@ -91,7 +91,7 @@ struct Video: Codable {
             return ""
         }
         let currentDate = Date()
-            
+        
         let dateGap = Calendar.current.dateComponents([.month, .day, .hour], from: isoDate, to: currentDate)
         
         if let month = dateGap.month, let day = dateGap.day, let hour = dateGap.hour {

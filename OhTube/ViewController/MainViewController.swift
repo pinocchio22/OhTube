@@ -19,6 +19,8 @@ final class MainViewController: UIViewController {
     
     var youtubeArray: [Video] = []
     
+    var filteredYoutubeArray: [Video] = []
+    
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색어를 입력해주세요"
@@ -64,7 +66,7 @@ final class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionView.reloadData()
+        //collectionView.reloadData()
     }
     
     private func naviBarSetting() {
@@ -103,6 +105,14 @@ final class MainViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
     }
+    
+    private func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    private func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
 }
 
 extension MainViewController: UICollectionViewDataSource {
@@ -138,7 +148,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
         let collectionViewHeight = collectionView.bounds.height
-        return CGSize(width: collectionViewWidth, height: (collectionViewHeight - 40)/3)
+        return CGSize(width: collectionViewWidth, height: (collectionViewHeight - 260)/2)
     }
 }
 
@@ -161,10 +171,30 @@ extension MainViewController: UICollectionViewDelegate {
 
 
 extension MainViewController: UISearchBarDelegate, UISearchResultsUpdating {
-    
     func updateSearchResults(for searchController: UISearchController) {
         
     }
+    
+    // 유저가 글자를 입력하는 순간마다 호출되는 메서드 (한 글자씩 입력할 때마다 결과가 테이블로 나옴)
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //print(searchText) // 글자를 입력할 때마다 보여줌
+        // 다시 빈 배열로 만들기 ⭐️⭐️⭐️
+        self.youtubeArray = []
+        
+        // 네트워킹 시작
+        NetworkManager.shared.fetchVideo() { result in
+            switch result {
+            case .success(let musicDatas):
+                self.youtubeArray = musicDatas
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     //검색창 클릭 시 키보드 올리기
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
