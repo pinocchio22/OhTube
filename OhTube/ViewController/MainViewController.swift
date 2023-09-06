@@ -162,7 +162,7 @@ extension MainViewController: UICollectionViewDelegate {
         
         let detailViewController = DetailViewController()
         
-        detailViewController.video = selectedData
+        detailViewController.selectedVideo = selectedData
         self.navigationController?.pushViewController(detailViewController, animated: true)
         
     }

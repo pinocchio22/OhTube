@@ -13,7 +13,7 @@ final class DataManager {
     private let userListKey = "UserList"
     private let commentListKey = "CommentList"
     private let likedVideoListKey = "LikedVideoList"
-
+    
     typealias UserList = [User]
     typealias CommentList = [Comment]
     typealias LikedVideoList = [Video]
