@@ -121,7 +121,7 @@ extension MainViewController: UICollectionViewDataSource {
         cell.channelImage.load(url: url!)
         cell.videoTitleLabel.text = youtubeArray[indexPath.row].title
         cell.channelNameLabel.text = youtubeArray[indexPath.row].channelId
-        cell.videoViewCountLabel.text = "\(youtubeArray[indexPath.row].viewCount) 조회"
+        cell.videoViewCountLabel.text = "\(youtubeArray[indexPath.row].formatViewCount) 조회"
         cell.videoDateLabel.text = youtubeArray[indexPath.row].uploadDateString
         return cell
     }

@@ -15,6 +15,7 @@ class DetailViewController: UIViewController {
     var likedVideoList = [Video]()
     var selectedVideo: Video?
 
+
 //    var video: Video? {
 //        didSet {
 //            titleLabel.text = video?.title
@@ -23,7 +24,7 @@ class DetailViewController: UIViewController {
 //            viewCount.text = "\(video!.viewCount) 조회"
 //        }
 //    }
-    
+
     var profileImage: UIImageView = {
         var image = UIImageView()
         image.image = UIImage(systemName: "photo")
