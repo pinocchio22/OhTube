@@ -56,10 +56,10 @@ final class LoginViewController: UIViewController {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.systemPink.cgColor
         button.layer.cornerRadius = 5
-        loginButton.layer.borderColor = UIColor.clear.cgColor
     }
     
     private func configure() {
+        loginButton.layer.borderColor = UIColor.clear.cgColor
         passWordTextField.isSecureTextEntry = true
         passWordTextField.textContentType = .newPassword
     }
@@ -115,6 +115,8 @@ final class LoginViewController: UIViewController {
         if userValidation() == false {
             showToast(message: Message.toast)
         }
+        dataManager.saveIslogin()
+        // 로그아웃 시 UserDefaults.standard.removeObject(forKey: "") 필요.
     }
     
     @IBAction func registrationButtonTapped(_ sender: UIButton) {

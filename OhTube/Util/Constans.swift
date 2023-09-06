@@ -26,4 +26,8 @@ enum Message {
                                 """
 }
 
+enum Key {
+    static let isLogin = "IsLogin"
+    static let userList = "UserList"
+}
 
