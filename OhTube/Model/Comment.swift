@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct Comment {
-    var id: String
+struct Comment: Codable {
     var nickName: String
     var content: String
     var date: String
+    var videoId: String
+    var userUUId: String
 }

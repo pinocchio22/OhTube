@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct Video {
-    var id: UUID
+struct Video: Codable {
+    var id: String
     var title: String
     var thumbNail: String
     var channelId: String
     var viewCount: Int
     var uploadDate: String
     var favorite: Bool
-    var comment: Comment
+    var comment: [Comment]
     
 }
