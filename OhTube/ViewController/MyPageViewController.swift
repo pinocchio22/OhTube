@@ -19,32 +19,46 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
     
-    private func customButton() {
-        profileButton.layer.borderWidth = 1
-        logoutButton.layer.borderWidth = 1
+    private func customProfileButton() {
+        profileButton.backgroundColor = UIColor.lightGray
+        profileButton.setTitle("계정 정보 수정", for: .normal)
+        profileButton.setTitleColor(UIColor.white, for: .normal)
         
-    }
-    
-    private func shadowButton() {
+        profileButton.layer.cornerRadius = 5
+        profileButton.layer.borderWidth = 5
+        profileButton.layer.borderColor = UIColor.lightGray.cgColor
+        
         profileButton.layer.shadowColor = UIColor.black.cgColor
         profileButton.layer.masksToBounds = false
-        profileButton.layer.shadowRadius = 3
-        profileButton.layer.shadowOpacity = 0.4
-        profileButton.layer.shadowOffset = CGSize(width: 0, height: 4)
+        profileButton.layer.shadowRadius = 1
+        profileButton.layer.shadowOpacity = 0.5
+        profileButton.layer.shadowOffset = CGSize.zero
+    }
+    
+    private func customLogoutButton() {
+        logoutButton.backgroundColor = UIColor.lightGray
+        logoutButton.setTitle("로그아웃", for: .normal)
+        logoutButton.setTitleColor(UIColor.white, for: .normal)
         
-        logoutButton.layer.shadowColor = UIColor.blue.cgColor
+        logoutButton.layer.cornerRadius = 5
+        logoutButton.layer.borderWidth = 5
+        logoutButton.layer.borderColor = UIColor.lightGray.cgColor
+        
+        logoutButton.layer.shadowColor = UIColor.black.cgColor
         logoutButton.layer.masksToBounds = false
-        logoutButton.layer.shadowRadius = 3
-        logoutButton.layer.shadowOpacity = 0.4
-        logoutButton.layer.shadowOffset = CGSize(width: 0, height: 4)
+        logoutButton.layer.shadowRadius = 1
+        logoutButton.layer.shadowOpacity = 0.5
+        logoutButton.layer.shadowOffset = CGSize.zero
     }
     
     @IBAction func idEditButtonTapped(_ sender: Any) {
-        
         let storyBoard = UIStoryboard(name: "RegistrationScene", bundle: nil)
-        let moveVC = storyBoard.instantiateViewController(withIdentifier: RegistraionViewController.identifier)
+        let moveVC = storyBoard.instantiateViewController(withIdentifier: RegistraionViewController.identifier) as! RegistraionViewController
         moveVC.modalPresentationStyle = .fullScreen
         moveVC.modalTransitionStyle = .crossDissolve
+        moveVC.reuseTitle = "개인정보수정 페이지"
+        moveVC.resueStartButton = "수정하기"
+    
         self.present(moveVC, animated: true, completion: nil)
     }
     
@@ -61,7 +75,8 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        shadowButton()
+        customProfileButton()
+        customLogoutButton()
         
         tableView.delegate = self
         tableView.dataSource = self
