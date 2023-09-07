@@ -129,7 +129,7 @@ class DetailViewController: UIViewController {
     
     var editCommentContent: UITextField = {
         var tf = UITextField()
-        tf.placeholder = "댓글"
+        tf.placeholder = "댓글 내용을 입력하세요."
         tf.font = Font.commentFont
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
@@ -159,9 +159,7 @@ class DetailViewController: UIViewController {
         
         videoWebView.delegate = self
         
-        // commentList = selectedVido.comment
-//        commentList = DataManager.shared.getCommentList().sorted{ $0.date > $1.date }
-        
+        setDetailKeyboardNotification()
         setUI()
     }
     
@@ -450,5 +448,28 @@ extension DetailViewController: UIWebViewDelegate {
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
         indicator.stopAnimating()
+    }
+}
+
+extension UIViewController {
+    func setDetailKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(showDetailKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideDetailKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func showDetailKeyboard(_ notification: Notification) {
+        if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+               let keyboardRectangle = keyboardFrame.cgRectValue
+                UIView.animate(
+                    withDuration: 0.3
+                    , animations: {
+                        self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
+                    }
+                )
+            }
+    }
+
+    @objc private func hideDetailKeyboard(_ notification: Notification) {
+        self.view.transform = .identity
     }
 }
