@@ -55,8 +55,8 @@ final class MainViewController: UIViewController {
                 
                 print("데이터 잘 받음")
                 self.youtubeArray = tubedata
+
                 dump(self.youtubeArray)
-                
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }

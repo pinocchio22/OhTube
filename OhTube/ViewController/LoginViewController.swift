@@ -19,6 +19,7 @@ final class LoginViewController: UIViewController {
     
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
+    @IBOutlet weak var passWordSecureButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var registrationButton: UIButton!
     
@@ -106,6 +107,16 @@ final class LoginViewController: UIViewController {
         updateForm(button: loginButton)
     }
     
+    @IBAction func passWordSecureButtonTapped(_ sender: UIButton) {
+        if passWordTextField.isSecureTextEntry == true {
+            passWordSecureButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+            passWordTextField.isSecureTextEntry = false
+        } else {
+            passWordSecureButton.setImage(UIImage(systemName: "eye"), for: .normal)
+            passWordTextField.isSecureTextEntry = true
+        }
+    }
+    
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         if userValidation() {
             let moveVC = ViewController()
@@ -115,7 +126,9 @@ final class LoginViewController: UIViewController {
         if userValidation() == false {
             showToast(message: Message.toast)
         }
-        dataManager.saveIslogin()
+        guard let id = self.id else { return }
+        dataManager.saveIslogin(true)
+        dataManager.saveUser(id: id)
         // 로그아웃 시 UserDefaults.standard.removeObject(forKey: "") 필요.
     }
     

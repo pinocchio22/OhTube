@@ -37,11 +37,16 @@ final class RegistraionViewController: UIViewController {
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var nickNameTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
+    @IBOutlet weak var passWordSecureButton: UIButton!
     @IBOutlet weak var checkPassWordTextField: UITextField!
+    @IBOutlet weak var checkPassWordSecureButton: UIButton!
     @IBOutlet weak var checkedPassWordLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     
+    override func loadView() {
+        super.loadView()
+    }
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,11 +101,12 @@ final class RegistraionViewController: UIViewController {
               let passWord = self.passWord else { return }
         let user = User(id: id, nickName: nickNmae, passWord: passWord)
         dataManager.createUser(user)
+        dataManager.saveUser(id: id)
     }
     
     private func updateForm() {
         startButton.backgroundColor = startButtonBackgroundColor
-        if formIsValid { startButton.isEnabled = true }
+        if formIsValid == true { startButton.isEnabled = true }
         if formIsValid == false { startButton.isEnabled = false }
         if passWord?.isEmpty == true && checkedPassWord?.isEmpty == true {
             checkedPassWordLabel.isHidden = true
@@ -140,6 +146,26 @@ final class RegistraionViewController: UIViewController {
         if textField == passWordTextField { self.passWord = passWordTextField.text }
         if textField == checkPassWordTextField { self.checkedPassWord = checkPassWordTextField.text }
         updateForm()
+    }
+    
+    @IBAction func passWordSecureButtonTapped(_ sender: UIButton) {
+        if passWordTextField.isSecureTextEntry == true {
+            passWordSecureButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+            passWordTextField.isSecureTextEntry = false
+        } else {
+            passWordSecureButton.setImage(UIImage(systemName: "eye"), for: .normal)
+            passWordTextField.isSecureTextEntry = true
+        }
+    }
+    
+    @IBAction func checkPassWordSecureButtonTapped(_ sender: UIButton) {
+        if checkPassWordTextField.isSecureTextEntry == true {
+            checkPassWordSecureButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+            checkPassWordTextField.isSecureTextEntry = false
+        } else {
+            checkPassWordSecureButton.setImage(UIImage(systemName: "eye"), for: .normal)
+            checkPassWordTextField.isSecureTextEntry = true
+        }
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {

@@ -9,8 +9,11 @@ import UIKit
 
 
 
-class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MyPageViewController: UIViewController {
     
+    let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+
+    @IBOutlet weak var MyPageCollectionView: UICollectionView!
     @IBOutlet weak var profileImage: UIImageView!
     
     @IBOutlet weak var idLabel: UILabel!
@@ -19,7 +22,10 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
     
+    var reuseYoutubeData = DataManager.shared.getLikedVideoList()
+    
     private func customProfileButton() {
+        profileButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         profileButton.backgroundColor = UIColor.lightGray
         profileButton.setTitle("계정 정보 수정", for: .normal)
         profileButton.setTitleColor(UIColor.white, for: .normal)
@@ -36,6 +42,7 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func customLogoutButton() {
+        logoutButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         logoutButton.backgroundColor = UIColor.lightGray
         logoutButton.setTitle("로그아웃", for: .normal)
         logoutButton.setTitleColor(UIColor.white, for: .normal)
@@ -58,7 +65,6 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
         moveVC.modalTransitionStyle = .crossDissolve
         moveVC.reuseTitle = "개인정보수정 페이지"
         moveVC.resueStartButton = "수정하기"
-    
         self.present(moveVC, animated: true, completion: nil)
     }
     
@@ -69,33 +75,70 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
         moveVC.modalPresentationStyle = .fullScreen
         moveVC.modalTransitionStyle = .crossDissolve
         self.present(moveVC, animated: true, completion: nil)
+        DataManager.shared.saveIslogin(false)
     }
-    
-    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         customProfileButton()
         customLogoutButton()
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        MyPageCollectionView.dataSource = self
+        MyPageCollectionView.delegate = self
+        MyPageCollectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "MainCollectionViewCell")
         
         profileImage.layer.cornerRadius = 50
         profileImage.layer.masksToBounds = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        reuseYoutubeData = DataManager.shared.getLikedVideoList()
+        MyPageCollectionView.reloadData()
+    }
+    
+}
+
+extension MyPageViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        //tableView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: Cell.mainViewIdentifier)
-  
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.mainViewIdentifier, for: indexPath) as! MainCollectionViewCell
+        let url = URL(string: reuseYoutubeData[indexPath.row].thumbNail)
+        
+        cell.channelNameLabel.text = reuseYoutubeData[indexPath.row].channelId
+        cell.videoThumbnailImage.load(url: url!)
+        cell.channelImage.load(url: url!)
+        cell.videoTitleLabel.text = reuseYoutubeData[indexPath.row].title
+        cell.videoViewCountLabel.text = "\(reuseYoutubeData[indexPath.row].formatViewCount) 조회"
+        cell.videoDateLabel.text = reuseYoutubeData[indexPath.row].uploadDateString
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return DataManager.shared.getLikedVideoList().count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withReuseIdentifier: Cell.mainViewIdentifier, for: indexPath) as! MainCollectionViewCell
-//        return cell
-        return UITableViewCell()
+}
+extension MyPageViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let collectionViewWidth = collectionView.bounds.width
+        let collectionViewHeight = collectionView.bounds.height
+        return CGSize(width: collectionViewWidth, height: collectionViewHeight - 90)
+
     }
 
+    func collectionView(_ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+                return 5
+        }
+    
+    func collectionView(_ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+                return 5
+        }
 }
+
+
