@@ -5,21 +5,26 @@
 //  Created by t2023-m0056 on 2023/09/04.
 //
 // 해야 할 일
-// 1. 데이터를 컬렉션뷰에서 보여주기
-// 2. 데이터 전달하기
-// 3. 검색 구현
-// 4. 페이지 네이션 구현
-// 5. 카테고리 구현
+
+// 1. 페이지 네이션 구현
+// 2. 카테고리 구현
 
 
 import UIKit
 
 final class MainViewController: UIViewController {
-    
-    
+  
     var youtubeArray: [Video] = []
+
+    var searchResultArray: [Video] = []
     
-    var filteredYoutubeArray: [Video] = []
+    
+    var isEditMode: Bool {
+        let searchController = navigationItem.searchController
+        let isActive = searchController?.isActive ?? false
+        let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
+        return isActive && isSearchBarHasText
+    }
     
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -27,7 +32,8 @@ final class MainViewController: UIViewController {
         searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         searchController.searchBar.tintColor = .black
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.searchBar.autocapitalizationType = .none
         return searchController
     }()
     
@@ -48,15 +54,12 @@ final class MainViewController: UIViewController {
             case .success(let tubedata):
                 
                 print("데이터 잘 받음")
-                
-                // 데이터(배열)을 받아오고 난 후
                 self.youtubeArray = tubedata
                 dump(self.youtubeArray)
+                
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
-                // 테이블뷰 리로드
-                
             case .failure(let error):
                 print("데이터 받아오기 에러 ")
                 print(error.localizedDescription)
@@ -75,6 +78,7 @@ final class MainViewController: UIViewController {
         
         appearance.backgroundColor = .clear
         appearance.shadowColor = .none
+        self.navigationItem.hidesSearchBarWhenScrolling = false //스크롤 시 사라짐
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
@@ -106,11 +110,11 @@ final class MainViewController: UIViewController {
         ])
     }
     
-    private func searchBarIsEmpty() -> Bool {
+    func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    private func isFiltering() -> Bool {
+    func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
 }
@@ -118,7 +122,7 @@ final class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return youtubeArray.count
+        return isEditMode == true ? searchResultArray.count : youtubeArray.count
     }
     
     
@@ -126,25 +130,33 @@ extension MainViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.mainViewIdentifier, for: indexPath) as! MainCollectionViewCell
         
-        let url = URL(string: youtubeArray[indexPath.row].thumbNail)
-        cell.videoThumbnailImage.load(url: url!)
-        cell.channelImage.load(url: url!)
-        cell.videoTitleLabel.text = youtubeArray[indexPath.row].title
-        cell.channelNameLabel.text = youtubeArray[indexPath.row].channelId
-        cell.videoViewCountLabel.text = "\(youtubeArray[indexPath.row].formatViewCount) 조회"
-        cell.videoDateLabel.text = youtubeArray[indexPath.row].uploadDateString
+        if isFiltering() {
+            let url = URL(string: searchResultArray[indexPath.row].thumbNail)
+            cell.videoThumbnailImage.load(url: url!)
+            cell.channelImage.load(url: url!)
+            cell.videoTitleLabel.text = searchResultArray[indexPath.row].title
+            cell.channelNameLabel.text = searchResultArray[indexPath.row].channelId
+            cell.videoViewCountLabel.text = "\(searchResultArray[indexPath.row].viewCount) 조회"
+            cell.videoDateLabel.text = searchResultArray[indexPath.row].uploadDateString
+        } else {
+            let url = URL(string: youtubeArray[indexPath.row].thumbNail)
+            cell.videoThumbnailImage.load(url: url!)
+            cell.channelImage.load(url: url!)
+            cell.videoTitleLabel.text = youtubeArray[indexPath.row].title
+            cell.channelNameLabel.text = youtubeArray[indexPath.row].channelId
+            cell.videoViewCountLabel.text = "\(youtubeArray[indexPath.row].formatViewCount) 조회"
+            cell.videoDateLabel.text = youtubeArray[indexPath.row].uploadDateString
+        }
         return cell
     }
 }
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     
-    // 셀 간의 위아래 간격을 10포인트로 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 20
     }
     
-    // 셀 크기 수정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
         let collectionViewHeight = collectionView.bounds.height
@@ -171,28 +183,17 @@ extension MainViewController: UICollectionViewDelegate {
 
 
 extension MainViewController: UISearchBarDelegate, UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        
-    }
     
-    // 유저가 글자를 입력하는 순간마다 호출되는 메서드 (한 글자씩 입력할 때마다 결과가 테이블로 나옴)
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //print(searchText) // 글자를 입력할 때마다 보여줌
-        // 다시 빈 배열로 만들기 ⭐️⭐️⭐️
-        self.youtubeArray = []
+
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text?.lowercased() else { return }
         
-        // 네트워킹 시작
-        NetworkManager.shared.fetchVideo() { result in
-            switch result {
-            case .success(let musicDatas):
-                self.youtubeArray = musicDatas
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+        if searchText.isEmpty {// 검색창이 비었으면 다보여줌
+            searchResultArray = youtubeArray
+        } else {// 검색결과값
+            searchResultArray = youtubeArray.filter { $0.title.lowercased().contains(searchText)}
         }
+        self.collectionView.reloadData()
     }
     
     //검색창 클릭 시 키보드 올리기
@@ -207,10 +208,6 @@ extension MainViewController: UISearchBarDelegate, UISearchResultsUpdating {
     // 캔슬버튼 보이게 하기
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
-    }
-    //검색 결과를 업데이트하는 코드
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        updateSearchResults(for: searchController)
     }
 }
 

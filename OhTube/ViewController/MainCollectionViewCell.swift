@@ -122,6 +122,7 @@ class MainCollectionViewCell: UICollectionViewCell {
             videoThumbnailImage.widthAnchor.constraint(equalToConstant: self.contentView.bounds.width),
             videoThumbnailImage.heightAnchor.constraint(equalToConstant: 230),
             videoThumbnailImage.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
+            videoThumbnailImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
             
             
             channelImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5),
@@ -141,7 +142,7 @@ class MainCollectionViewCell: UICollectionViewCell {
             channelNameLabel.heightAnchor.constraint(equalToConstant: 14),
             labelCountstackView.heightAnchor.constraint(equalToConstant: 14),
             
-            labelCountstackView.trailingAnchor.constraint(equalTo: labelsStackView.trailingAnchor, constant: -140)
+            //labelCountstackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -140),
         ])
         
     }
