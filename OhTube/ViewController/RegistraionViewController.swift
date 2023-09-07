@@ -48,7 +48,7 @@ final class RegistraionViewController: UIViewController {
         return UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 55))
     }()
     
-    lazy var saveButton: UIButton = {
+    lazy var inputCompletionButton: UIButton = {
         let button = UIButton()
         button.setTitle("입력 완료", for: .normal)
         button.backgroundColor = .systemPink
@@ -61,31 +61,12 @@ final class RegistraionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        titleLabel.text = reuseTitle
-        startButton.setTitle(resueStartButton, for: .normal)
         setConstraints()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(showKeyboard(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        setKeyboardNotification()
     }
     
     deinit {
         print("RegistraionViewController 사라집니다~")
-    }
-    
-    @objc func showKeyboard(_ notification: Notification) {
-        if self.view.frame.origin.y == 0.0 {
-                self.view.frame.origin.y -= 45
-        }
-    }
-
-    @objc private func hideKeyboard(_ notification: Notification) {
-        if self.view.frame.origin.y != 0.0 {
-                self.view.frame.origin.y += 45
-        }
     }
     
     // MARK: - Configure
@@ -118,21 +99,28 @@ final class RegistraionViewController: UIViewController {
     }
     
     private func configure() {
+        titleLabel.text = reuseTitle
+        startButton.setTitle(resueStartButton, for: .normal)
         startButton.layer.borderColor = UIColor.clear.cgColor
         passWordTextField.isSecureTextEntry = true
-        passWordTextField.textContentType = .newPassword
+        passWordTextField.textContentType = .oneTimeCode
         checkPassWordTextField.isSecureTextEntry = true
+        checkPassWordTextField.textContentType = .oneTimeCode
         checkedPassWordLabel.isHidden = true
     }
     
     private func setConstraints() {
-        self.accessoryView.addSubview(saveButton)
-        guard let superView = saveButton.superview else { return }
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        saveButton.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 15).isActive = true
-        saveButton.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -15).isActive = true
-        saveButton.bottomAnchor.constraint(equalTo: superView.bottomAnchor, constant: -5).isActive = true
-        saveButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        inputCompletionButtonConstraints(inputCompletionButton)
+    }
+    
+    private func inputCompletionButtonConstraints(_ button: UIButton) {
+        self.accessoryView.addSubview(button)
+        guard let superView = button.superview else { return }
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 15).isActive = true
+        button.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -15).isActive = true
+        button.bottomAnchor.constraint(equalTo: superView.bottomAnchor, constant: -5).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 45).isActive = true
     }
     
     private func register() {
@@ -252,5 +240,29 @@ extension RegistraionViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 0
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+extension UIViewController {
+    func setKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(showKeyboard(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func showKeyboard(_ notification: Notification) {
+        if self.view.frame.origin.y == 0.0 {
+                self.view.frame.origin.y -= 45
+        }
+    }
+
+    @objc private func hideKeyboard(_ notification: Notification) {
+        if self.view.frame.origin.y != 0.0 {
+                self.view.frame.origin.y += 45
+        }
     }
 }

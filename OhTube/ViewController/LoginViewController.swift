@@ -27,6 +27,7 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        setKeyboardNotification()
     }
     
     deinit {
@@ -61,8 +62,9 @@ final class LoginViewController: UIViewController {
     
     private func configure() {
         loginButton.layer.borderColor = UIColor.clear.cgColor
+        idTextField.textContentType = .name
         passWordTextField.isSecureTextEntry = true
-        passWordTextField.textContentType = .newPassword
+        passWordTextField.textContentType = .oneTimeCode
     }
     
     private func updateForm(button: UIButton) {
@@ -89,7 +91,7 @@ final class LoginViewController: UIViewController {
         toastView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             toastView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            toastView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50),
+            toastView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -30),
             toastView.widthAnchor.constraint(equalToConstant: self.view.frame.size.width / 2),
             toastView.heightAnchor.constraint(equalToConstant: self.view.frame.height / 10)
         ])
@@ -152,5 +154,11 @@ extension LoginViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 0
+        textField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
