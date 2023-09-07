@@ -12,5 +12,5 @@ struct Comment: Codable {
     var content: String
     var date: String
     var videoId: String
-    var userUUId: String
+    var userId: String
 }

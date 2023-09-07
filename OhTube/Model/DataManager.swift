@@ -126,11 +126,7 @@ final class DataManager {
     
     func deleteLikedVideo(_ video: Video) {
         var likedVideoList = getLikedVideoList()
-        for i in 0...likedVideoList.count-1 {
-            if likedVideoList[i].id == video.id {
-                likedVideoList.remove(at: i)
-            }
-        }
+        likedVideoList.removeAll{ $0.id == video.id }
         updateUserDefaults(likedVideoList)
     }
     
