@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
-        if UserDefaults.standard.bool(forKey: "IsLogin") {
+        if DataManager.shared.isLoginState() {
             let rootVC = ViewController()
             self.changeRootViewController(rootVC, animation: false)
         }

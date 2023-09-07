@@ -47,6 +47,10 @@ final class DataManager {
         return nil
     }
     
+    func isLoginState() -> Bool {
+        return userDefaults.bool(forKey: isLoginKey)
+    }
+    
     func saveUser(id: String) {
         let user = searchUser(id)
         updateUserDefaults(user)
@@ -59,7 +63,7 @@ final class DataManager {
     
     // MARK: - UserList
     func getUserList() -> [User] {
-        if let encodedUserList = self.userDefaults.object(forKey: Key.userList) as? Data,
+        if let encodedUserList = self.userDefaults.object(forKey: userListKey) as? Data,
            let userList = try? JSONDecoder().decode(UserList.self, from: encodedUserList) {
             return userList
         }

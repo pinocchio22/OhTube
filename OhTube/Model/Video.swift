@@ -23,6 +23,7 @@ struct Item: Codable {
     let statistics: Statistics
 }
 
+
 // MARK: - Snippet
 struct Snippet: Codable {
     let publishedAt: String
@@ -78,11 +79,13 @@ struct Video: Codable {
         if viewCount >= 10000 {
             let roundedValue = round(Double(viewCount) / 10000)
             formattedViewCount = String(format: "%.0f만", roundedValue)
+            return formattedViewCount
         } else if viewCount >= 1000 {
             let roundedValue = round(Double(viewCount) / 1000)
             formattedViewCount = String(format: "%.0f천", roundedValue)
+            return formattedViewCount
         }
-        return formattedViewCount
+        return ""
     }
     
     
@@ -91,7 +94,7 @@ struct Video: Codable {
             return ""
         }
         let currentDate = Date()
-            
+        
         let dateGap = Calendar.current.dateComponents([.month, .day, .hour], from: isoDate, to: currentDate)
         
         if let month = dateGap.month, let day = dateGap.day, let hour = dateGap.hour {
@@ -106,6 +109,7 @@ struct Video: Codable {
         return "방금 전"
     }
 }
+
 //  ▿ OhTube.Video
 //      - id: "LmaXdOKu5Eg"
 //      - title: "모두가 놀란 그녀의 행동"
@@ -121,3 +125,4 @@ struct Video: Codable {
 //          - nickName: "2"
 //          - content: "3"
 //          - date: "4"
+

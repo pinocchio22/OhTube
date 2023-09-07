@@ -27,6 +27,7 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        setKeyboardNotification()
     }
     
     deinit {
@@ -61,8 +62,9 @@ final class LoginViewController: UIViewController {
     
     private func configure() {
         loginButton.layer.borderColor = UIColor.clear.cgColor
+        idTextField.textContentType = .name
         passWordTextField.isSecureTextEntry = true
-        passWordTextField.textContentType = .newPassword
+        passWordTextField.textContentType = .oneTimeCode
     }
     
     private func updateForm(button: UIButton) {
@@ -89,7 +91,7 @@ final class LoginViewController: UIViewController {
         toastView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             toastView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            toastView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50),
+            toastView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -30),
             toastView.widthAnchor.constraint(equalToConstant: self.view.frame.size.width / 2),
             toastView.heightAnchor.constraint(equalToConstant: self.view.frame.height / 10)
         ])
@@ -129,7 +131,6 @@ final class LoginViewController: UIViewController {
         guard let id = self.id else { return }
         dataManager.saveIslogin(true)
         dataManager.saveUser(id: id)
-        // 로그아웃 시 UserDefaults.standard.removeObject(forKey: "") 필요.
     }
     
     @IBAction func registrationButtonTapped(_ sender: UIButton) {
@@ -137,6 +138,11 @@ final class LoginViewController: UIViewController {
         let moveVC = storyboard.instantiateViewController(withIdentifier: RegistraionViewController.identifier)
         moveVC.modalPresentationStyle = .fullScreen
         present(moveVC, animated: true)
+    }
+    
+    // MARK: - Touch
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
 
@@ -148,5 +154,11 @@ extension LoginViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 0
+        textField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
