@@ -11,7 +11,7 @@ final class DataManager {
     static let shared = DataManager()
     private let userDefaults = UserDefaults.standard
     private let userKey = "User"
-    private let isLogin = "IsLogin"
+    private let isLoginKey = "IsLogin"
     private let userListKey = "UserList"
     private let commentListKey = "CommentList"
     private let likedVideoListKey = "LikedVideoList"
@@ -52,6 +52,10 @@ final class DataManager {
         updateUserDefaults(user)
     }
     
+    func saveIslogin(_ state: Bool) {
+        userDefaults.set(state, forKey: isLoginKey)
+    }
+    
     
     // MARK: - UserList
     func getUserList() -> [User] {
@@ -60,10 +64,6 @@ final class DataManager {
             return userList
         }
         return []
-    }
-    
-    func saveIslogin() {
-        userDefaults.set(true, forKey: isLogin)
     }
     
     private func updateUserDefaults(_ userList: UserList) {

@@ -69,15 +69,34 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S8W-tJ-zgW">
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="-45" translatesAutoresizingMaskIntoConstraints="NO" id="D21-7a-7wB">
                                                 <rect key="frame" x="0.0" y="26.666666666666686" width="353" height="45"/>
-                                                <color key="tintColor" systemColor="labelColor"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S8W-tJ-zgW">
+                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="45"/>
+                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="45" id="Pei-nL-nBk"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shD-7m-8Gd">
+                                                        <rect key="frame" x="308" y="0.0" width="45" height="45"/>
+                                                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" image="eye" catalog="system"/>
+                                                        <connections>
+                                                            <action selector="passWordSecureButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="lKt-hX-a7K"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="45" id="Pei-nL-nBk"/>
+                                                    <constraint firstItem="shD-7m-8Gd" firstAttribute="bottom" secondItem="S8W-tJ-zgW" secondAttribute="bottom" id="CiF-bA-Uxg"/>
+                                                    <constraint firstItem="shD-7m-8Gd" firstAttribute="top" secondItem="S8W-tJ-zgW" secondAttribute="top" id="kAE-Wd-h1h"/>
+                                                    <constraint firstItem="S8W-tJ-zgW" firstAttribute="trailing" secondItem="shD-7m-8Gd" secondAttribute="trailing" id="qTh-X5-7cW"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7lm-SD-kKh">
@@ -89,15 +108,34 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호를 재입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="foj-XE-ejz">
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="-45" translatesAutoresizingMaskIntoConstraints="NO" id="gCS-SS-gkG">
                                                 <rect key="frame" x="0.0" y="26.666666666666686" width="353" height="45"/>
-                                                <color key="tintColor" systemColor="labelColor"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호를 재입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="foj-XE-ejz">
+                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="45"/>
+                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="45" id="mPl-7r-CNI"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zMu-mV-8Sm">
+                                                        <rect key="frame" x="308" y="0.0" width="45" height="45"/>
+                                                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" image="eye" catalog="system"/>
+                                                        <connections>
+                                                            <action selector="checkPassWordSecureButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="by5-aB-3kk"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="45" id="mPl-7r-CNI"/>
+                                                    <constraint firstItem="zMu-mV-8Sm" firstAttribute="bottom" secondItem="foj-XE-ejz" secondAttribute="bottom" id="3uv-7m-8Lm"/>
+                                                    <constraint firstItem="foj-XE-ejz" firstAttribute="trailing" secondItem="zMu-mV-8Sm" secondAttribute="trailing" id="SUV-8N-J4D"/>
+                                                    <constraint firstItem="zMu-mV-8Sm" firstAttribute="top" secondItem="foj-XE-ejz" secondAttribute="top" id="mbR-Uh-L6a"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
+                                            </stackView>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="비밀번호가 일치하지 않습니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2M-Fs-cw6">
                                                 <rect key="frame" x="0.0" y="71.666666666666686" width="353" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -166,10 +204,12 @@
                     </view>
                     <connections>
                         <outlet property="backButton" destination="k6a-9p-7jc" id="7bh-y6-8sy"/>
+                        <outlet property="checkPassWordSecureButton" destination="zMu-mV-8Sm" id="5do-gl-eRW"/>
                         <outlet property="checkPassWordTextField" destination="foj-XE-ejz" id="LLY-8h-u0x"/>
                         <outlet property="checkedPassWordLabel" destination="l2M-Fs-cw6" id="c1g-mH-p4U"/>
                         <outlet property="idTextField" destination="7qh-QQ-aGD" id="z7Z-9t-doA"/>
                         <outlet property="nickNameTextField" destination="wKA-d0-8Ee" id="6Wo-0P-nsJ"/>
+                        <outlet property="passWordSecureButton" destination="shD-7m-8Gd" id="NAp-Qb-UsW"/>
                         <outlet property="passWordTextField" destination="S8W-tJ-zgW" id="PHL-fN-fui"/>
                         <outlet property="startButton" destination="23i-pn-yHM" id="Vpa-cI-4H1"/>
                         <outlet property="titleLabel" destination="WrN-Jf-Woy" id="1mq-Jm-dco"/>
@@ -181,6 +221,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="eye" catalog="system" width="128" height="79"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
