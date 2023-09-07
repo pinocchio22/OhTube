@@ -44,15 +44,25 @@ final class RegistraionViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     
-    override func loadView() {
-        super.loadView()
-    }
+    lazy var accessoryView: UIView = {
+        return UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 55))
+    }()
+    
+    lazy var inputCompletionButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("입력 완료", for: .normal)
+        button.backgroundColor = .systemPink
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        titleLabel.text = reuseTitle
-        startButton.setTitle(resueStartButton, for: .normal)
+        setConstraints()
+        setKeyboardNotification()
     }
     
     deinit {
@@ -78,6 +88,7 @@ final class RegistraionViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
         textField.spellCheckingType = .no
+        textField.inputAccessoryView = accessoryView
         textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
@@ -88,11 +99,28 @@ final class RegistraionViewController: UIViewController {
     }
     
     private func configure() {
+        titleLabel.text = reuseTitle
+        startButton.setTitle(resueStartButton, for: .normal)
         startButton.layer.borderColor = UIColor.clear.cgColor
         passWordTextField.isSecureTextEntry = true
-        passWordTextField.textContentType = .newPassword
+        passWordTextField.textContentType = .oneTimeCode
         checkPassWordTextField.isSecureTextEntry = true
+        checkPassWordTextField.textContentType = .oneTimeCode
         checkedPassWordLabel.isHidden = true
+    }
+    
+    private func setConstraints() {
+        inputCompletionButtonConstraints(inputCompletionButton)
+    }
+    
+    private func inputCompletionButtonConstraints(_ button: UIButton) {
+        self.accessoryView.addSubview(button)
+        guard let superView = button.superview else { return }
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 15).isActive = true
+        button.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -15).isActive = true
+        button.bottomAnchor.constraint(equalTo: superView.bottomAnchor, constant: -5).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 45).isActive = true
     }
     
     private func register() {
@@ -148,6 +176,25 @@ final class RegistraionViewController: UIViewController {
         updateForm()
     }
     
+    @objc func saveButtonTapped(_ sender: UIButton) {
+        if idTextField.isFirstResponder == true {
+            nickNameTextField.becomeFirstResponder()
+            return
+        }
+        if nickNameTextField.isFirstResponder == true {
+            passWordTextField.becomeFirstResponder()
+            return
+        }
+        if passWordTextField.isFirstResponder == true {
+            checkPassWordTextField.becomeFirstResponder()
+            return
+        }
+        if checkPassWordTextField.isFirstResponder == true {
+            checkPassWordTextField.resignFirstResponder()
+            return
+        }
+    }
+    
     @IBAction func passWordSecureButtonTapped(_ sender: UIButton) {
         if passWordTextField.isSecureTextEntry == true {
             passWordSecureButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
@@ -178,6 +225,11 @@ final class RegistraionViewController: UIViewController {
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
         sceneDelegate.changeRootViewController(moveVC, animation: true)
     }
+    
+    // MARK: - Touch
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 // MARK: - UITextField Delegate
@@ -188,5 +240,29 @@ extension RegistraionViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 0
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+extension UIViewController {
+    func setKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(showKeyboard(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func showKeyboard(_ notification: Notification) {
+        if self.view.frame.origin.y == 0.0 {
+                self.view.frame.origin.y -= 45
+        }
+    }
+
+    @objc private func hideKeyboard(_ notification: Notification) {
+        if self.view.frame.origin.y != 0.0 {
+                self.view.frame.origin.y += 45
+        }
     }
 }
