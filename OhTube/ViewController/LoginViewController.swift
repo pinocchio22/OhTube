@@ -129,7 +129,6 @@ final class LoginViewController: UIViewController {
         guard let id = self.id else { return }
         dataManager.saveIslogin(true)
         dataManager.saveUser(id: id)
-        // 로그아웃 시 UserDefaults.standard.removeObject(forKey: "") 필요.
     }
     
     @IBAction func registrationButtonTapped(_ sender: UIButton) {
@@ -137,6 +136,11 @@ final class LoginViewController: UIViewController {
         let moveVC = storyboard.instantiateViewController(withIdentifier: RegistraionViewController.identifier)
         moveVC.modalPresentationStyle = .fullScreen
         present(moveVC, animated: true)
+    }
+    
+    // MARK: - Touch
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
 
