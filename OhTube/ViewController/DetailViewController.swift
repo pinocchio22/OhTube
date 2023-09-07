@@ -10,10 +10,10 @@ import UIKit
 class DetailViewController: UIViewController {
     
     // MARK: variable
-    var commentList = [Comment]()
-    
+    var commentList = DataManager.shared.getCommentList().sorted{ $0.date > $1.date }
     var likedVideoList = [Video]()
     var selectedVideo: Video?
+    var currentUser = DataManager.shared.getUser()
 
 //    var video: Video? {
 //        didSet {
@@ -44,6 +44,16 @@ class DetailViewController: UIViewController {
     var videoWebView: UIWebView = {
         var view = UIWebView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var indicator: UIActivityIndicatorView = {
+        var view = UIActivityIndicatorView()
+        view.center = self.view.center
+        view.color = .red
+        view.style = UIActivityIndicatorView.Style.large
+        view.hidesWhenStopped = true
+        view.startAnimating()
         return view
     }()
     
@@ -147,10 +157,10 @@ class DetailViewController: UIViewController {
         commentTableView.dataSource = self
         commentTableView.delegate = self
         
-        // load userDate
+        videoWebView.delegate = self
         
         // commentList = selectedVido.comment
-        commentList = DataManager.shared.getCommentList().sorted{ $0.date > $1.date }
+//        commentList = DataManager.shared.getCommentList().sorted{ $0.date > $1.date }
         
         setUI()
     }
@@ -170,7 +180,7 @@ class DetailViewController: UIViewController {
         view.addSubview(profileImage)
         NSLayoutConstraint.activate([
             profileImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            profileImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            profileImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             profileImage.widthAnchor.constraint(equalToConstant: 60),
             profileImage.heightAnchor.constraint(equalToConstant: 60)
         ])
@@ -188,17 +198,17 @@ class DetailViewController: UIViewController {
         view.addSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor, constant: 10),
-            titleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             titleLabel.heightAnchor.constraint(equalToConstant: 60)
         ])
-        titleLabel.backgroundColor = .systemGray4
         
         titleLabel.text = selectedVideo?.channelId
     }
     
     func setVideoUView() {
         view.addSubview(videoWebView)
+        view.addSubview(indicator)
         
         NSLayoutConstraint.activate([
             videoWebView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
@@ -258,7 +268,7 @@ class DetailViewController: UIViewController {
             viewCount.widthAnchor.constraint(equalToConstant: 50)
         ])
         
-        viewCount.text = selectedVideo?.viewCount
+        viewCount.text = selectedVideo?.formatViewCount
     }
     
     func setUploadDate() {
@@ -335,7 +345,7 @@ class DetailViewController: UIViewController {
             editCommentName.widthAnchor.constraint(equalToConstant: 100)
         ])
         
-//        editCommentName.text = "유저 닉네임"
+        editCommentName.text = currentUser?.nickName
         
     }
     
@@ -407,13 +417,13 @@ class DetailViewController: UIViewController {
                 showToast(message: "내용을 입력하세요.")
             } else {
                 // save comment
-                DataManager.shared.createComment(Comment(nickName: "유저 닉네임", content: content, date: Util.util.getDate(), videoId: "비디오 id", userUUId: "유저 id"))
+                DataManager.shared.createComment(Comment(nickName: currentUser!.nickName, content: content, date: Util.util.getDate(), videoId: selectedVideo!.id, userId: currentUser!.id))
 
                 // 완료 Toast
                 showToast(message: "댓글 완료!")
                 
                 // reload tableView
-                commentList.insert(Comment(nickName: "유저 닉네임", content: content, date: Util.util.getDate(), videoId: "비디오 id", userUUId: "유저 id"), at: 0)
+                commentList.insert(Comment(nickName: currentUser!.nickName, content: content, date: Util.util.getDate(), videoId: selectedVideo!.id, userId: currentUser!.id), at: 0)
                 commentTableView.reloadData()
             }
         }
@@ -430,5 +440,15 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
         cell.setComment(comment: commentList[indexPath.row])
         return cell
+    }
+}
+
+extension DetailViewController: UIWebViewDelegate {
+    func webViewDidStartLoad(_ webView: UIWebView) {
+        indicator.startAnimating()
+    }
+
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        indicator.stopAnimating()
     }
 }
