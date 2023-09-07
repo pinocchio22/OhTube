@@ -49,8 +49,8 @@ public enum YouTubeAPI {
     static let requestUrl = "https://youtube.googleapis.com/youtube/v3/videos?"
     static let reQuestInfo = "part=snippet%2Cstatistics"
     static let chart = "chart=mostPopular"
-    static let apiKey = "key=AIzaSyB4mgZGx7am_zDKQr4I75nerrwG0KFZVeE"
-    static let maxResults = "maxResults=40"
+    static let apiKey = "key=AIzaSyBeu_eK6eaWUr6yzpu_Ir7xozpS02rqHAw"
+    static let maxResults = "maxResults=5"
     static let regionCode = "regionCode=KR"
 }
 
