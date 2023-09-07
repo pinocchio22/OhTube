@@ -15,7 +15,6 @@ class DetailViewController: UIViewController {
     var likedVideoList = [Video]()
     var selectedVideo: Video?
 
-
 //    var video: Video? {
 //        didSet {
 //            titleLabel.text = video?.title
@@ -151,7 +150,7 @@ class DetailViewController: UIViewController {
         // load userDate
         
         // commentList = selectedVido.comment
-        commentList = DataManager.shared.getCommentList()
+        commentList = DataManager.shared.getCommentList().sorted{ $0.date > $1.date }
         
         setUI()
     }
@@ -293,6 +292,7 @@ class DetailViewController: UIViewController {
         likeButton.layer.borderWidth = 1
         likeButton.layer.borderColor = UIColor.black.cgColor
         
+        likeButton.setImage(DataManager.shared.getLikedVideoList().filter{ $0.id == selectedVideo?.id }.isEmpty ? UIImage(systemName: "bookmark") : UIImage(systemName: "bookmark.fill"), for: .normal)
         likeButton.addTarget(self, action: #selector(tappedLikeButton), for: .touchUpInside)
     }
     
@@ -371,27 +371,51 @@ class DetailViewController: UIViewController {
         ])
     }
     
+    func showToast(message : String) {
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        self.view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50),
+            toastView.widthAnchor.constraint(equalToConstant: self.view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: self.view.frame.height / 10)
+        ])
+        UIView.animate(withDuration: 2.5, delay: 0.2) {
+            toastView.alpha = 0
+        } completion: { _ in
+            toastView.removeFromSuperview()
+        }
+    }
+    
     // MARK: @objc
     @objc func tappedLikeButton() {
-        selectedVideo?.favorite = !selectedVideo!.favorite
-        likeButton.setImage(selectedVideo!.favorite ? UIImage(systemName: "bookmark.fill") : UIImage(systemName: "bookmark"), for: .normal)
+        let tempSelecetedVideo = !selectedVideo!.favorite
+        selectedVideo?.favorite = tempSelecetedVideo
         // save video
         DataManager.shared.tappedLikedButton(selectedVideo!)
+        likeButton.setImage(DataManager.shared.getLikedVideoList().filter{ $0.id == selectedVideo?.id }.isEmpty ? UIImage(systemName: "bookmark") : UIImage(systemName: "bookmark.fill"), for: .normal)
     }
     
     
     @objc func tappedEditButton() {
         if let content = editCommentContent.text {
-            // save comment
-            DataManager.shared.createComment(Comment(nickName: "유저 닉네임", content: content, date: Util.util.getDate(), videoId: "비디오 id", userUUId: "유저 id"))
-            
-            // reload tableView
-            commentList.append(Comment(nickName: "유저 닉네임", content: content, date: Util.util.getDate(), videoId: "비디오 id", userUUId: "유저 id"))
-            commentTableView.reloadData()
-            
-            // 완료 Toast
-        } else {
-            // Toast
+            if content == "" {
+                // Toast
+                showToast(message: "내용을 입력하세요.")
+            } else {
+                // save comment
+                DataManager.shared.createComment(Comment(nickName: "유저 닉네임", content: content, date: Util.util.getDate(), videoId: "비디오 id", userUUId: "유저 id"))
+
+                // 완료 Toast
+                showToast(message: "댓글 완료!")
+                
+                // reload tableView
+                commentList.insert(Comment(nickName: "유저 닉네임", content: content, date: Util.util.getDate(), videoId: "비디오 id", userUUId: "유저 id"), at: 0)
+                commentTableView.reloadData()
+            }
         }
     }
 }
