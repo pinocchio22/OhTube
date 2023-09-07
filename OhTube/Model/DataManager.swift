@@ -131,13 +131,11 @@ final class DataManager {
     }
     
     func tappedLikedButton(_ video: Video) {
-        var likedVideoList = getLikedVideoList()
-        likedVideoList.forEach{ item in
-            if item.id == video.id {
-                deleteLikedVideo(video)
-                return
-            }
+        let likedVideoList = getLikedVideoList()
+        if likedVideoList.filter({ $0.id == video.id }).isEmpty {
+            createLikedVideo(video)
+        } else {
+            deleteLikedVideo(video)
         }
-        createLikedVideo(video)
     }
 }
