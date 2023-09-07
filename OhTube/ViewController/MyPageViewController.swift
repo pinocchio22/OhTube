@@ -60,7 +60,6 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
         moveVC.modalTransitionStyle = .crossDissolve
         moveVC.reuseTitle = "개인정보수정 페이지"
         moveVC.resueStartButton = "수정하기"
-    
         self.present(moveVC, animated: true, completion: nil)
     }
     

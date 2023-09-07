@@ -96,11 +96,12 @@ final class RegistraionViewController: UIViewController {
               let passWord = self.passWord else { return }
         let user = User(id: id, nickName: nickNmae, passWord: passWord)
         dataManager.createUser(user)
+        dataManager.saveUser(id: id)
     }
     
     private func updateForm() {
         startButton.backgroundColor = startButtonBackgroundColor
-        if formIsValid { startButton.isEnabled = true }
+        if formIsValid == true { startButton.isEnabled = true }
         if formIsValid == false { startButton.isEnabled = false }
         if passWord?.isEmpty == true && checkedPassWord?.isEmpty == true {
             checkedPassWordLabel.isHidden = true

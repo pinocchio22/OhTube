@@ -32,7 +32,6 @@ final class NetworkManager {
     // 네트워킹 요청하는 함수
     func fetchVideo(completion: @escaping NetworkCompletion) {
         let urlString = "\(YouTubeAPI.requestUrl)\(YouTubeAPI.reQuestInfo)&\(YouTubeAPI.chart)&\(YouTubeAPI.apiKey)&\(YouTubeAPI.maxResults)&\(YouTubeApiVideoCategoryId.sport)&\(YouTubeAPI.regionCode)"
-        print(urlString)
         
         
         performRequest(with: urlString) { result in
@@ -74,8 +73,6 @@ final class NetworkManager {
     // 받아본 데이터 분석하는 함수 (동기적 실행)
     private func parseJSON(_ data: Data) -> [Video]? {
         //var youtubeArray: [Video] = []
-        print(#function)
-        print(data)
         // 성공
         do {
             let decoder = JSONDecoder()

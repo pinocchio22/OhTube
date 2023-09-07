@@ -115,7 +115,9 @@ final class LoginViewController: UIViewController {
         if userValidation() == false {
             showToast(message: Message.toast)
         }
+        guard let id = self.id else { return }
         dataManager.saveIslogin()
+        dataManager.saveUser(id: id)
         // 로그아웃 시 UserDefaults.standard.removeObject(forKey: "") 필요.
     }
     
