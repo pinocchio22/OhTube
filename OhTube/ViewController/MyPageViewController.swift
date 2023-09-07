@@ -9,8 +9,9 @@ import UIKit
 
 
 
-class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+class MyPageViewController: UIViewController {
+
+    @IBOutlet weak var MyPageCollectionView: UICollectionView!
     @IBOutlet weak var profileImage: UIImageView!
     
     @IBOutlet weak var idLabel: UILabel!
@@ -18,6 +19,8 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
+    
+    var testData = DataManager.shared.getLikedVideoList()
     
     private func customProfileButton() {
         profileButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
@@ -72,31 +75,35 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.present(moveVC, animated: true, completion: nil)
     }
     
-    @IBOutlet weak var tableView: UITableView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         customProfileButton()
         customLogoutButton()
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        MyPageCollectionView.dataSource = self
+        MyPageCollectionView.delegate = self
+        MyPageCollectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "MainCollectionViewCell")
         
         profileImage.layer.cornerRadius = 50
         profileImage.layer.masksToBounds = true
-        
-        //tableView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: Cell.mainViewIdentifier)
-  
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withReuseIdentifier: Cell.mainViewIdentifier, for: indexPath) as! MainCollectionViewCell
-//        return cell
-        return UITableViewCell()
-    }
+}
 
+extension MyPageViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.mainViewIdentifier, for: indexPath) as! MainCollectionViewCell
+//        cell.channelNameLabel.text = testData[indexPath.row].channelId
+//        cell.videoThumbnailImage.load(url: url!)
+//        cell.channelImage.load(url: url!)
+//        cell.videoTitleLabel.text = testData[indexpath.row].title
+//        cell.videoViewCountLabel.text = "\(testData[indexpath.row].formatViewCount) 조회"
+//        cell.videoDateLabel.text = testData[indexpath.row].uploadDateString
+        return cell
+    }
+    
 }
