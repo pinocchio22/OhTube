@@ -50,12 +50,13 @@ public enum YouTubeAPI {
 }
 
 public enum YouTubeApiVideoCategoryId {
-    static let sport = "videoCategoryId=17"
-    static let filmAndAnimation = "videoCategoryId=1"
-    static let music = "videoCategoryId=" //"videoCategoryId=10"
-    static let comedy = "videoCategoryId=23"
-    static let entertainment = "videoCategoryId=24"
-    static let gaming = "videoCategoryId=20"
+    static let sport = "&videoCategoryId=17"
+    static let filmAndAnimation = "&videoCategoryId=1"
+    static let music = "&videoCategoryId=10"
+    static let comedy = "&videoCategoryId=23"
+    static let entertainment = "&videoCategoryId=24"
+    static let gaming = "&videoCategoryId=20"
+    static let all = ""
 }
 
 public enum searchYouTubeAPI {
@@ -69,6 +70,7 @@ public enum searchYouTubeAPI {
 
 public struct Cell {
     static let mainViewIdentifier: String = "MainCollectionViewCell"
+    static let mainViewCategoryIdentifier: String = "MainViewCategoryCollectionViewCell"
 }
 
 //일반 URL
@@ -85,17 +87,3 @@ public struct Cell {
 //&
 //videoCategoryId=17
 
-
-// 검색 URL
-//https://youtube.googleapis.com/youtube/v3/search?
-//part=snippet
-//&
-//key=AIzaSyB4mgZGx7am_zDKQr4I75nerrwG0KFZVeE
-//&
-//maxResults=10
-//&
-//regionCode=KR
-//&
-//q=%22BTS%22
-//&
-//order=viewCount

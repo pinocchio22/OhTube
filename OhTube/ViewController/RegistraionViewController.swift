@@ -130,6 +130,7 @@ final class RegistraionViewController: UIViewController {
         let user = User(id: id, nickName: nickNmae, passWord: passWord)
         dataManager.createUser(user)
         dataManager.saveUser(id: id)
+        dataManager.saveIslogin(true)
     }
     
     private func updateForm() {
