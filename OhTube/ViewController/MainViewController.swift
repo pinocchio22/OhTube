@@ -117,10 +117,10 @@ final class MainViewController: UIViewController {
             switch result {
             case .success(let tubedata):
                 //self.currentPage += 1
-                print("데이터 잘 받음")
+                //print("데이터 잘 받음")
                 self.youtubeArray = tubedata
                 
-                dump(self.youtubeArray)
+                //dump(self.youtubeArray)
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
