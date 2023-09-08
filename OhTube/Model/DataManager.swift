@@ -47,6 +47,20 @@ final class DataManager {
         return nil
     }
     
+    func updateUser(_ user: User) {
+        let userList = getUserList()
+        let nowUser = getUser()
+        for item in userList {
+            if nowUser?.id == item.id {
+                guard var oldUser = nowUser else { return }
+                oldUser.nickName = user.nickName
+                oldUser.passWord = user.passWord
+                updateUserDefaults(user)
+                updateUserDefaults(userList)
+            }
+        }
+    }
+    
     func isLoginState() -> Bool {
         return userDefaults.bool(forKey: isLoginKey)
     }
