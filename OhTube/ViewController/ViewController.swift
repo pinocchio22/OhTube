@@ -33,6 +33,8 @@ class ViewController: UITabBarController {
         
         self.tabBar.layer.borderWidth = 1
         self.tabBar.layer.borderColor = #colorLiteral(red: 0.9176470588, green: 0.9176470588, blue: 0.9176470588, alpha: 1)
+        
+        self.tabBar.tintColor = .red
 
         // Main
         self.tabBar.items![0].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
@@ -55,12 +57,10 @@ extension ViewController: UITabBarControllerDelegate {
         if tabBarIndex == 0 {
             // do your stuff
         }
-        print("tabBarIndex : \(tabBarIndex)")
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let currentIndex = tabBarController.selectedIndex
-        print("currentIndex : \(currentIndex)")
         guard let fromView = selectedViewController?.view, let toView = viewController.view else {
             return false // Make sure you want this as false
         }
