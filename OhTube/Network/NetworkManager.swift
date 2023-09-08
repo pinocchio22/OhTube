@@ -16,7 +16,6 @@ enum NetworkError: Error {
     case parseError
 }
 
-
 final class NetworkManager {
     
     
@@ -29,22 +28,9 @@ final class NetworkManager {
     typealias NetworkCompletion = (Result<[Video], NetworkError>) -> Void
     
     
-//    //검색 네트워킹 요청하는 함수
-//    func fetchSearchVideo(searchTerm: String, completion: @escaping NetworkCompletion) {
-//        let urlString = "\(searchYouTubeAPI.requestUrl)\(searchYouTubeAPI.reQuestInfo)&\(searchYouTubeAPI.apiKey)&\(searchYouTubeAPI.maxResults)&\(searchYouTubeAPI.regionCode)&\(searchYouTubeAPI.resultOrder)&q=\(searchTerm)"
-//        guard let url = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-//            return
-//        }
-//        performRequest(with: url) { result in
-//            completion(result)
-//        }
-//    }
-    
-    
     // 카테고리별 (일반적)네트워킹 요청하는 함수
-    func fetchVideo(completion: @escaping NetworkCompletion) {
-        let urlString = "\(YouTubeAPI.requestUrl)\(YouTubeAPI.reQuestInfo)&\(YouTubeAPI.chart)&\(YouTubeAPI.apiKey)&\(YouTubeAPI.maxResults)&\(YouTubeApiVideoCategoryId.sport)&\(YouTubeAPI.regionCode)"
-        
+    func fetchVideo(category: String, completion: @escaping NetworkCompletion) {
+        let urlString = "\(YouTubeAPI.requestUrl)\(YouTubeAPI.reQuestInfo)&\(YouTubeAPI.chart)&\(YouTubeAPI.apiKey)&\(YouTubeAPI.maxResults)\(category)&\(YouTubeAPI.regionCode)"
         
         performRequest(with: urlString) { result in
             completion(result)
