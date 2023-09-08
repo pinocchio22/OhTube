@@ -131,23 +131,15 @@ final class DataManager {
     }
     
     func createLikedVideo(_ video: Video) {
-        var userList = getUserList()
         let user = getUser()
-        let index = userList.firstIndex{ $0.id == getUser()!.id }
-        userList[index!] = User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: getLikedVideoList() + [video])
-        updateUserDefaults(User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: getLikedVideoList() + [video]))
-        updateUserDefaults(userList)
+        
+        updateUser(User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: user!.likedVideoList + [video]))
     }
     
     func deleteLikedVideo(_ video: Video) {
-        var likedVideoList = getLikedVideoList()
-        var userList = getUserList()
-        let user = getUser()
-        let index = userList.firstIndex{ $0.id == getUser()!.id }
-        likedVideoList.removeAll{ $0.id == video.id }
-        userList[index!] = User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: likedVideoList)
-        updateUserDefaults(User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: likedVideoList))
-        updateUserDefaults(userList)
+        var user = getUser()
+        user?.likedVideoList.removeAll{ $0.id == video.id }
+        updateUser(User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: user!.likedVideoList + [video]))
     }
     
     func tappedLikedButton(_ video: Video) {
