@@ -132,14 +132,13 @@ final class DataManager {
     
     func createLikedVideo(_ video: Video) {
         let user = getUser()
-        
         updateUser(User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: user!.likedVideoList + [video]))
     }
     
     func deleteLikedVideo(_ video: Video) {
         var user = getUser()
         user?.likedVideoList.removeAll{ $0.id == video.id }
-        updateUser(User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: user!.likedVideoList + [video]))
+        updateUser(User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: user!.likedVideoList))
     }
     
     func tappedLikedButton(_ video: Video) {

@@ -30,10 +30,6 @@ final class LoginViewController: UIViewController {
         setKeyboardNotification()
     }
     
-    deinit {
-        print("LoginViewController 사라집니다~")
-    }
-    
     // MARK: - Configure
     private func configureUI() {
         configure(loginButton)

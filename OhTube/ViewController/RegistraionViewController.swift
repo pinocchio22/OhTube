@@ -68,10 +68,6 @@ final class RegistraionViewController: UIViewController {
         setKeyboardNotification()
     }
     
-    deinit {
-        print("RegistraionViewController 사라집니다~")
-    }
-    
     // MARK: - Data Setting
     func setupData() {
         let user = dataManager.getUser()

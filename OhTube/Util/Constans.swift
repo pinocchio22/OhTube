@@ -12,7 +12,7 @@ enum Font {
     static let mainTitleFont = UIFont.boldSystemFont(ofSize: 24)
     static let contentFont = UIFont.systemFont(ofSize: 16)
     static let descriptionFont = UIFont.systemFont(ofSize: 10)
-    static let commentFont = UIFont.systemFont(ofSize: 12)
+    static let commentFont = UIFont.boldSystemFont(ofSize: 12)
 }
 
 enum Margin {

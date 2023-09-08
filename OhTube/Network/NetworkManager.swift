@@ -39,14 +39,14 @@ final class NetworkManager {
     
     // 실제 Request하는 함수
     private func performRequest(with urlString: String, completion: @escaping NetworkCompletion) {
-        print(#function)
+//        print(#function)
         guard let url = URL(string: urlString) else { return }
         
         let session = URLSession(configuration: .default)
         
         let task = session.dataTask(with: url) { (data, response, error) in
             if error != nil {
-                print(error!)
+//                print(error!)
                 completion(.failure(.networkingError))
                 return
             }
@@ -58,10 +58,10 @@ final class NetworkManager {
             
             // 결과를 받음
             if let videos = self.parseJSON(safeData) {
-                print("Parse 실행")
+//                print("Parse 실행")
                 completion(.success(videos))
             } else {
-                print("Parse 실패")
+//                print("Parse 실패")
                 completion(.failure(.parseError))
             }
         }
@@ -79,22 +79,22 @@ final class NetworkManager {
             return videoforEach(video: video)
             // 실패
         } catch let DecodingError.dataCorrupted(context) {
-            print(context)
+//            print(context)
             return nil
         } catch let DecodingError.keyNotFound(key, context) {
-            print("Key '\(key)' not found:", context.debugDescription)
-            print("codingPath:", context.codingPath)
+//            print("Key '\(key)' not found:", context.debugDescription)
+//            print("codingPath:", context.codingPath)
             return nil
         } catch let DecodingError.valueNotFound(value, context) {
-            print("Value '\(value)' not found:", context.debugDescription)
-            print("codingPath:", context.codingPath)
+//            print("Value '\(value)' not found:", context.debugDescription)
+//            print("codingPath:", context.codingPath)
             return nil
         } catch let DecodingError.typeMismatch(type, context)  {
-            print("Type '\(type)' mismatch:", context.debugDescription)
-            print("codingPath:", context.codingPath)
+//            print("Type '\(type)' mismatch:", context.debugDescription)
+//            print("codingPath:", context.codingPath)
             return nil
         } catch {
-            print("error: ", error)
+//            print("error: ", error)
             return nil
         }
     }
