@@ -19,6 +19,10 @@ final class MainViewController: UIViewController {
     
     private let category: [String] = ["전체","예능","스포츠","음악","게임","영화","재미"]
     
+    private var isSearchButtonPressed = false
+    private var isSearching = false
+    
+    
 //    var currentPage = 0
 //    var maxResult = 40
     
@@ -264,26 +268,36 @@ extension MainViewController: UICollectionViewDelegate {
 
 extension MainViewController: UISearchBarDelegate, UISearchResultsUpdating {
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+         searchBar.resignFirstResponder()
+         isSearchButtonPressed = true
+         searchBar.setShowsCancelButton(false, animated: true)
+         performSearch()
+     }
+
 
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text?.lowercased() else { return }
-        
-        if searchText.isEmpty {// 검색창이 비었으면 다보여줌
-            searchResultArray = youtubeArray
-        } else {// 검색결과값
-            searchResultArray = youtubeArray.filter { $0.title.lowercased().contains(searchText)}
+        if isSearchButtonPressed {
+            isSearchButtonPressed = false
+            if let searchText = searchController.searchBar.text?.lowercased(), !searchText.isEmpty {
+                performSearch()
+            }
+        } else {
+            isSearching = !searchController.searchBar.text!.isEmpty
         }
-        self.collectionView.reloadData()
     }
-    
-    //검색창 클릭 시 키보드 올리기
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        searchBar.setShowsCancelButton(true, animated: true)
+
+    private func performSearch() {
+        if let searchText = searchController.searchBar.text?.lowercased(), !searchText.isEmpty {
+            searchResultArray = youtubeArray.filter { $0.title.lowercased().contains(searchText) }
+            collectionView.reloadData()
+        }
     }
     // 캔슬 버튼
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
+        isSearching = false
+        searchResultArray.removeAll()
+        collectionView.reloadData()
     }
     // 캔슬버튼 보이게 하기
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
