@@ -136,7 +136,6 @@ extension MyPageViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("여긴 어디인가")
         
         let selectedData = reuseYoutubeData[indexPath.item]
         

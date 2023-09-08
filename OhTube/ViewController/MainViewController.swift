@@ -113,16 +113,16 @@ final class MainViewController: UIViewController {
             switch result {
             case .success(let tubedata):
                 //self.currentPage += 1
-                print("데이터 잘 받음")
+//                print("데이터 잘 받음")
                 self.youtubeArray = tubedata
                 
                 dump(self.youtubeArray)
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
-            case .failure(let error):
-                print("데이터 받아오기 에러 ")
-                print(error.localizedDescription)
+            case .failure(_): break
+//                print("데이터 받아오기 에러 ")
+//                print(error.localizedDescription)
             }
         }
     }

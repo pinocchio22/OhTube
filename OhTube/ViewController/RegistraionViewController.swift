@@ -73,10 +73,6 @@ final class RegistraionViewController: UIViewController {
         setKeyboardNotification()
     }
     
-    deinit {
-        print("RegistraionViewController 사라집니다~")
-    }
-    
     // MARK: - Data Setting
     private func setupData() {
         idTextField.text = user?.id
@@ -326,7 +322,6 @@ extension RegistraionViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
-        print(text.count)
         return text.count < 20
     }
 }
