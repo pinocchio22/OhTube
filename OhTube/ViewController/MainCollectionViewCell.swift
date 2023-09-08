@@ -8,7 +8,7 @@
 import UIKit
 
 class MainCollectionViewCell: UICollectionViewCell {
-    
+
     
     var videoThumbnailImage: UIImageView = {
         let image = UIImageView()
@@ -107,6 +107,16 @@ class MainCollectionViewCell: UICollectionViewCell {
         self.channelImage.clipsToBounds = true
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        videoThumbnailImage.image = nil//UIImage(systemName: "square.and.arrow.up")
+        channelImage.image = UIImage(systemName: "square.and.arrow.up")
+        videoTitleLabel.text = nil
+        channelNameLabel.text = nil
+        videoViewCountLabel.text = nil
+        videoDateLabel.text = nil
+    }
+    
     func cellSetting() {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.3
@@ -127,7 +137,7 @@ class MainCollectionViewCell: UICollectionViewCell {
             videoThumbnailImage.widthAnchor.constraint(equalToConstant: self.contentView.bounds.width),
             videoThumbnailImage.heightAnchor.constraint(equalToConstant: 240),
             videoThumbnailImage.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
-            //videoThumbnailImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
+            videoThumbnailImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
             
             
             channelImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5),
@@ -141,10 +151,8 @@ class MainCollectionViewCell: UICollectionViewCell {
             labelsStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5),
             labelsStackView.topAnchor.constraint(equalTo: self.channelImage.topAnchor),
             labelsStackView.bottomAnchor.constraint(equalTo: self.channelImage.bottomAnchor),
-            
-            videoTitleLabel.heightAnchor.constraint(equalToConstant: 20),
-            channelNameLabel.heightAnchor.constraint(equalToConstant: 16),
-            labelCountstackView.heightAnchor.constraint(equalToConstant: 16),
+        
+            channelNameLabel.heightAnchor.constraint(equalToConstant: 16)
         ])
         
     }

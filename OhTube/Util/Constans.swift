@@ -32,7 +32,7 @@ enum Message {
 
 
 
-
+//https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&key=AIzaSyAFQfaz5R7bRzVdupElRJTY1E_Y0rho2EE&page=10&maxResults=20
 
 
 
@@ -44,8 +44,8 @@ public enum YouTubeAPI {
     static let reQuestInfo = "part=snippet%2Cstatistics"
     static let chart = "chart=mostPopular"
 //    static let apiKey = "key=AIzaSyB4mgZGx7am_zDKQr4I75nerrwG0KFZVeE"
-    static let apiKey = "key=AIzaSyBeu_eK6eaWUr6yzpu_Ir7xozpS02rqHAw"
-    static let maxResults = "maxResults=5"
+    static let apiKey = "key=AIzaSyDZj6Feg2H_noeQuKgvILQYuKfTG1nnGAM"
+    static let maxResults = "maxResults=4"
     static let regionCode = "regionCode=KR"
 }
 

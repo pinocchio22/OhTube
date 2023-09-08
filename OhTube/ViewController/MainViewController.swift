@@ -13,11 +13,14 @@ import UIKit
 
 final class MainViewController: UIViewController {
   
-    var youtubeArray: [Video] = []
+    private var youtubeArray: [Video] = []
 
-    var searchResultArray: [Video] = []
+    private var searchResultArray: [Video] = []
     
-    var category: [String] = ["전체","예능","스포츠","음악","게임","영화","재미"]
+    private let category: [String] = ["전체","예능","스포츠","음악","게임","영화","재미"]
+    
+//    var currentPage = 0
+//    var maxResult = 40
     
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -109,7 +112,7 @@ final class MainViewController: UIViewController {
         NetworkManager.shared.fetchVideo(category: categoryId) { result in
             switch result {
             case .success(let tubedata):
-                
+                //self.currentPage += 1
                 print("데이터 잘 받음")
                 self.youtubeArray = tubedata
                 
@@ -130,6 +133,14 @@ final class MainViewController: UIViewController {
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
+ 
+//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        let currentRow = indexPath.row
+//        if (currentRow % maxResult) == maxResult - 5
+//            && (currentRow / maxResult) == (currentPage) {
+//            networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
+//        }
+//    }
 }
 
 extension MainViewController: UICollectionViewDataSource {
@@ -224,9 +235,13 @@ extension MainViewController: UICollectionViewDelegate {
             
         } else if collectionView.tag == 2 {
             let selectedCategory = category[indexPath.item]
+            let indexPath = IndexPath(item: 0, section: 0)
+            self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
             switch selectedCategory {
             case "전체":
                 networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
+                let indexPath:IndexPath = IndexPath(row: indexPath.row, section: 0)
+                self.collectionView.scrollsToTop
             case "예능":
                 networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.entertainment)
             case "스포츠":
@@ -244,24 +259,7 @@ extension MainViewController: UICollectionViewDelegate {
             }
         }
     }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let contentOffsetY = scrollView.contentOffset.y
-//        
-//        // collectionView의
-//        // content size(화면에 보이지 않는 모든 collectionView영역을 포함하는 size)
-//        let collectionViewContentSizeY = self.collectionView.contentSize.height
-//        
-//        // pagination을 하고 싶은 y 좌표는 collectionView의 content size의 0.5 지점
-//        let paginationY = collectionViewContentSizeY * 0.
-//        
-//        // contentOffsetY가
-//        // 전체 CollectionView의 contentSizeY의 반을 넘어가면
-//        // if 문 내부 코드 실행!!
-//        if contentOffsetY > collectionViewContentSizeY - paginationY {
-//            // 서버에서 다음 페이지 GET
-//            networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
-//        }
-    }
+
 }
 
 extension MainViewController: UISearchBarDelegate, UISearchResultsUpdating {
