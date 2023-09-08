@@ -161,6 +161,18 @@ class DetailViewController: UIViewController {
         return tv
     }()
     
+    var commentCount: UILabel = {
+        var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "20개"
+        label.font = Font.commentFont
+        label.backgroundColor = .systemGray6
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 10
+        label.textAlignment = .center
+        return label
+    }()
+    
     var commentSpacer: UIView = {
         var view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -170,25 +182,25 @@ class DetailViewController: UIViewController {
     
     var editCommentName: UILabel = {
         var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "닉네임"
         label.font = Font.commentFont
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     var editCommentContent: UITextField = {
         var tf = UITextField()
+        tf.translatesAutoresizingMaskIntoConstraints = false
         tf.placeholder = "댓글 내용을 입력하세요."
         tf.font = Font.commentFont
-        tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
     
     var editCommentButton: UIButton = {
         var btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
         btn.tintColor = .red
         btn.setImage(UIImage(systemName: "plus.app"), for: .normal)
-        btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
     
@@ -409,6 +421,7 @@ class DetailViewController: UIViewController {
     func setCommentView() {
         view.addSubview(commentView)
         setCommentTableView()
+        setCommentCount()
         setCommentSpacer()
         setEditCommentName()
         setEditCommentContent()
@@ -433,6 +446,19 @@ class DetailViewController: UIViewController {
             commentTableView.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             commentTableView.bottomAnchor.constraint(equalTo: commentSpacer.safeAreaLayoutGuide.topAnchor),
         ])
+    }
+    
+    func setCommentCount() {
+        commentView.addSubview(commentCount)
+        
+        NSLayoutConstraint.activate([
+            commentCount.topAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.topAnchor, constant: 5),
+            commentCount.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -5),
+            commentCount.widthAnchor.constraint(equalToConstant: 50),
+            commentCount.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
+        commentCount.text = "\(commentList.count)개"
     }
     
     func setCommentSpacer() {
