@@ -11,8 +11,6 @@ import UIKit
 
 class MyPageViewController: UIViewController {
     
-    let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-
     @IBOutlet weak var MyPageCollectionView: UICollectionView!
     @IBOutlet weak var profileImage: UIImageView!
     
@@ -23,6 +21,16 @@ class MyPageViewController: UIViewController {
     @IBOutlet weak var logoutButton: UIButton!
     
     var reuseYoutubeData = DataManager.shared.getLikedVideoList()
+    let getUserInformation = DataManager.shared.getUser()
+    
+    private func IdImage() {
+        profileImage.image = Util.util.imageWith(name: getUserInformation?.id)
+    }
+    
+    private func userInformation() {
+        idLabel.text = getUserInformation?.id
+        nickNameLabel.text = getUserInformation?.nickName
+    }
     
     private func customProfileButton() {
         profileButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
@@ -82,6 +90,8 @@ class MyPageViewController: UIViewController {
         super.viewDidLoad()
         customProfileButton()
         customLogoutButton()
+        userInformation()
+        IdImage()
         
         MyPageCollectionView.dataSource = self
         MyPageCollectionView.delegate = self
@@ -111,6 +121,7 @@ extension MyPageViewController: UICollectionViewDataSource, UICollectionViewDele
         cell.videoTitleLabel.text = reuseYoutubeData[indexPath.row].title
         cell.videoViewCountLabel.text = "\(reuseYoutubeData[indexPath.row].formatViewCount) 조회"
         cell.videoDateLabel.text = reuseYoutubeData[indexPath.row].uploadDateString
+        
         return cell
     }
     
@@ -119,12 +130,24 @@ extension MyPageViewController: UICollectionViewDataSource, UICollectionViewDele
         return DataManager.shared.getLikedVideoList().count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("여긴 어디인가")
+        
+        let selectedData = reuseYoutubeData[indexPath.item]
+        
+        let detailViewController = DetailViewController()
+        
+        detailViewController.selectedVideo = selectedData
+
+        self.navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
 }
 extension MyPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
         let collectionViewHeight = collectionView.bounds.height
-        return CGSize(width: collectionViewWidth, height: collectionViewHeight - 90)
+        return CGSize(width: collectionViewWidth, height: collectionViewHeight - 40)
 
     }
 
