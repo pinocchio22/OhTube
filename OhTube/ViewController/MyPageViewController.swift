@@ -44,13 +44,13 @@ class MyPageViewController: UIViewController {
     
     private func customProfileButton() {
         profileButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        profileButton.backgroundColor = UIColor.lightGray
+        profileButton.backgroundColor = UIColor.red
         profileButton.setTitle("계정 정보 수정", for: .normal)
         profileButton.setTitleColor(UIColor.white, for: .normal)
         
         profileButton.layer.cornerRadius = 5
         profileButton.layer.borderWidth = 5
-        profileButton.layer.borderColor = UIColor.lightGray.cgColor
+        profileButton.layer.borderColor = UIColor.red.cgColor
         
         profileButton.layer.shadowColor = UIColor.black.cgColor
         profileButton.layer.masksToBounds = false
@@ -61,13 +61,13 @@ class MyPageViewController: UIViewController {
     
     private func customLogoutButton() {
         logoutButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        logoutButton.backgroundColor = UIColor.lightGray
+        logoutButton.backgroundColor = UIColor.red
         logoutButton.setTitle("로그아웃", for: .normal)
         logoutButton.setTitleColor(UIColor.white, for: .normal)
         
         logoutButton.layer.cornerRadius = 5
         logoutButton.layer.borderWidth = 5
-        logoutButton.layer.borderColor = UIColor.lightGray.cgColor
+        logoutButton.layer.borderColor = UIColor.red.cgColor
         
         logoutButton.layer.shadowColor = UIColor.black.cgColor
         logoutButton.layer.masksToBounds = false

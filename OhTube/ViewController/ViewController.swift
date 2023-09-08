@@ -33,6 +33,8 @@ class ViewController: UITabBarController {
         
         self.tabBar.layer.borderWidth = 1
         self.tabBar.layer.borderColor = #colorLiteral(red: 0.9176470588, green: 0.9176470588, blue: 0.9176470588, alpha: 1)
+        
+        self.tabBar.tintColor = .red
 
         // Main
         self.tabBar.items![0].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)

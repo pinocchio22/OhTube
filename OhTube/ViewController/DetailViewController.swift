@@ -15,15 +15,6 @@ class DetailViewController: UIViewController {
     var selectedVideo: Video?
     var currentUser = DataManager.shared.getUser()
 
-//    var video: Video? {
-//        didSet {
-//            titleLabel.text = video?.title
-//            videoTitle.text = video?.channelId
-//            uploadDate.text = video?.uploadDateString
-//            viewCount.text = "\(video!.viewCount) 조회"
-//        }
-//    }
-
     var profileImage: UIImageView = {
         var image = UIImageView()
         image.image = UIImage(systemName: "photo")
@@ -69,7 +60,7 @@ class DetailViewController: UIViewController {
     var videoTitle: UILabel = {
         var label = UILabel()
         label.text = "원훈이와 영식이"
-        label.font = Font.contentFont
+        label.font = Font.mainTitleFont
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -103,11 +94,55 @@ class DetailViewController: UIViewController {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.frame.size.width = 60
         btn.frame.size.height = 60
+        btn.tintColor = .red
         btn.setImage(UIImage(systemName: "bookmark"), for: .normal)
         return btn
     }()
     
-//    var isLikedButton = false
+    lazy var iconStackView: UIStackView = {
+        var sv = UIStackView(arrangedSubviews: [iconLike, iconNext, iconDownload, iconBookmark, iconAdd])
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.axis = .horizontal
+        sv.alignment = .center
+        sv.distribution = .equalSpacing
+        sv.spacing = 5
+        return sv
+    }()
+    
+    var iconLike: UIButton = {
+        var btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(named: "like"), for: .normal)
+        return btn
+    }()
+    
+    var iconNext: UIButton = {
+        var btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(named: "next"), for: .normal)
+        return btn
+    }()
+    
+    var iconDownload: UIButton = {
+        var btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(named: "download"), for: .normal)
+        return btn
+    }()
+    
+    var iconBookmark: UIButton = {
+        var btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(named: "bookmark"), for: .normal)
+        return btn
+    }()
+    
+    var iconAdd: UIButton = {
+        var btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(named: "add"), for: .normal)
+        return btn
+    }()
     
     var commentView: UIView = {
         var view = UIView()
@@ -128,7 +163,7 @@ class DetailViewController: UIViewController {
     
     var commentSpacer: UIView = {
         var view = UIView()
-        view.heightAnchor.constraint(equalToConstant: 1)
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray
         return view
     }()
@@ -151,6 +186,7 @@ class DetailViewController: UIViewController {
     
     var editCommentButton: UIButton = {
         var btn = UIButton()
+        btn.tintColor = .red
         btn.setImage(UIImage(systemName: "plus.app"), for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
@@ -220,14 +256,7 @@ class DetailViewController: UIViewController {
             videoWebView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
             videoWebView.heightAnchor.constraint(equalToConstant: 250)
         ])
-        
-        // connect video in webview
-        //        guard let url = URL(string: "https://www.youtube.com/embed/\(videoKey)") else { return  }
-//        var url1 = "https://www.youtube.com/watch?v=prjjnxXBkpo"
-//        var url2 = "https://www.youtube.com/embed/9bZkp7q19f0"
-//        var url3 = "https://www.youtube.com/embed/5t0IwokCKlY"
-//        var url4 = "https://www.youtube.com/embed/43FZXOo6oRM"
-        
+
         videoWebView.allowsInlineMediaPlayback = true
         guard let url = URL(string: "https://www.youtube.com/embed/\(selectedVideo!.id)") else { return }
         videoWebView.loadRequest(URLRequest(url: url))
@@ -242,6 +271,7 @@ class DetailViewController: UIViewController {
         setUploadDate()
         setLikeButton()
         setVideoDescription()
+        setIconStackView()
         
         NSLayoutConstraint.activate([
             infoView.topAnchor.constraint(equalTo: videoWebView.bottomAnchor, constant: 10),
@@ -254,7 +284,7 @@ class DetailViewController: UIViewController {
         infoView.addSubview(videoTitle)
         
         NSLayoutConstraint.activate([
-            videoTitle.topAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            videoTitle.topAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.topAnchor),
             videoTitle.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
         ])
         
@@ -266,9 +296,8 @@ class DetailViewController: UIViewController {
         infoView.addSubview(viewCount)
         
         NSLayoutConstraint.activate([
-            viewCount.topAnchor.constraint(equalTo: videoTitle.bottomAnchor, constant: 10),
+            viewCount.topAnchor.constraint(equalTo: videoTitle.bottomAnchor),
             viewCount.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-//            viewCount.trailingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             viewCount.bottomAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.topAnchor, constant: -10),
             viewCount.widthAnchor.constraint(equalToConstant: 50)
         ])
@@ -278,12 +307,10 @@ class DetailViewController: UIViewController {
     
     func setUploadDate() {
         infoView.addSubview(likeButton)
-        
         infoView.addSubview(uploadDate)
-       
         
         NSLayoutConstraint.activate([
-            uploadDate.topAnchor.constraint(equalTo: videoTitle.bottomAnchor, constant: 10),
+            uploadDate.topAnchor.constraint(equalTo: videoTitle.bottomAnchor),
             uploadDate.leadingAnchor.constraint(equalTo: viewCount.safeAreaLayoutGuide.trailingAnchor, constant: 10),
             uploadDate.trailingAnchor.constraint(equalTo: likeButton.safeAreaLayoutGuide.leadingAnchor, constant: -10),
             uploadDate.bottomAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.topAnchor, constant: -10),
@@ -297,8 +324,7 @@ class DetailViewController: UIViewController {
             likeButton.topAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.topAnchor, constant: 10),
             likeButton.leadingAnchor.constraint(equalTo: videoTitle.trailingAnchor, constant: 10),
             likeButton.trailingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            likeButton.bottomAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.topAnchor, constant: -10),
-//            likeButton.centerYAnchor.constraint(equalTo: infoView.centerYAnchor),
+            likeButton.bottomAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.topAnchor),
             likeButton.widthAnchor.constraint(equalToConstant: 60),
             likeButton.heightAnchor.constraint(equalToConstant: 60),
         ])
@@ -314,12 +340,68 @@ class DetailViewController: UIViewController {
     func setVideoDescription() {
         NSLayoutConstraint.activate([
             videoDescription.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            videoDescription.bottomAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            videoDescription.trailingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             videoDescription.widthAnchor.constraint(equalTo: infoView.widthAnchor, constant:  -10),
-//            videoDescription.heightAnchor.constraint(equalToConstant: 60)
         ])
         
         videoDescription.text = selectedVideo?.description
+    }
+    
+    func setIconStackView() {
+        infoView.addSubview(iconStackView)
+        
+        setIconLike()
+        setIconNext()
+        setIconDownload()
+        setIconBookmark()
+        setIconAdd()
+        
+        NSLayoutConstraint.activate([
+            iconStackView.topAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+            iconStackView.leadingAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            iconStackView.trailingAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            iconStackView.bottomAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+        ])
+    }
+    
+    func setIconLike() {
+        NSLayoutConstraint.activate([
+            iconLike.widthAnchor.constraint(equalToConstant: 20),
+            iconLike.heightAnchor.constraint(equalToConstant: 20),
+        ])
+        iconLike.addTarget(self, action: #selector(tappedIconLike), for: .touchUpInside)
+    }
+    
+    func setIconNext() {
+        NSLayoutConstraint.activate([
+            iconNext.widthAnchor.constraint(equalToConstant: 20),
+            iconNext.heightAnchor.constraint(equalToConstant: 20),
+        ])
+        iconNext.addTarget(self, action: #selector(tappedIconNext), for: .touchUpInside)
+    }
+    
+    func setIconDownload() {
+        NSLayoutConstraint.activate([
+            iconDownload.widthAnchor.constraint(equalToConstant: 20),
+            iconDownload.heightAnchor.constraint(equalToConstant: 20),
+        ])
+        iconDownload.addTarget(self, action: #selector(tappedIconDownload), for: .touchUpInside)
+    }
+    
+    func setIconBookmark() {
+        NSLayoutConstraint.activate([
+            iconBookmark.widthAnchor.constraint(equalToConstant: 20),
+            iconBookmark.heightAnchor.constraint(equalToConstant: 20),
+        ])
+        iconBookmark.addTarget(self, action: #selector(tappedIconBookmark), for: .touchUpInside)
+    }
+    
+    func setIconAdd() {
+        NSLayoutConstraint.activate([
+            iconAdd.widthAnchor.constraint(equalToConstant: 20),
+            iconAdd.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        iconAdd.addTarget(self, action: #selector(tappedIconAdd), for: .touchUpInside)
     }
     
     // MARK: commentView
@@ -327,7 +409,7 @@ class DetailViewController: UIViewController {
     func setCommentView() {
         view.addSubview(commentView)
         setCommentTableView()
-//        setCommentSpacer()
+        setCommentSpacer()
         setEditCommentName()
         setEditCommentContent()
         setEditCommentButton()
@@ -343,33 +425,32 @@ class DetailViewController: UIViewController {
     func setCommentTableView() {
         commentView.addSubview(commentTableView)
         commentView.addSubview(editCommentName)
+        commentView.addSubview(commentSpacer)
         
         NSLayoutConstraint.activate([
             commentTableView.topAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.topAnchor, constant: 10),
             commentTableView.leadingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             commentTableView.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            commentTableView.bottomAnchor.constraint(equalTo: editCommentName.safeAreaLayoutGuide.topAnchor, constant: -10),
+            commentTableView.bottomAnchor.constraint(equalTo: commentSpacer.safeAreaLayoutGuide.topAnchor),
         ])
     }
     
     func setCommentSpacer() {
-        commentView.addSubview(commentSpacer)
-        
         NSLayoutConstraint.activate([
-            commentSpacer.topAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+            commentSpacer.topAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.bottomAnchor),
             commentSpacer.leadingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             commentSpacer.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            commentSpacer.heightAnchor.constraint(equalToConstant: 10)
+            commentSpacer.heightAnchor.constraint(equalToConstant: 0.5)
         ])
     }
     
     func setEditCommentName() {
         NSLayoutConstraint.activate([
-            editCommentName.topAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+            editCommentName.topAnchor.constraint(equalTo: commentSpacer.safeAreaLayoutGuide.bottomAnchor, constant: 10),
             editCommentName.leadingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             editCommentName.bottomAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             editCommentName.widthAnchor.constraint(equalToConstant: 100),
-            editCommentName.heightAnchor.constraint(equalToConstant: 20)
+            editCommentName.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         editCommentName.text = currentUser?.nickName
@@ -379,7 +460,7 @@ class DetailViewController: UIViewController {
         commentView.addSubview(editCommentContent)
         
         NSLayoutConstraint.activate([
-            editCommentContent.topAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+            editCommentContent.topAnchor.constraint(equalTo: commentSpacer.safeAreaLayoutGuide.bottomAnchor, constant: 10),
             editCommentContent.leadingAnchor.constraint(equalTo: editCommentName.safeAreaLayoutGuide.trailingAnchor, constant: 10),
             editCommentContent.bottomAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
         ])
@@ -392,7 +473,7 @@ class DetailViewController: UIViewController {
         commentView.addSubview(editCommentButton)
         
         NSLayoutConstraint.activate([
-            editCommentButton.topAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+            editCommentButton.topAnchor.constraint(equalTo: commentSpacer.safeAreaLayoutGuide.bottomAnchor, constant: 10),
             editCommentButton.leadingAnchor.constraint(equalTo: editCommentContent.safeAreaLayoutGuide.trailingAnchor, constant: 10),
             editCommentButton.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             editCommentButton.bottomAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
@@ -431,6 +512,25 @@ class DetailViewController: UIViewController {
         likeButton.setImage(DataManager.shared.getLikedVideoList().filter{ $0.id == selectedVideo?.id }.isEmpty ? UIImage(systemName: "bookmark") : UIImage(systemName: "bookmark.fill"), for: .normal)
     }
     
+    @objc func tappedIconLike() {
+        iconLike.setImage(iconLike.imageView?.image == UIImage(named: "like") ? UIImage(named: "like_red") : UIImage(named: "like"), for: .normal)
+    }
+    
+    @objc func tappedIconNext() {
+        iconNext.setImage(iconNext.imageView?.image == UIImage(named: "next") ? UIImage(named: "next_red") : UIImage(named: "next"), for: .normal)
+    }
+    
+    @objc func tappedIconDownload() {
+        iconDownload.setImage(iconDownload.imageView?.image == UIImage(named: "download") ? UIImage(named: "download_red") : UIImage(named: "download"), for: .normal)
+    }
+    
+    @objc func tappedIconBookmark() {
+        iconBookmark.setImage(iconBookmark.imageView?.image == UIImage(named: "bookmark") ? UIImage(named: "bookmark_red") : UIImage(named: "bookmark"), for: .normal)
+    }
+    
+    @objc func tappedIconAdd() {
+        iconAdd.setImage(iconAdd.imageView?.image == UIImage(named: "add") ? UIImage(named: "add_red") : UIImage(named: "add"), for: .normal)
+    }
     
     @objc func tappedEditButton() {
         if let content = editCommentContent.text {
