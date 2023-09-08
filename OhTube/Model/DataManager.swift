@@ -119,7 +119,7 @@ final class DataManager {
         var likedVideoList = getLikedVideoList()
         var userList = getUserList()
         let user = getUser()
-        var index = userList.firstIndex{ $0.id == getUser()!.id }
+        let index = userList.firstIndex{ $0.id == getUser()!.id }
         likedVideoList.removeAll{ $0.id == video.id }
         userList[index!] = User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: likedVideoList)
         updateUserDefaults(User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: likedVideoList))
