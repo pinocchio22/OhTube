@@ -119,6 +119,20 @@ class DetailViewController: UIViewController {
         return view
     }()
     
+    var commentTableView: UITableView = {
+        var tv = UITableView()
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.register(CommentTableViewCell.self, forCellReuseIdentifier: "CommentTableViewCell")
+        return tv
+    }()
+    
+    var commentSpacer: UIView = {
+        var view = UIView()
+        view.heightAnchor.constraint(equalToConstant: 1)
+        view.backgroundColor = .systemGray
+        return view
+    }()
+    
     var editCommentName: UILabel = {
         var label = UILabel()
         label.text = "닉네임"
@@ -129,7 +143,7 @@ class DetailViewController: UIViewController {
     
     var editCommentContent: UITextField = {
         var tf = UITextField()
-        tf.placeholder = "댓글"
+        tf.placeholder = "댓글 내용을 입력하세요."
         tf.font = Font.commentFont
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
@@ -142,13 +156,6 @@ class DetailViewController: UIViewController {
         return btn
     }()
     
-    var commentTableView: UITableView = {
-        var tv = UITableView()
-        tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.register(CommentTableViewCell.self, forCellReuseIdentifier: "CommentTableViewCell")
-        return tv
-    }()
-    
     // MARK: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,9 +166,7 @@ class DetailViewController: UIViewController {
         
         videoWebView.delegate = self
         
-        // commentList = selectedVido.comment
-//        commentList = DataManager.shared.getCommentList().sorted{ $0.date > $1.date }
-        
+        setDetailKeyboardNotification()
         setUI()
     }
     
@@ -211,7 +216,7 @@ class DetailViewController: UIViewController {
         view.addSubview(indicator)
         
         NSLayoutConstraint.activate([
-            videoWebView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            videoWebView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             videoWebView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
             videoWebView.heightAnchor.constraint(equalToConstant: 250)
         ])
@@ -321,10 +326,11 @@ class DetailViewController: UIViewController {
     // set comment group
     func setCommentView() {
         view.addSubview(commentView)
+        setCommentTableView()
+//        setCommentSpacer()
         setEditCommentName()
         setEditCommentContent()
         setEditCommentButton()
-        setCommentTableView()
         
         NSLayoutConstraint.activate([
             commentView.topAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
@@ -333,52 +339,68 @@ class DetailViewController: UIViewController {
             commentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
-    
-    func setEditCommentName() {
-        commentView.addSubview(editCommentName)
+
+    func setCommentTableView() {
         commentView.addSubview(commentTableView)
+        commentView.addSubview(editCommentName)
         
         NSLayoutConstraint.activate([
-            editCommentName.topAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            commentTableView.topAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            commentTableView.leadingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            commentTableView.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            commentTableView.bottomAnchor.constraint(equalTo: editCommentName.safeAreaLayoutGuide.topAnchor, constant: -10),
+        ])
+    }
+    
+    func setCommentSpacer() {
+        commentView.addSubview(commentSpacer)
+        
+        NSLayoutConstraint.activate([
+            commentSpacer.topAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+            commentSpacer.leadingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            commentSpacer.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            commentSpacer.heightAnchor.constraint(equalToConstant: 10)
+        ])
+    }
+    
+    func setEditCommentName() {
+        NSLayoutConstraint.activate([
+            editCommentName.topAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
             editCommentName.leadingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            editCommentName.bottomAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.topAnchor, constant: 10),
-            editCommentName.widthAnchor.constraint(equalToConstant: 100)
+            editCommentName.bottomAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            editCommentName.widthAnchor.constraint(equalToConstant: 100),
+            editCommentName.heightAnchor.constraint(equalToConstant: 20)
         ])
         
         editCommentName.text = currentUser?.nickName
-        
     }
     
     func setEditCommentContent() {
         commentView.addSubview(editCommentContent)
         
         NSLayoutConstraint.activate([
-            editCommentContent.topAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            editCommentContent.topAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
             editCommentContent.leadingAnchor.constraint(equalTo: editCommentName.safeAreaLayoutGuide.trailingAnchor, constant: 10),
-            editCommentContent.bottomAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            editCommentContent.bottomAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
         ])
+        
+        editCommentContent.layer.cornerRadius = 5
+        editCommentContent.backgroundColor = .systemGray6
     }
     
     func setEditCommentButton() {
         commentView.addSubview(editCommentButton)
         
         NSLayoutConstraint.activate([
-            editCommentButton.topAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            editCommentButton.topAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
             editCommentButton.leadingAnchor.constraint(equalTo: editCommentContent.safeAreaLayoutGuide.trailingAnchor, constant: 10),
             editCommentButton.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            editCommentButton.bottomAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            editCommentButton.bottomAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            editCommentButton.widthAnchor.constraint(equalToConstant: 20),
+            editCommentButton.heightAnchor.constraint(equalToConstant: 20)
         ])
         
         editCommentButton.addTarget(self, action: #selector(tappedEditButton), for: .touchUpInside)
-    }
-    
-    func setCommentTableView() {
-        NSLayoutConstraint.activate([
-            commentTableView.topAnchor.constraint(equalTo: editCommentContent.safeAreaLayoutGuide.bottomAnchor, constant: 10),
-            commentTableView.leadingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            commentTableView.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            commentTableView.bottomAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.bottomAnchor),
-        ])
     }
     
     func showToast(message : String) {
@@ -450,5 +472,28 @@ extension DetailViewController: UIWebViewDelegate {
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
         indicator.stopAnimating()
+    }
+}
+
+extension UIViewController {
+    func setDetailKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(showDetailKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideDetailKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func showDetailKeyboard(_ notification: Notification) {
+        if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+               let keyboardRectangle = keyboardFrame.cgRectValue
+                UIView.animate(
+                    withDuration: 0.3
+                    , animations: {
+                        self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
+                    }
+                )
+            }
+    }
+
+    @objc private func hideDetailKeyboard(_ notification: Notification) {
+        self.view.transform = .identity
     }
 }
