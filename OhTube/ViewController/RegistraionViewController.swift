@@ -13,11 +13,6 @@ final class RegistraionViewController: UIViewController {
     static let identifier = "RegistraionViewController"
     var reuseTitle: String? = "회원가입"
     var resueStartButton: String? = "시작하기"
-    var user: User? {
-        didSet {
-            setupData()
-        }
-    }
     private var id: String?
     private var nickName: String?
     private var passWord: String?
@@ -78,7 +73,8 @@ final class RegistraionViewController: UIViewController {
     }
     
     // MARK: - Data Setting
-    private func setupData() {
+    func setupData() {
+        let user = dataManager.getUser()
         idTextField.text = user?.id
         nickNameTextField.text = user?.nickName
         passWordTextField.text = user?.passWord
@@ -326,7 +322,6 @@ extension RegistraionViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
-        print(text.count)
         return text.count < 20
     }
 }
