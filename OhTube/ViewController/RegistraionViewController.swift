@@ -9,17 +9,20 @@ import UIKit
 
 final class RegistraionViewController: UIViewController {
     // MARK: - Properties
-    
-    var reuseTitle: String? = "회원가입"
-    var resueStartButton: String? = "시작하기"
-    
     static let storyboardName = "RegistrationScene"
     static let identifier = "RegistraionViewController"
-    private let dataManager = DataManager.shared
+    var reuseTitle: String? = "회원가입"
+    var resueStartButton: String? = "시작하기"
+    var user: User? {
+        didSet {
+            setupData()
+        }
+    }
     private var id: String?
     private var nickName: String?
     private var passWord: String?
     private var checkedPassWord: String?
+    private let dataManager = DataManager.shared
     private var idIsValid: Bool {
         id?.isEmpty == false &&
         checkValidate(id: id)
@@ -74,6 +77,23 @@ final class RegistraionViewController: UIViewController {
         print("RegistraionViewController 사라집니다~")
     }
     
+    // MARK: - Data Setting
+    private func setupData() {
+        idTextField.text = user?.id
+        nickNameTextField.text = user?.nickName
+        passWordTextField.text = user?.passWord
+        checkPassWordTextField.text = user?.passWord
+        id = user?.id
+        nickName = user?.nickName
+        passWord = user?.passWord
+        checkedPassWord = user?.passWord
+        titleLabel.text = self.reuseTitle
+        startButton.setTitle(self.resueStartButton, for: .normal)
+        idTextField.isEnabled = false
+        idTextField.backgroundColor = .lightGray.withAlphaComponent(0.8)
+        idTextField.layer.borderColor = UIColor.clear.cgColor
+    }
+
     // MARK: - Configure
     private func configureUI() {
         configure(backButton)
@@ -267,10 +287,20 @@ final class RegistraionViewController: UIViewController {
     }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
-        register()
-        let moveVC = ViewController()
-        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-        sceneDelegate.changeRootViewController(moveVC, animation: true)
+        if reuseTitle == "회원가입" {
+            register()
+            let moveVC = ViewController()
+            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+            sceneDelegate.changeRootViewController(moveVC, animation: true)
+        } else {
+            guard let id = self.id,
+                  let nickName = self.nickName,
+                  let passWord = self.passWord else { return }
+            let user = User(id: id, nickName: nickName, passWord: passWord)
+            dataManager.updateUser(user)
+            dismiss(animated: true)
+        }
+        
     }
     
     // MARK: - Touch

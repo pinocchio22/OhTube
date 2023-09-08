@@ -52,11 +52,10 @@ final class DataManager {
         let nowUser = getUser()
         for item in userList {
             if nowUser?.id == item.id {
-                guard var oldUser = nowUser else { return }
-                oldUser.nickName = user.nickName
-                oldUser.passWord = user.passWord
-                updateUserDefaults(user)
-                updateUserDefaults(userList)
+                guard var newUser = nowUser else { return }
+                newUser = user
+                updateUserDefaults(newUser)
+                updateUserList()
             }
         }
     }
@@ -88,6 +87,17 @@ final class DataManager {
         if let encodedUserList = try? JSONEncoder().encode(userList) {
             self.userDefaults.set(encodedUserList, forKey: userListKey)
         }
+    }
+    
+    func updateUserList() {
+        var userList = getUserList()
+        guard let updateUser = getUser() else { return }
+        let optionalIndex = userList.firstIndex { user in
+            user.id == updateUser.id
+        }
+        guard let index = optionalIndex else { return }
+        userList[index] = updateUser
+        updateUserDefaults(userList)
     }
     
     func createUser(_ user: User) {
