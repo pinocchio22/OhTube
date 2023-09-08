@@ -15,7 +15,7 @@ final class LoginViewController: UIViewController {
     private var id: String?
     private var passWord: String?
     private var formIsValid: Bool { id?.isEmpty == false && passWord?.isEmpty == false }
-    private var loginButtonBackgroundColor: UIColor { formIsValid ? UIColor.systemPink : UIColor.lightGray }
+    private var loginButtonBackgroundColor: UIColor { formIsValid ? UIColor.red : UIColor.lightGray }
     
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
@@ -56,7 +56,7 @@ final class LoginViewController: UIViewController {
     
     private func configure(_ button: UIButton) {
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.systemPink.cgColor
+        button.layer.borderColor = UIColor.red.cgColor
         button.layer.cornerRadius = 5
     }
     
@@ -64,7 +64,7 @@ final class LoginViewController: UIViewController {
         loginButton.layer.borderColor = UIColor.clear.cgColor
         idTextField.textContentType = .name
         passWordTextField.isSecureTextEntry = true
-        passWordTextField.textContentType = .oneTimeCode
+        passWordTextField.textContentType = .newPassword
     }
     
     private func updateForm(button: UIButton) {

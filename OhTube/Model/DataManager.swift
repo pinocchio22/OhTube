@@ -45,6 +45,19 @@ final class DataManager {
         return nil
     }
     
+    func updateUser(_ user: User) {
+        let userList = getUserList()
+        let nowUser = getUser()
+        for item in userList {
+            if nowUser?.id == item.id {
+                guard var newUser = nowUser else { return }
+                newUser = user
+                updateUserDefaults(newUser)
+                updateUserList()
+            }
+        }
+    }
+    
     func isLoginState() -> Bool {
         return userDefaults.bool(forKey: isLoginKey)
     }
@@ -72,6 +85,17 @@ final class DataManager {
         if let encodedUserList = try? JSONEncoder().encode(userList) {
             self.userDefaults.set(encodedUserList, forKey: userListKey)
         }
+    }
+    
+    func updateUserList() {
+        var userList = getUserList()
+        guard let updateUser = getUser() else { return }
+        let optionalIndex = userList.firstIndex { user in
+            user.id == updateUser.id
+        }
+        guard let index = optionalIndex else { return }
+        userList[index] = updateUser
+        updateUserDefaults(userList)
     }
     
     func createUser(_ user: User) {
