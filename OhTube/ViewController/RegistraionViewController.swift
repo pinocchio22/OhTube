@@ -21,7 +21,7 @@ final class RegistraionViewController: UIViewController {
     private var passWord: String?
     private var checkedPassWord: String?
     private var idIsValid: Bool {
-        nickName?.isEmpty == false &&
+        id?.isEmpty == false &&
         checkValidate(id: id)
     }
     private var passWordIsValid: Bool {
@@ -111,7 +111,6 @@ final class RegistraionViewController: UIViewController {
         passWordTextField.textContentType = .oneTimeCode
         checkPassWordTextField.isSecureTextEntry = true
         checkPassWordTextField.textContentType = .oneTimeCode
-        checkedPassWordLabel.isHidden = true
     }
     
     // MARK: - Constraints
@@ -151,7 +150,7 @@ final class RegistraionViewController: UIViewController {
     }
     
     private func updateIdForm() {
-        passWordValidateLabel.isHidden = false
+        checkIdLabel.isHidden = false
         if idIsValid == true {
             checkIdLabel.textColor = .blue
             checkIdLabel.text = "* 사용 가능한 아이디입니다."
@@ -166,22 +165,22 @@ final class RegistraionViewController: UIViewController {
         guard let passWord = self.passWord else { return }
         passWordValidateLabel.isHidden = false
         if checkValidate(passWord: passWord) == true {
-            checkedPassWordLabel.text = "* 비밀번호가 일치합니다."
-            checkedPassWordLabel.textColor = .blue
+            passWordValidateLabel.text = "* 사용 가능한 비밀번호입니다."
+            passWordValidateLabel.textColor = .blue
         }
         if checkValidate(passWord: passWord) == false {
-            passWordValidateLabel.text = "* 비밀번호가 일치하지 않습니다."
-            checkedPassWordLabel.textColor = .red
+            passWordValidateLabel.text = "* 형식에 맞지 않는 비밀번호입니다."
+            passWordValidateLabel.textColor = .red
         }
     }
     
     private func updateCheckPassWordForm() {
         checkedPassWordLabel.isHidden = false
-        if passWord == checkedPassWord {
+        if passWord == checkedPassWord && passWord?.isEmpty == false {
             checkedPassWordLabel.text = "* 비밀번호가 일치합니다."
             checkedPassWordLabel.textColor = .blue
         }
-        if passWord != checkedPassWord {
+        if passWord != checkedPassWord && passWord?.isEmpty == false {
             checkedPassWordLabel.text = "* 비밀번호가 일치하지 않습니다."
             checkedPassWordLabel.textColor = .red
         }
