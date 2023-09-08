@@ -31,26 +31,6 @@ class MyPageViewController: UIViewController {
         idLabel.text = getUserInformation?.id
         nickNameLabel.text = getUserInformation?.nickName
     }
-    
-    
-//    @IBOutlet weak var titleLabel: UILabel!
-//    @IBOutlet weak var idTextField: UITextField!
-//    @IBOutlet weak var nickNameTextField: UITextField!
-//    @IBOutlet weak var passWordTextField: UITextField!
-//    @IBOutlet weak var passWordSecureButton: UIButton!
-//    @IBOutlet weak var checkPassWordTextField: UITextField!
-//    @IBOutlet weak var checkPassWordSecureButton: UIButton!
-//    @IBOutlet weak var checkedPassWordLabel: UILabel!
-//    @IBOutlet weak var backButton: UIButton!
-//    @IBOutlet weak var startButton: UIButton!
-    
-//   텍스트필드 수정 불가 만드는 메서드
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        if textField == moveVC.idTextField {
-//            return false
-//        }
-//        return true
-//    }
     private func EditMyPage() {
         let storyBoard = UIStoryboard(name: "RegistrationScene", bundle: nil)
         let moveVC = storyBoard.instantiateViewController(withIdentifier: RegistraionViewController.identifier) as! RegistraionViewController
@@ -59,11 +39,6 @@ class MyPageViewController: UIViewController {
         moveVC.reuseTitle = "개인정보수정 페이지"
         moveVC.resueStartButton = "수정하기"
         self.present(moveVC, animated: true, completion: nil)
-        moveVC.idTextField.text = getUserInformation?.id
-        moveVC.nickNameTextField.text = getUserInformation?.nickName
-        moveVC.passWordTextField.text = getUserInformation?.passWord
-        moveVC.checkPassWordTextField.text = getUserInformation?.passWord
-        moveVC.idTextField.isUserInteractionEnabled = false
     }
     
     private func customProfileButton() {
