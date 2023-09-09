@@ -51,10 +51,13 @@ final class MainViewController: UIViewController {
         let refresh = UIRefreshControl()
         refresh.tintColor = UIColor.lightGray
         refresh.translatesAutoresizingMaskIntoConstraints = false
+        refresh.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         return refresh
     }()
     
-    
+    @objc private func refreshData() {
+        youtubeArray.randomElement()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,6 +99,7 @@ final class MainViewController: UIViewController {
         categoryCollectionView.delegate = self
         collectionView.tag = 1
         categoryCollectionView.tag = 2
+        collectionView.refreshControl = refreshControl
     }
     
     private func collectionMakeUI() {
