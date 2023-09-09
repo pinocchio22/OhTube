@@ -258,7 +258,7 @@ final class RegistraionViewController: UIViewController {
     
     // MARK: - Show Alert
     private func showAlert() {
-        let alert = UIAlertController(title: "", message: "중복된 아이디를 사용할 수 없습니다.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "중복된 아이디", message: "아이디를 다시 입력해주세요.", preferredStyle: .alert)
         let ok = UIAlertAction(title: "확인", style: .cancel)
         alert.addAction(ok)
         present(alert, animated: true)
