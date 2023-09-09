@@ -14,6 +14,7 @@ final class RegistraionViewController: UIViewController {
     var reuseTitle: String? = "회원가입"
     var resueStartButton: String? = "시작하기"
     private var id: String?
+    private var checkedDuplicateId: String?
     private var nickName: String?
     private var passWord: String?
     private var checkedPassWord: String?
@@ -21,6 +22,9 @@ final class RegistraionViewController: UIViewController {
     private let maxTextCount = 20
     private var idIsValid: Bool {
         checkValidate(id: id)
+    }
+    private var idIsDuplicate: Bool {
+        checkDuplicate(id: id)
     }
     private var passWordIsValid: Bool {
         checkValidate(passWord: passWord)
@@ -30,6 +34,7 @@ final class RegistraionViewController: UIViewController {
     }
     private var formIsValid: Bool {
         idIsValid == true &&
+        id == checkedDuplicateId &&
         passWordIsValid == true &&
         checkPassWordIsValid == true
     }
@@ -37,7 +42,9 @@ final class RegistraionViewController: UIViewController {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var idTextField: UITextField!
+    @IBOutlet weak var checkDuplicateIdButton: UIButton!
     @IBOutlet weak var idValidateLabel: UIButton!
+    @IBOutlet weak var checkDuplicateIdLabel: UIButton!
     @IBOutlet weak var nickNameTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
     @IBOutlet weak var passWordSecureButton: UIButton!
@@ -82,10 +89,10 @@ final class RegistraionViewController: UIViewController {
     
     private func setupUser() {
         guard let user = dataManager.getUser() else { return }
-        self.id = user.id
-        self.nickName = user.nickName
-        self.passWord = user.passWord
-        self.checkedPassWord = user.passWord
+        id = user.id
+        nickName = user.nickName
+        passWord = user.passWord
+        checkedPassWord = user.passWord
         setupUserData(user)
     }
     
@@ -98,6 +105,7 @@ final class RegistraionViewController: UIViewController {
 
     // MARK: - Configure
     private func configureUI() {
+        configure(checkDuplicateIdButton)
         configure(backButton)
         configure(startButton)
         configure(idTextField)
@@ -169,6 +177,10 @@ final class RegistraionViewController: UIViewController {
         startButton.backgroundColor = startButtonBackgroundColor
         if formIsValid == true { startButton.isEnabled = true }
         if formIsValid == false { startButton.isEnabled = false }
+        if id != checkedDuplicateId {
+            checkDuplicateIdLabel.tintColor = .red
+            checkDuplicateIdLabel.titleLabel?.textColor = .red
+        }
         updateIdForm()
         updatePassWordForm()
         updateCheckPassWordForm()
@@ -183,6 +195,17 @@ final class RegistraionViewController: UIViewController {
         if idIsValid == false {
             idValidateLabel.tintColor = .red
             idValidateLabel.titleLabel?.textColor = .red
+        }
+    }
+    
+    private func updateDuplicateIdForm() {
+        if idIsDuplicate == true {
+            checkDuplicateIdLabel.tintColor = .blue
+            checkDuplicateIdLabel.titleLabel?.textColor = .blue
+        }
+        if idIsDuplicate == false {
+            checkDuplicateIdLabel.tintColor = .red
+            checkDuplicateIdLabel.titleLabel?.textColor = .red
         }
     }
     
@@ -217,7 +240,8 @@ final class RegistraionViewController: UIViewController {
         return pred.evaluate(with: id)
     }
     
-    private func checkDuplicate(id: String) -> Bool {
+    private func checkDuplicate(id: String?) -> Bool {
+        guard let _ = self.id else { return false }
         let userList = dataManager.getUserList()
         for user in userList {
             if user.id == self.id {
@@ -260,6 +284,12 @@ final class RegistraionViewController: UIViewController {
             return
         }
     }
+    
+    @IBAction func checkDuplicateIdButtonTapped(_ sender: UIButton) {
+        updateDuplicateIdForm()
+        checkedDuplicateId = id
+    }
+    
     
     @IBAction func passWordSecureButtonTapped(_ sender: UIButton) {
         if passWordTextField.isSecureTextEntry == true {
