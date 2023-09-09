@@ -72,13 +72,13 @@ final class NetworkManager {
             let video = try decoder.decode(welcome.self, from: data)
             return videoforEach(video: video)
             // 실패
-        } catch let DecodingError.dataCorrupted(context) {
+        } catch DecodingError.dataCorrupted(_) {
             return nil
-        } catch let DecodingError.keyNotFound(key, context) {
+        } catch DecodingError.keyNotFound(_, _) {
             return nil
-        } catch let DecodingError.valueNotFound(value, context) {
+        } catch DecodingError.valueNotFound(_, _) {
             return nil
-        } catch let DecodingError.typeMismatch(type, context)  {
+        } catch DecodingError.typeMismatch(_, _)  {
             return nil
         } catch {
             return nil

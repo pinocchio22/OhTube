@@ -56,7 +56,11 @@ final class MainViewController: UIViewController {
     }()
     
     @objc private func refreshData() {
-        youtubeArray.randomElement()
+        youtubeArray.shuffle()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+        refreshControl.endRefreshing()
     }
     
     override func viewDidLoad() {
@@ -233,6 +237,7 @@ extension MainViewController: UICollectionViewDelegate {
             self.navigationController?.pushViewController(detailViewController, animated: true)
             
         } else if collectionView.tag == 2 {
+            current = 0
             currentCategory = category[indexPath.item]
             let indexPath = IndexPath(item: 0, section: 0)
             self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
@@ -259,7 +264,7 @@ extension MainViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
-        if indexPath.item == youtubeArray.count - 1 {
+        if indexPath.item == youtubeArray.count - 1 && current < 50 {
             switch currentCategory {
             case "전체":
                 networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
