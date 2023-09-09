@@ -23,9 +23,7 @@ final class RegistraionViewController: UIViewController {
     private var idIsValid: Bool {
         checkValidate(id: id)
     }
-    private var idIsDuplicate: Bool {
-        checkDuplicate(id: id)
-    }
+    private var idIsDuplicate: Bool?
     private var passWordIsValid: Bool {
         checkValidate(passWord: passWord)
     }
@@ -34,6 +32,7 @@ final class RegistraionViewController: UIViewController {
     }
     private var formIsValid: Bool {
         idIsValid == true &&
+        idIsDuplicate == false &&
         id == checkedDuplicateId &&
         passWordIsValid == true &&
         checkPassWordIsValid == true
@@ -199,13 +198,13 @@ final class RegistraionViewController: UIViewController {
     }
     
     private func updateDuplicateIdForm() {
-        if idIsDuplicate == true {
-            checkDuplicateIdLabel.tintColor = .blue
-            checkDuplicateIdLabel.titleLabel?.textColor = .blue
-        }
-        if idIsDuplicate == false {
+        if checkDuplicate(id: id) == true {
             checkDuplicateIdLabel.tintColor = .red
             checkDuplicateIdLabel.titleLabel?.textColor = .red
+        }
+        if checkDuplicate(id: id) == false {
+            checkDuplicateIdLabel.tintColor = .blue
+            checkDuplicateIdLabel.titleLabel?.textColor = .blue
         }
     }
     
@@ -245,16 +244,24 @@ final class RegistraionViewController: UIViewController {
         let userList = dataManager.getUserList()
         for user in userList {
             if user.id == self.id {
-                return false
+                return true
             }
         }
-        return true
+        return false
     }
     
     private func checkValidate(passWord: String?) -> Bool {
         guard let passWord = self.passWord else { return false }
         let pred = NSPredicate(format: "SELF MATCHES %@", RegistraionForm.passWordRegex)
         return pred.evaluate(with: passWord)
+    }
+    
+    // MARK: - Show Alert
+    private func showAlert() {
+        let alert = UIAlertController(title: "", message: "중복된 아이디를 사용할 수 없습니다.", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .cancel)
+        alert.addAction(ok)
+        present(alert, animated: true)
     }
     
     // MARK: - Actions
@@ -286,10 +293,19 @@ final class RegistraionViewController: UIViewController {
     }
     
     @IBAction func checkDuplicateIdButtonTapped(_ sender: UIButton) {
-        updateDuplicateIdForm()
         checkedDuplicateId = id
+        if checkDuplicate(id: id) == true {
+            showAlert()
+            updateDuplicateIdForm()
+            idIsDuplicate = true
+            updateForm()
+        }
+        if checkDuplicate(id: id) == false {
+            updateDuplicateIdForm()
+            idIsDuplicate = false
+            updateForm()
+        }
     }
-    
     
     @IBAction func passWordSecureButtonTapped(_ sender: UIButton) {
         if passWordTextField.isSecureTextEntry == true {
