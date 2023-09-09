@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewCategoryCollectionViewCell: UICollectionViewCell {
+final class MainViewCategoryCollectionViewCell: UICollectionViewCell {
     
     
     var categoryLabel: UILabel = {

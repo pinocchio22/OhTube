@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainCollectionViewCell: UICollectionViewCell {
+final class MainCollectionViewCell: UICollectionViewCell {
 
     
     var videoThumbnailImage: UIImageView = {
@@ -68,7 +68,7 @@ class MainCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var labelCountstackView: UIStackView = {
+    private lazy var labelCountstackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [videoViewCountLabel, videoDateLabel, labelOfNil])
         stack.axis = .horizontal
         stack.spacing = 20
@@ -78,7 +78,7 @@ class MainCollectionViewCell: UICollectionViewCell {
         return stack
     }()
     
-    lazy var labelsStackView: UIStackView = {
+    private lazy var labelsStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [videoTitleLabel, channelNameLabel,labelCountstackView])
         stack.axis = .vertical
         stack.spacing = 5
