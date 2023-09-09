@@ -27,7 +27,7 @@ class MainCollectionViewCell: UICollectionViewCell {
     var videoTitleLabel: UILabel = {
         let title = UILabel()
         title.font = UIFont.boldSystemFont(ofSize: 20)
-        title.textColor = .black
+        title.textColor = UIColor.black
         title.numberOfLines = 0
         title.sizeToFit()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +37,8 @@ class MainCollectionViewCell: UICollectionViewCell {
     var channelNameLabel: UILabel = {
         let title = UILabel()
         title.font = Font.contentFont
-        title.textColor = .black
+        title.backgroundColor = UIColor.clear
+        title.textColor = UIColor.black
         title.numberOfLines = 0
         title.sizeToFit()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +48,7 @@ class MainCollectionViewCell: UICollectionViewCell {
     var videoViewCountLabel: UILabel = {
         let title = UILabel()
         title.font = Font.contentFont
-        title.textColor = .black
+        title.textColor = UIColor.black
         title.numberOfLines = 0
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
@@ -56,7 +57,7 @@ class MainCollectionViewCell: UICollectionViewCell {
     var videoDateLabel: UILabel = {
         let title = UILabel()
         title.font = Font.contentFont
-        title.textColor = .black
+        title.textColor = UIColor.black
         title.numberOfLines = 0
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
@@ -108,7 +109,7 @@ class MainCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        videoThumbnailImage.image = nil//UIImage(systemName: "square.and.arrow.up")
+        videoThumbnailImage.image = nil //UIImage(systemName: "square.and.arrow.up")
         channelImage.image = UIImage(systemName: "square.and.arrow.up")
         videoTitleLabel.text = nil
         channelNameLabel.text = nil
@@ -151,7 +152,8 @@ class MainCollectionViewCell: UICollectionViewCell {
             labelsStackView.topAnchor.constraint(equalTo: self.channelImage.topAnchor),
             labelsStackView.bottomAnchor.constraint(equalTo: self.channelImage.bottomAnchor),
         
-            channelNameLabel.heightAnchor.constraint(equalToConstant: 16)
+            videoTitleLabel.heightAnchor.constraint(equalToConstant: 22),
+            labelCountstackView.heightAnchor.constraint(equalToConstant: 12)
         ])
         
     }

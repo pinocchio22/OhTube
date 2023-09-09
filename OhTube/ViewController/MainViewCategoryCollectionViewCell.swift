@@ -12,8 +12,8 @@ class MainViewCategoryCollectionViewCell: UICollectionViewCell {
     
     var categoryLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .white
-        label.tintColor = .black
+        label.backgroundColor = UIColor.white
+        label.tintColor = UIColor.black
         label.textAlignment = .center
         label.layer.borderColor = UIColor.black.cgColor
         label.layer.borderWidth = 1.5
