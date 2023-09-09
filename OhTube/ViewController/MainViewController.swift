@@ -3,10 +3,6 @@
 //  OhTube
 //
 //  Created by t2023-m0056 on 2023/09/04.
-//
-// 해야 할 일
-// 1. 페이지 네이션 구현
-
 
 
 import UIKit
@@ -19,40 +15,49 @@ final class MainViewController: UIViewController {
     
     private let category: [String] = ["전체","예능","스포츠","음악","게임","영화","재미"]
     
-    private var isSearchButtonPressed = false
-    private var isSearching = false
-    
-    
-//    var currentPage = 0
-//    var maxResult = 40
+    private var currentCategory: String = "전체"
+    private var current = 0
     
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색어를 입력해주세요"
         searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
-        searchController.searchBar.tintColor = .black
+        searchController.searchBar.tintColor = UIColor.black
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.autocapitalizationType = .none
         return searchController
     }()
     
-    var collectionView: UICollectionView = {
+    private var collectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
     
-    let categoryCollectionHorizontal = UICollectionViewFlowLayout()
+    private let categoryCollectionHorizontal = UICollectionViewFlowLayout()
     
-    lazy var categoryCollectionView: UICollectionView = {
+    private lazy var categoryCollectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collection.showsHorizontalScrollIndicator = false
+        collection.showsHorizontalScrollIndicator = false //스크롤바 삭제
         categoryCollectionHorizontal.scrollDirection = .horizontal
         collection.collectionViewLayout = categoryCollectionHorizontal
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
+    
+    
+    private let refreshControl: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.tintColor = UIColor.lightGray
+        refresh.translatesAutoresizingMaskIntoConstraints = false
+        refresh.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return refresh
+    }()
+    
+    @objc private func refreshData() {
+        youtubeArray.randomElement()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,6 +99,7 @@ final class MainViewController: UIViewController {
         categoryCollectionView.delegate = self
         collectionView.tag = 1
         categoryCollectionView.tag = 2
+        collectionView.refreshControl = refreshControl
     }
     
     private func collectionMakeUI() {
@@ -112,21 +118,18 @@ final class MainViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
         ])
     }
-    func networkingMakeUI(categoryId: String) {
-        NetworkManager.shared.fetchVideo(category: categoryId) { result in
+    private func networkingMakeUI(categoryId: String) {
+        let next = current + 3
+        NetworkManager.shared.fetchVideo(category: categoryId, maxResult: next) { result in
             switch result {
             case .success(let tubedata):
-                //self.currentPage += 1
-//                print("데이터 잘 받음")
-                self.youtubeArray = tubedata
-                
-                dump(self.youtubeArray)
+                self.youtubeArray.removeAll()
+                self.youtubeArray += tubedata
+                self.current = next
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
             case .failure(_): break
-//                print("데이터 받아오기 에러 ")
-//                print(error.localizedDescription)
             }
         }
     }
@@ -137,14 +140,7 @@ final class MainViewController: UIViewController {
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
- 
-//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        let currentRow = indexPath.row
-//        if (currentRow % maxResult) == maxResult - 5
-//            && (currentRow / maxResult) == (currentPage) {
-//            networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
-//        }
-//    }
+   
 }
 
 extension MainViewController: UICollectionViewDataSource {
@@ -184,7 +180,6 @@ extension MainViewController: UICollectionViewDataSource {
                 cell.videoViewCountLabel.text = "\(searchResultArray[indexPath.row].formatViewCount) 조회"
                 cell.videoDateLabel.text = searchResultArray[indexPath.row].uploadDateString
                 return cell
-                
             } else if !isFiltering() {
                 let url = URL(string: youtubeArray[indexPath.row].thumbNail)
                 cell.videoThumbnailImage.load(url: url!)
@@ -195,10 +190,10 @@ extension MainViewController: UICollectionViewDataSource {
                 cell.videoDateLabel.text = youtubeArray[indexPath.row].uploadDateString
                 return cell
             }
-
         }
         return UICollectionViewCell()
     }
+    
 }
 
 
@@ -221,7 +216,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
             label.text = category
             label.sizeToFit()
             let labelSize = label.frame.size
-            return CGSize(width: labelSize.width + 20, height: labelSize.height + 10) // Add some padding
+            return CGSize(width: labelSize.width + 20, height: labelSize.height + 10)
         }
         return CGSize(width: 0, height: 0)
     }
@@ -238,14 +233,12 @@ extension MainViewController: UICollectionViewDelegate {
             self.navigationController?.pushViewController(detailViewController, animated: true)
             
         } else if collectionView.tag == 2 {
-            let selectedCategory = category[indexPath.item]
+            currentCategory = category[indexPath.item]
             let indexPath = IndexPath(item: 0, section: 0)
             self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-            switch selectedCategory {
+            switch currentCategory {
             case "전체":
                 networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
-                let indexPath:IndexPath = IndexPath(row: indexPath.row, section: 0)
-                self.collectionView.scrollsToTop
             case "예능":
                 networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.entertainment)
             case "스포츠":
@@ -264,45 +257,61 @@ extension MainViewController: UICollectionViewDelegate {
         }
     }
 
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+
+        if indexPath.item == youtubeArray.count - 1 {
+            switch currentCategory {
+            case "전체":
+                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
+            case "예능":
+                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.entertainment)
+            case "스포츠":
+                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.sport)
+            case "음악":
+                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.music)
+            case "게임":
+                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.gaming)
+            case "영화":
+                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.filmAndAnimation)
+            case "재미":
+                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.comedy)
+            default:
+                break
+            }
+        }
+    }
 }
 
 extension MainViewController: UISearchBarDelegate, UISearchResultsUpdating {
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-         searchBar.resignFirstResponder()
-         isSearchButtonPressed = true
-         searchBar.setShowsCancelButton(false, animated: true)
-         performSearch()
-     }
-
-
     func updateSearchResults(for searchController: UISearchController) {
-        if isSearchButtonPressed {
-            isSearchButtonPressed = false
-            if let searchText = searchController.searchBar.text?.lowercased(), !searchText.isEmpty {
-                performSearch()
-            }
-        } else {
-            isSearching = !searchController.searchBar.text!.isEmpty
-        }
-    }
+        guard let searchText = searchController.searchBar.text?.lowercased() else { return }
 
-    private func performSearch() {
-        if let searchText = searchController.searchBar.text?.lowercased(), !searchText.isEmpty {
-            searchResultArray = youtubeArray.filter { $0.title.lowercased().contains(searchText) }
-            collectionView.reloadData()
-        }
-    }
-    // 캔슬 버튼
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        isSearching = false
-        searchResultArray.removeAll()
+        searchResultArray = youtubeArray.filter { $0.title.lowercased().contains(searchText) }
+
         collectionView.reloadData()
     }
+    
+    //검색창 클릭 시 키보드 올리기
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    // 캔슬 버튼
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
     // 캔슬버튼 보이게 하기
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
     }
+    //검색 결과를 업데이트하는 코드
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        updateSearchResults(for: searchController)
+    }
+    
+   
 }
 
 

@@ -29,24 +29,21 @@ final class NetworkManager {
     
     
     // 카테고리별 (일반적)네트워킹 요청하는 함수
-    func fetchVideo(category: String, completion: @escaping NetworkCompletion) {
-        let urlString = "\(YouTubeAPI.requestUrl)\(YouTubeAPI.reQuestInfo)&\(YouTubeAPI.chart)&\(YouTubeAPI.apiKey)&\(YouTubeAPI.maxResults)\(category)&\(YouTubeAPI.regionCode)"
+    func fetchVideo(category: String,maxResult: Int ,completion: @escaping NetworkCompletion) {
+        let urlString = "\(YouTubeAPI.requestUrl)\(YouTubeAPI.reQuestInfo)&\(YouTubeAPI.chart)&\(YouTubeAPI.apiKey)&\(YouTubeAPI.maxResults)\(maxResult)&\(category)&\(YouTubeAPI.regionCode)"
         
         performRequest(with: urlString) { result in
             completion(result)
         }
     }
     
-    // 실제 Request하는 함수
     private func performRequest(with urlString: String, completion: @escaping NetworkCompletion) {
-//        print(#function)
         guard let url = URL(string: urlString) else { return }
         
         let session = URLSession(configuration: .default)
         
         let task = session.dataTask(with: url) { (data, response, error) in
             if error != nil {
-//                print(error!)
                 completion(.failure(.networkingError))
                 return
             }
@@ -58,10 +55,8 @@ final class NetworkManager {
             
             // 결과를 받음
             if let videos = self.parseJSON(safeData) {
-//                print("Parse 실행")
                 completion(.success(videos))
             } else {
-//                print("Parse 실패")
                 completion(.failure(.parseError))
             }
         }
@@ -70,7 +65,6 @@ final class NetworkManager {
     
     // 받아본 데이터 분석하는 함수 (동기적 실행)
     private func parseJSON(_ data: Data) -> [Video]? {
-        //var youtubeArray: [Video] = []
         // 성공
         do {
             let decoder = JSONDecoder()
@@ -79,22 +73,14 @@ final class NetworkManager {
             return videoforEach(video: video)
             // 실패
         } catch let DecodingError.dataCorrupted(context) {
-//            print(context)
             return nil
         } catch let DecodingError.keyNotFound(key, context) {
-//            print("Key '\(key)' not found:", context.debugDescription)
-//            print("codingPath:", context.codingPath)
             return nil
         } catch let DecodingError.valueNotFound(value, context) {
-//            print("Value '\(value)' not found:", context.debugDescription)
-//            print("codingPath:", context.codingPath)
             return nil
         } catch let DecodingError.typeMismatch(type, context)  {
-//            print("Type '\(type)' mismatch:", context.debugDescription)
-//            print("codingPath:", context.codingPath)
             return nil
         } catch {
-//            print("error: ", error)
             return nil
         }
     }
