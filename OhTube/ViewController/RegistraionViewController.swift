@@ -20,21 +20,18 @@ final class RegistraionViewController: UIViewController {
     private let dataManager = DataManager.shared
     private let maxTextCount = 20
     private var idIsValid: Bool {
-        id?.isEmpty == false &&
         checkValidate(id: id)
     }
     private var passWordIsValid: Bool {
-        passWord?.isEmpty == false &&
-        passWord == checkedPassWord &&
         checkValidate(passWord: passWord)
     }
     private var checkPassWordIsValid: Bool {
-        passWordIsValid == true &&
-        checkedPassWord?.isEmpty == false
+        passWord == checkedPassWord
     }
     private var formIsValid: Bool {
         idIsValid == true &&
-        passWordIsValid == true
+        passWordIsValid == true &&
+        checkPassWordIsValid == true
     }
     private var startButtonBackgroundColor: UIColor { formIsValid ? UIColor.red : UIColor.lightGray }
     
@@ -73,23 +70,30 @@ final class RegistraionViewController: UIViewController {
         setKeyboardNotification()
     }
     
-    // MARK: - Data Setting
-    func setupData() {
-        let user = dataManager.getUser()
-        idTextField.text = user?.id
-        nickNameTextField.text = user?.nickName
-        passWordTextField.text = user?.passWord
-        checkPassWordTextField.text = user?.passWord
-        id = user?.id
-        nickName = user?.nickName
-        passWord = user?.passWord
-        checkedPassWord = user?.passWord
-        titleLabel.text = self.reuseTitle
-        startButton.setTitle(self.resueStartButton, for: .normal)
+    // MARK: - EditProfile Transition Setup
+    func setupEditProfile() {
+        setupUser()
+        configure()
         idTextField.isEnabled = false
-        idTextField.backgroundColor = .lightGray.withAlphaComponent(0.8)
+        idTextField.backgroundColor = .lightGray.withAlphaComponent(0.5)
         idTextField.layer.borderColor = UIColor.clear.cgColor
         idValidateLabel.isHidden = true
+    }
+    
+    private func setupUser() {
+        guard let user = dataManager.getUser() else { return }
+        self.id = user.id
+        self.nickName = user.nickName
+        self.passWord = user.passWord
+        self.checkedPassWord = user.passWord
+        setupUserData(user)
+    }
+    
+    private func setupUserData(_ user: User) {
+        idTextField.text = user.id
+        nickNameTextField.text = user.nickName
+        passWordTextField.text = user.passWord
+        checkPassWordTextField.text = user.passWord
     }
 
     // MARK: - Configure
@@ -100,7 +104,21 @@ final class RegistraionViewController: UIViewController {
         configure(nickNameTextField)
         configure(passWordTextField)
         configure(checkPassWordTextField)
+        configurePassWordTextField(passWordTextField)
+        configurePassWordTextField(checkPassWordTextField)
         configure()
+    }
+    
+    private func configure() {
+        titleLabel.text = self.reuseTitle
+        startButton.setTitle(resueStartButton, for: .normal)
+        startButton.layer.borderColor = UIColor.clear.cgColor
+    }
+    
+    private func configure(_ button: UIButton) {
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.red.cgColor
+        button.layer.cornerRadius = 5
     }
     
     private func configure(_ textField: UITextField) {
@@ -115,20 +133,9 @@ final class RegistraionViewController: UIViewController {
         textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
-    private func configure(_ button: UIButton) {
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.red.cgColor
-        button.layer.cornerRadius = 5
-    }
-    
-    private func configure() {
-        titleLabel.text = reuseTitle
-        startButton.setTitle(resueStartButton, for: .normal)
-        startButton.layer.borderColor = UIColor.clear.cgColor
-        passWordTextField.isSecureTextEntry = true
-        passWordTextField.textContentType = .oneTimeCode
-        checkPassWordTextField.isSecureTextEntry = true
-        checkPassWordTextField.textContentType = .oneTimeCode
+    private func configurePassWordTextField(_ textField: UITextField) {
+        textField.isSecureTextEntry = true
+        textField.textContentType = .newPassword
     }
     
     // MARK: - Constraints
@@ -203,7 +210,7 @@ final class RegistraionViewController: UIViewController {
         }
     }
     
-    // MARK: - Validation ID
+    // MARK: - Validation
     private func checkValidate(id: String?) -> Bool {
         guard let id = self.id else { return false }
         let pred = NSPredicate(format: "SELF MATCHES %@", RegistraionForm.idRegex)
@@ -220,14 +227,13 @@ final class RegistraionViewController: UIViewController {
         return true
     }
     
-    // MARK: - Validation Password
     private func checkValidate(passWord: String?) -> Bool {
         guard let passWord = self.passWord else { return false }
         let pred = NSPredicate(format: "SELF MATCHES %@", RegistraionForm.passWordRegex)
         return pred.evaluate(with: passWord)
     }
     
-    // MARK: - Action
+    // MARK: - Actions
     @objc func textDidChange(_ textField: UITextField) {
         if textField == idTextField { self.id = idTextField.text }
         if textField == nickNameTextField { self.nickName = nickNameTextField.text }
@@ -293,7 +299,6 @@ final class RegistraionViewController: UIViewController {
             dataManager.updateUser(user)
             dismiss(animated: true)
         }
-        
     }
     
     // MARK: - Touch
@@ -331,13 +336,13 @@ extension UIViewController {
     
     @objc func showKeyboard(_ notification: Notification) {
         if self.view.frame.origin.y == 0.0 {
-                self.view.frame.origin.y -= 45
+                self.view.frame.origin.y -= 85
         }
     }
 
     @objc private func hideKeyboard(_ notification: Notification) {
         if self.view.frame.origin.y != 0.0 {
-                self.view.frame.origin.y += 45
+                self.view.frame.origin.y += 85
         }
     }
 }
