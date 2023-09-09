@@ -174,27 +174,32 @@ final class RegistraionViewController: UIViewController {
     // MARK: - Update Form
     private func updateForm() {
         startButton.backgroundColor = startButtonBackgroundColor
-        if formIsValid == true { startButton.isEnabled = true }
-        if formIsValid == false { startButton.isEnabled = false }
+        formIsValid ? (startButton.isEnabled = true) : (startButton.isEnabled = false)
         if id != checkedDuplicateId {
             checkDuplicateIdLabel.tintColor = .red
             checkDuplicateIdLabel.titleLabel?.textColor = .red
         }
-        updateIdForm()
-        updatePassWordForm()
-        updateCheckPassWordForm()
+        if id?.isEmpty == false {
+            idIsValid ? updateValidForm(idValidateLabel) : updateInValidForm(idValidateLabel)
+        }
+        if passWord?.isEmpty == false {
+            passWordIsValid ? updateValidForm(passWordValidateLabel) : updateInValidForm(passWordValidateLabel)
+            checkPassWordIsValid ? updateValidForm(checkPassWordValidateLabel) : updateInValidForm(checkPassWordValidateLabel)
+        }
+        if checkedPassWord?.isEmpty == false {
+            passWordIsValid ? updateValidForm(passWordValidateLabel) : updateInValidForm(passWordValidateLabel)
+            checkPassWordIsValid ? updateValidForm(checkPassWordValidateLabel) : updateInValidForm(checkPassWordValidateLabel)
+        }
+    }
+
+    private func updateValidForm(_ label: UIButton) {
+        label.tintColor = .blue
+        label.titleLabel?.textColor = .blue
     }
     
-    private func updateIdForm() {
-        guard let _ = self.id else { return }
-        if idIsValid == true {
-            idValidateLabel.tintColor = .blue
-            idValidateLabel.titleLabel?.textColor = .blue
-        }
-        if idIsValid == false {
-            idValidateLabel.tintColor = .red
-            idValidateLabel.titleLabel?.textColor = .red
-        }
+    private func updateInValidForm(_ label: UIButton) {
+        label.tintColor = .red
+        label.titleLabel?.textColor = .red
     }
     
     private func updateDuplicateIdForm() {
@@ -205,30 +210,6 @@ final class RegistraionViewController: UIViewController {
         if checkDuplicate(id: id) == false {
             checkDuplicateIdLabel.tintColor = .blue
             checkDuplicateIdLabel.titleLabel?.textColor = .blue
-        }
-    }
-    
-    private func updatePassWordForm() {
-        guard let _ = self.passWord else { return }
-        if passWordIsValid == true {
-            passWordValidateLabel.tintColor = .blue
-            passWordValidateLabel.titleLabel?.textColor = .blue
-        }
-        if passWordIsValid == false {
-            passWordValidateLabel.tintColor = .red
-            passWordValidateLabel.titleLabel?.textColor = .red
-        }
-    }
-    
-    private func updateCheckPassWordForm() {
-        guard let _ = self.checkedPassWord else { return }
-        if checkPassWordIsValid == true {
-            checkPassWordValidateLabel.tintColor = .blue
-            checkPassWordValidateLabel.titleLabel?.textColor = .blue
-        }
-        if checkPassWordIsValid == false {
-            checkPassWordValidateLabel.tintColor = .red
-            checkPassWordValidateLabel.titleLabel?.textColor = .red
         }
     }
     
@@ -307,24 +288,26 @@ final class RegistraionViewController: UIViewController {
         }
     }
     
+    private func enableSecureText(update textField: UITextField, _ button: UIButton) {
+        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        textField.isSecureTextEntry = false
+    }
+    
+    private func disableSecureText(update textField: UITextField, _ button: UIButton) {
+        button.setImage(UIImage(systemName: "eye"), for: .normal)
+        textField.isSecureTextEntry = true
+    }
+    
     @IBAction func passWordSecureButtonTapped(_ sender: UIButton) {
-        if passWordTextField.isSecureTextEntry == true {
-            passWordSecureButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
-            passWordTextField.isSecureTextEntry = false
-        } else {
-            passWordSecureButton.setImage(UIImage(systemName: "eye"), for: .normal)
-            passWordTextField.isSecureTextEntry = true
-        }
+        passWordTextField.isSecureTextEntry ?
+        enableSecureText(update: passWordTextField, passWordSecureButton) :
+        disableSecureText(update: passWordTextField, passWordSecureButton)
     }
     
     @IBAction func checkPassWordSecureButtonTapped(_ sender: UIButton) {
-        if checkPassWordTextField.isSecureTextEntry == true {
-            checkPassWordSecureButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
-            checkPassWordTextField.isSecureTextEntry = false
-        } else {
-            checkPassWordSecureButton.setImage(UIImage(systemName: "eye"), for: .normal)
-            checkPassWordTextField.isSecureTextEntry = true
-        }
+        checkPassWordTextField.isSecureTextEntry ?
+        enableSecureText(update: checkPassWordTextField, checkPassWordSecureButton) :
+        disableSecureText(update: checkPassWordTextField, checkPassWordSecureButton)
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
