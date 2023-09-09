@@ -18,6 +18,7 @@ final class RegistraionViewController: UIViewController {
     private var passWord: String?
     private var checkedPassWord: String?
     private let dataManager = DataManager.shared
+    private let maxTextCount = 20
     private var idIsValid: Bool {
         id?.isEmpty == false &&
         checkValidate(id: id)
@@ -27,6 +28,10 @@ final class RegistraionViewController: UIViewController {
         passWord == checkedPassWord &&
         checkValidate(passWord: passWord)
     }
+    private var checkPassWordIsValid: Bool {
+        passWordIsValid == true &&
+        checkedPassWord?.isEmpty == false
+    }
     private var formIsValid: Bool {
         idIsValid == true &&
         passWordIsValid == true
@@ -35,14 +40,14 @@ final class RegistraionViewController: UIViewController {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var idTextField: UITextField!
-    @IBOutlet weak var checkIdLabel: UILabel!
+    @IBOutlet weak var idValidateLabel: UIButton!
     @IBOutlet weak var nickNameTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
     @IBOutlet weak var passWordSecureButton: UIButton!
-    @IBOutlet weak var passWordValidateLabel: UILabel!
+    @IBOutlet weak var passWordValidateLabel: UIButton!
     @IBOutlet weak var checkPassWordTextField: UITextField!
     @IBOutlet weak var checkPassWordSecureButton: UIButton!
-    @IBOutlet weak var checkedPassWordLabel: UILabel!
+    @IBOutlet weak var checkPassWordValidateLabel: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     
@@ -84,6 +89,7 @@ final class RegistraionViewController: UIViewController {
         idTextField.isEnabled = false
         idTextField.backgroundColor = .lightGray.withAlphaComponent(0.8)
         idTextField.layer.borderColor = UIColor.clear.cgColor
+        idValidateLabel.isHidden = true
     }
 
     // MARK: - Configure
@@ -162,39 +168,38 @@ final class RegistraionViewController: UIViewController {
     }
     
     private func updateIdForm() {
-        checkIdLabel.isHidden = false
+        guard let _ = self.id else { return }
         if idIsValid == true {
-            checkIdLabel.textColor = .blue
-            checkIdLabel.text = "* 사용 가능한 아이디입니다."
+            idValidateLabel.tintColor = .blue
+            idValidateLabel.titleLabel?.textColor = .blue
         }
         if idIsValid == false {
-            checkIdLabel.textColor = .red
-            checkIdLabel.text = "* 형식에 맞지 않는 아이디입니다."
+            idValidateLabel.tintColor = .red
+            idValidateLabel.titleLabel?.textColor = .red
         }
     }
     
     private func updatePassWordForm() {
-        guard let passWord = self.passWord else { return }
-        passWordValidateLabel.isHidden = false
-        if checkValidate(passWord: passWord) == true {
-            passWordValidateLabel.text = "* 사용 가능한 비밀번호입니다."
-            passWordValidateLabel.textColor = .blue
+        guard let _ = self.passWord else { return }
+        if passWordIsValid == true {
+            passWordValidateLabel.tintColor = .blue
+            passWordValidateLabel.titleLabel?.textColor = .blue
         }
-        if checkValidate(passWord: passWord) == false {
-            passWordValidateLabel.text = "* 형식에 맞지 않는 비밀번호입니다."
-            passWordValidateLabel.textColor = .red
+        if passWordIsValid == false {
+            passWordValidateLabel.tintColor = .red
+            passWordValidateLabel.titleLabel?.textColor = .red
         }
     }
     
     private func updateCheckPassWordForm() {
-        checkedPassWordLabel.isHidden = false
-        if passWord == checkedPassWord && passWord?.isEmpty == false {
-            checkedPassWordLabel.text = "* 비밀번호가 일치합니다."
-            checkedPassWordLabel.textColor = .blue
+        guard let _ = self.checkedPassWord else { return }
+        if checkPassWordIsValid == true {
+            checkPassWordValidateLabel.tintColor = .blue
+            checkPassWordValidateLabel.titleLabel?.textColor = .blue
         }
-        if passWord != checkedPassWord && passWord?.isEmpty == false {
-            checkedPassWordLabel.text = "* 비밀번호가 일치하지 않습니다."
-            checkedPassWordLabel.textColor = .red
+        if checkPassWordIsValid == false {
+            checkPassWordValidateLabel.tintColor = .red
+            checkPassWordValidateLabel.titleLabel?.textColor = .red
         }
     }
     
@@ -209,13 +214,9 @@ final class RegistraionViewController: UIViewController {
         let userList = dataManager.getUserList()
         for user in userList {
             if user.id == self.id {
-                checkIdLabel.text = "* 중복된 아이디입니다."
-                checkIdLabel.textColor = .red
                 return false
             }
         }
-        checkIdLabel.text = "* 사용 가능한 아이디입니다."
-        checkIdLabel.textColor = .blue
         return true
     }
     
@@ -318,7 +319,7 @@ extension RegistraionViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
-        return text.count < 20
+        return text.count < maxTextCount
     }
 }
 
