@@ -8,7 +8,6 @@
 import UIKit
 
 class CommentTableViewCell: UITableViewCell {
-    
     var commentName: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -30,6 +29,7 @@ class CommentTableViewCell: UITableViewCell {
         setUI()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -60,10 +60,4 @@ class CommentTableViewCell: UITableViewCell {
             commentContent.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
 }

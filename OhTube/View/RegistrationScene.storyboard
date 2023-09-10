@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -271,7 +270,7 @@
                         <outlet property="passWordSecureButton" destination="shD-7m-8Gd" id="NAp-Qb-UsW"/>
                         <outlet property="passWordTextField" destination="S8W-tJ-zgW" id="PHL-fN-fui"/>
                         <outlet property="passWordValidateLabel" destination="rEb-tI-WeN" id="X2y-t7-d4A"/>
-                        <outlet property="startButton" destination="23i-pn-yHM" id="Vpa-cI-4H1"/>
+                        <outlet property="startButtonTitle" destination="23i-pn-yHM" id="Vpa-cI-4H1"/>
                         <outlet property="titleLabel" destination="WrN-Jf-Woy" id="1mq-Jm-dco"/>
                     </connections>
                 </viewController>

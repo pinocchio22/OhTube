@@ -21,6 +21,7 @@ final class DataManager {
     private init() {}
     
     // MARK: - User
+
     private func searchUser(_ id: String) -> User {
         let userList = getUserList()
         for user in userList {
@@ -33,13 +34,14 @@ final class DataManager {
     
     private func updateUserDefaults(_ user: User) {
         if let encodedUser = try? JSONEncoder().encode(user) {
-            self.userDefaults.set(encodedUser, forKey: userKey)
+            userDefaults.set(encodedUser, forKey: userKey)
         }
     }
     
     func getUser() -> User? {
-        if let encodedUser = self.userDefaults.object(forKey: userKey) as? Data,
-           let user = try? JSONDecoder().decode(User.self, from: encodedUser) {
+        if let encodedUser = userDefaults.object(forKey: userKey) as? Data,
+           let user = try? JSONDecoder().decode(User.self, from: encodedUser)
+        {
             return user
         }
         return nil
@@ -71,11 +73,12 @@ final class DataManager {
         userDefaults.set(state, forKey: isLoginKey)
     }
     
-    
     // MARK: - UserList
+
     func getUserList() -> [User] {
-        if let encodedUserList = self.userDefaults.object(forKey: userListKey) as? Data,
-           let userList = try? JSONDecoder().decode(UserList.self, from: encodedUserList) {
+        if let encodedUserList = userDefaults.object(forKey: userListKey) as? Data,
+           let userList = try? JSONDecoder().decode(UserList.self, from: encodedUserList)
+        {
             return userList
         }
         return []
@@ -83,7 +86,7 @@ final class DataManager {
     
     private func updateUserDefaults(_ userList: UserList) {
         if let encodedUserList = try? JSONEncoder().encode(userList) {
-            self.userDefaults.set(encodedUserList, forKey: userListKey)
+            userDefaults.set(encodedUserList, forKey: userListKey)
         }
     }
     
@@ -105,9 +108,11 @@ final class DataManager {
     }
     
     // MARK: - Comment
+
     func getCommentList() -> [Comment] {
-        if let encodedCommentList = self.userDefaults.object(forKey: commentListKey) as? Data,
-           let commentList = try? JSONDecoder().decode(CommentList.self, from: encodedCommentList) {
+        if let encodedCommentList = userDefaults.object(forKey: commentListKey) as? Data,
+           let commentList = try? JSONDecoder().decode(CommentList.self, from: encodedCommentList)
+        {
             return commentList
         }
         return []
@@ -115,7 +120,7 @@ final class DataManager {
     
     private func updateUserDefaults(_ commentList: CommentList) {
         if let encodedCommentList = try? JSONEncoder().encode(commentList) {
-            self.userDefaults.set(encodedCommentList, forKey: commentListKey)
+            userDefaults.set(encodedCommentList, forKey: commentListKey)
         }
     }
     
@@ -126,6 +131,7 @@ final class DataManager {
     }
     
     // MARK: - LikedVideo
+
     func getLikedVideoList() -> [Video] {
         return (getUser()?.likedVideoList) ?? []
     }
@@ -137,7 +143,7 @@ final class DataManager {
     
     func deleteLikedVideo(_ video: Video) {
         var user = getUser()
-        user?.likedVideoList.removeAll{ $0.id == video.id }
+        user?.likedVideoList.removeAll { $0.id == video.id }
         updateUser(User(id: user!.id, nickName: user!.nickName, passWord: user!.passWord, likedVideoList: user!.likedVideoList))
     }
     

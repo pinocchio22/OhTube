@@ -11,6 +11,5 @@ struct User: Codable {
     var id: String
     var nickName: String
     var passWord: String
-//    var profileImage: UIImage
     var likedVideoList: [Video] = []
 }

@@ -9,6 +9,7 @@ import UIKit
 
 final class LoginViewController: UIViewController {
     // MARK: - Properties
+
     static let storyboardName = "LoginScene"
     static let identifier = "LoginViewController"
     private let dataManager = DataManager.shared
@@ -17,13 +18,14 @@ final class LoginViewController: UIViewController {
     private var formIsValid: Bool { id?.isEmpty == false && passWord?.isEmpty == false }
     private var loginButtonBackgroundColor: UIColor { formIsValid ? UIColor.red : UIColor.lightGray }
     
-    @IBOutlet weak var idTextField: UITextField!
-    @IBOutlet weak var passWordTextField: UITextField!
-    @IBOutlet weak var passWordSecureButton: UIButton!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var registrationButton: UIButton!
+    @IBOutlet var idTextField: UITextField!
+    @IBOutlet var passWordTextField: UITextField!
+    @IBOutlet var passWordSecureButton: UIButton!
+    @IBOutlet var loginButton: UIButton!
+    @IBOutlet var registrationButton: UIButton!
     
     // MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -31,6 +33,7 @@ final class LoginViewController: UIViewController {
     }
     
     // MARK: - Configure
+
     private func configureUI() {
         configure(loginButton)
         configure(registrationButton)
@@ -72,24 +75,24 @@ final class LoginViewController: UIViewController {
     private func userValidation() -> Bool {
         let userList = dataManager.getUserList()
         for user in userList {
-            if user.id == self.id && user.passWord == self.passWord {
+            if user.id == id && user.passWord == passWord {
                 return true
             }
         }
         return false
     }
     
-    func showToast(message : String) {
+    private func showToast(message: String) {
         let toastView = ToastView()
         toastView.configure()
         toastView.text = message
-        self.view.addSubview(toastView)
+        view.addSubview(toastView)
         toastView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            toastView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            toastView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -30),
-            toastView.widthAnchor.constraint(equalToConstant: self.view.frame.size.width / 2),
-            toastView.heightAnchor.constraint(equalToConstant: self.view.frame.height / 10)
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -30),
+            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 10)
         ])
         UIView.animate(withDuration: 2.5, delay: 0.2) {
             toastView.alpha = 0
@@ -99,9 +102,10 @@ final class LoginViewController: UIViewController {
     }
     
     // MARK: - Action
+
     @objc private func textDidChange(_ textField: UITextField) {
-        if textField == idTextField { self.id = idTextField.text }
-        if textField == passWordTextField { self.passWord = passWordTextField.text }
+        if textField == idTextField { id = idTextField.text }
+        if textField == passWordTextField { passWord = passWordTextField.text }
         updateForm()
     }
     
@@ -117,14 +121,14 @@ final class LoginViewController: UIViewController {
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         if userValidation() {
-            let moveVC = ViewController()
+            let moveVC = TabbarViewController()
             guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
             sceneDelegate.changeRootViewController(moveVC, animation: true)
         }
         if userValidation() == false {
             showToast(message: Message.toast)
         }
-        guard let id = self.id else { return }
+        guard let id = id else { return }
         dataManager.saveIslogin(true)
         dataManager.saveUser(id: id)
     }
@@ -137,12 +141,14 @@ final class LoginViewController: UIViewController {
     }
     
     // MARK: - Touch
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 }
 
 // MARK: - UITextField Delegate
+
 extension LoginViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 1

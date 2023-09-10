@@ -7,8 +7,7 @@
 
 import Foundation
 
-
-//MARK: - 에러 정의
+// MARK: - 에러 정의
 
 enum NetworkError: Error {
     case networkingError
@@ -17,20 +16,16 @@ enum NetworkError: Error {
 }
 
 final class NetworkManager {
-    
-    
     static let shared = NetworkManager()
     
     private init() {}
     
-    
-    //타입 별명 (치환)
+    // 타입 별명 (치환)
     typealias NetworkCompletion = (Result<[Video], NetworkError>) -> Void
     
-    
     // 카테고리별 (일반적)네트워킹 요청하는 함수
-    func fetchVideo(category: String,maxResult: Int ,completion: @escaping NetworkCompletion) {
-        let urlString = "\(YouTubeAPI.requestUrl)\(YouTubeAPI.reQuestInfo)&\(YouTubeAPI.chart)&\(YouTubeAPI.apiKey)&\(YouTubeAPI.maxResults)\(maxResult)&\(category)&\(YouTubeAPI.regionCode)"
+    func fetchVideo(category: String, maxResult: Int, completion: @escaping NetworkCompletion) {
+        let urlString = "\(YouTubeAPI.requestUrl)\(YouTubeAPI.reQuestInfo)&\(YouTubeAPI.chart)&\(Secret.apiKey)&\(YouTubeAPI.maxResults)\(maxResult)&\(category)&\(YouTubeAPI.regionCode)"
         
         performRequest(with: urlString) { result in
             completion(result)
@@ -42,7 +37,7 @@ final class NetworkManager {
         
         let session = URLSession(configuration: .default)
         
-        let task = session.dataTask(with: url) { (data, response, error) in
+        let task = session.dataTask(with: url) { data, _, error in
             if error != nil {
                 completion(.failure(.networkingError))
                 return
@@ -69,7 +64,7 @@ final class NetworkManager {
         do {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            let video = try decoder.decode(welcome.self, from: data)
+            let video = try decoder.decode(RawVideos.self, from: data)
             return videoforEach(video: video)
             // 실패
         } catch DecodingError.dataCorrupted(_) {
@@ -78,20 +73,18 @@ final class NetworkManager {
             return nil
         } catch DecodingError.valueNotFound(_, _) {
             return nil
-        } catch DecodingError.typeMismatch(_, _)  {
+        } catch DecodingError.typeMismatch(_, _) {
             return nil
         } catch {
             return nil
         }
     }
     
-    private func videoforEach(video: welcome) -> [Video] {
+    private func videoforEach(video: RawVideos) -> [Video] {
         var youtubeArray: [Video] = []
         video.items.forEach { result in
-            youtubeArray.append(Video(id: result.id, title: result.snippet.title, thumbNail: result.snippet.thumbnails.high.url, description: result.snippet.description, channelId: result.snippet.channelTitle, viewCount: result.statistics.viewCount, uploadDate: result.snippet.publishedAt, favorite: false))
+            youtubeArray.append(Video(id: result.id, title: result.snippet.title, thumbNail: result.snippet.thumbnails.high.url, description: result.snippet.description, channelName: result.snippet.channelTitle, viewCount: result.statistics.viewCount, uploadDate: result.snippet.publishedAt, favorite: false))
         }
         return youtubeArray
     }
-
-   
 }

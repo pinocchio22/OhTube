@@ -8,8 +8,6 @@
 import UIKit
 
 final class MainViewCategoryCollectionViewCell: UICollectionViewCell {
-    
-    
     var categoryLabel: UILabel = {
         let label = UILabel()
         label.layer.backgroundColor = UIColor.black.cgColor
@@ -29,6 +27,7 @@ final class MainViewCategoryCollectionViewCell: UICollectionViewCell {
         makeUI()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,13 +38,13 @@ final class MainViewCategoryCollectionViewCell: UICollectionViewCell {
     }
     
     private func makeUI() {
-        self.contentView.addSubview(categoryLabel)
+        contentView.addSubview(categoryLabel)
         
         NSLayoutConstraint.activate([
-            categoryLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
-            categoryLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 0),
-            categoryLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
-            categoryLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
+            categoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            categoryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
+            categoryLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            categoryLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         
         ])
     }

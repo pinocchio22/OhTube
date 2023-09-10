@@ -8,9 +8,9 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-    
     // MARK: variable
-    var commentList = DataManager.shared.getCommentList().sorted{ $0.date > $1.date }
+
+    var commentList = DataManager.shared.getCommentList().sorted { $0.date > $1.date }
     var likedVideoList = [Video]()
     var selectedVideo: Video?
     var currentUser = DataManager.shared.getUser()
@@ -205,6 +205,7 @@ class DetailViewController: UIViewController {
     }()
     
     // MARK: life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -235,7 +236,7 @@ class DetailViewController: UIViewController {
             profileImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             profileImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             profileImage.widthAnchor.constraint(equalToConstant: 60),
-            profileImage.heightAnchor.constraint(equalToConstant: 60)
+            profileImage.heightAnchor.constraint(equalToConstant: 60),
         ])
         
         profileImage.contentMode = .scaleAspectFill
@@ -244,7 +245,7 @@ class DetailViewController: UIViewController {
         profileImage.layer.borderWidth = 1
         profileImage.layer.borderColor = UIColor.clear.cgColor
         
-        profileImage.image = Util.util.imageWith(name: selectedVideo?.channelId)
+        profileImage.image = Util.util.imageWith(name: selectedVideo?.channelName)
     }
     
     func setTitleLabel() {
@@ -253,10 +254,10 @@ class DetailViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            titleLabel.heightAnchor.constraint(equalToConstant: 60)
+            titleLabel.heightAnchor.constraint(equalToConstant: 60),
         ])
         
-        titleLabel.text = selectedVideo?.channelId
+        titleLabel.text = selectedVideo?.channelName
     }
     
     func setVideoUView() {
@@ -266,7 +267,7 @@ class DetailViewController: UIViewController {
         NSLayoutConstraint.activate([
             videoWebView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             videoWebView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-            videoWebView.heightAnchor.constraint(equalToConstant: 250)
+            videoWebView.heightAnchor.constraint(equalToConstant: 250),
         ])
 
         videoWebView.allowsInlineMediaPlayback = true
@@ -275,6 +276,7 @@ class DetailViewController: UIViewController {
     }
     
     // MARK: infoView
+
     // set video info group
     func setInfoView() {
         view.addSubview(infoView)
@@ -311,7 +313,7 @@ class DetailViewController: UIViewController {
             viewCount.topAnchor.constraint(equalTo: videoTitle.bottomAnchor),
             viewCount.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             viewCount.bottomAnchor.constraint(equalTo: videoDescription.safeAreaLayoutGuide.topAnchor, constant: -10),
-            viewCount.widthAnchor.constraint(equalToConstant: 50)
+            viewCount.widthAnchor.constraint(equalToConstant: 50),
         ])
         
         viewCount.text = selectedVideo?.formatViewCount
@@ -345,7 +347,7 @@ class DetailViewController: UIViewController {
         likeButton.layer.borderWidth = 1
         likeButton.layer.borderColor = UIColor.black.cgColor
         
-        likeButton.setImage(DataManager.shared.getLikedVideoList().filter{ $0.id == selectedVideo?.id }.isEmpty ? UIImage(systemName: "bookmark") : UIImage(systemName: "bookmark.fill"), for: .normal)
+        likeButton.setImage(DataManager.shared.getLikedVideoList().filter { $0.id == selectedVideo?.id }.isEmpty ? UIImage(systemName: "bookmark") : UIImage(systemName: "bookmark.fill"), for: .normal)
         likeButton.addTarget(self, action: #selector(tappedLikeButton), for: .touchUpInside)
     }
     
@@ -353,7 +355,7 @@ class DetailViewController: UIViewController {
         NSLayoutConstraint.activate([
             videoDescription.leadingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             videoDescription.trailingAnchor.constraint(equalTo: infoView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            videoDescription.widthAnchor.constraint(equalTo: infoView.widthAnchor, constant:  -10),
+            videoDescription.widthAnchor.constraint(equalTo: infoView.widthAnchor, constant: -10),
         ])
         
         videoDescription.text = selectedVideo?.description
@@ -411,12 +413,13 @@ class DetailViewController: UIViewController {
     func setIconAdd() {
         NSLayoutConstraint.activate([
             iconAdd.widthAnchor.constraint(equalToConstant: 20),
-            iconAdd.heightAnchor.constraint(equalToConstant: 20)
+            iconAdd.heightAnchor.constraint(equalToConstant: 20),
         ])
         iconAdd.addTarget(self, action: #selector(tappedIconAdd), for: .touchUpInside)
     }
     
     // MARK: commentView
+
     // set comment group
     func setCommentView() {
         view.addSubview(commentView)
@@ -455,7 +458,7 @@ class DetailViewController: UIViewController {
             commentCount.topAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.topAnchor, constant: 5),
             commentCount.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -5),
             commentCount.widthAnchor.constraint(equalToConstant: 50),
-            commentCount.heightAnchor.constraint(equalToConstant: 20)
+            commentCount.heightAnchor.constraint(equalToConstant: 20),
         ])
         
         commentCount.text = "\(commentList.count)개"
@@ -466,7 +469,7 @@ class DetailViewController: UIViewController {
             commentSpacer.topAnchor.constraint(equalTo: commentTableView.safeAreaLayoutGuide.bottomAnchor),
             commentSpacer.leadingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             commentSpacer.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            commentSpacer.heightAnchor.constraint(equalToConstant: 0.5)
+            commentSpacer.heightAnchor.constraint(equalToConstant: 0.5),
         ])
     }
     
@@ -476,7 +479,7 @@ class DetailViewController: UIViewController {
             editCommentName.leadingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             editCommentName.bottomAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             editCommentName.widthAnchor.constraint(equalToConstant: 100),
-            editCommentName.heightAnchor.constraint(equalToConstant: 30)
+            editCommentName.heightAnchor.constraint(equalToConstant: 30),
         ])
         
         editCommentName.text = currentUser?.nickName
@@ -504,23 +507,23 @@ class DetailViewController: UIViewController {
             editCommentButton.trailingAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             editCommentButton.bottomAnchor.constraint(equalTo: commentView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             editCommentButton.widthAnchor.constraint(equalToConstant: 20),
-            editCommentButton.heightAnchor.constraint(equalToConstant: 20)
+            editCommentButton.heightAnchor.constraint(equalToConstant: 20),
         ])
         
         editCommentButton.addTarget(self, action: #selector(tappedEditButton), for: .touchUpInside)
     }
     
-    func showToast(message : String) {
+    func showToast(message: String) {
         let toastView = ToastView()
         toastView.configure()
         toastView.text = message
-        self.view.addSubview(toastView)
+        view.addSubview(toastView)
         toastView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            toastView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            toastView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50),
-            toastView.widthAnchor.constraint(equalToConstant: self.view.frame.size.width / 2),
-            toastView.heightAnchor.constraint(equalToConstant: self.view.frame.height / 10)
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 10),
         ])
         UIView.animate(withDuration: 2.5, delay: 0.2) {
             toastView.alpha = 0
@@ -530,12 +533,13 @@ class DetailViewController: UIViewController {
     }
     
     // MARK: @objc
+
     @objc func tappedLikeButton() {
         let tempSelecetedVideo = !selectedVideo!.favorite
         selectedVideo?.favorite = tempSelecetedVideo
         // save video
         DataManager.shared.tappedLikedButton(selectedVideo!)
-        likeButton.setImage(DataManager.shared.getLikedVideoList().filter{ $0.id == selectedVideo?.id }.isEmpty ? UIImage(systemName: "bookmark") : UIImage(systemName: "bookmark.fill"), for: .normal)
+        likeButton.setImage(DataManager.shared.getLikedVideoList().filter { $0.id == selectedVideo?.id }.isEmpty ? UIImage(systemName: "bookmark") : UIImage(systemName: "bookmark.fill"), for: .normal)
     }
     
     @objc func tappedIconLike() {
@@ -579,6 +583,7 @@ class DetailViewController: UIViewController {
 }
 
 // MARK: extension
+
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return commentList.count
@@ -598,28 +603,5 @@ extension DetailViewController: UIWebViewDelegate {
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
         indicator.stopAnimating()
-    }
-}
-
-extension UIViewController {
-    func setDetailKeyboardNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(showDetailKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(hideDetailKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func showDetailKeyboard(_ notification: Notification) {
-        if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-               let keyboardRectangle = keyboardFrame.cgRectValue
-                UIView.animate(
-                    withDuration: 0.3
-                    , animations: {
-                        self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
-                    }
-                )
-            }
-    }
-
-    @objc private func hideDetailKeyboard(_ notification: Notification) {
-        self.view.transform = .identity
     }
 }

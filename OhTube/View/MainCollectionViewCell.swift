@@ -8,8 +8,6 @@
 import UIKit
 
 final class MainCollectionViewCell: UICollectionViewCell {
-
-    
     var videoThumbnailImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +78,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var labelsStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [videoTitleLabel, channelNameLabel,labelCountstackView])
+        let stack = UIStackView(arrangedSubviews: [videoTitleLabel, channelNameLabel, labelCountstackView])
         stack.axis = .vertical
         stack.spacing = 5
         stack.alignment = .fill
@@ -89,14 +87,13 @@ final class MainCollectionViewCell: UICollectionViewCell {
         return stack
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeCollectionViewUI()
         cellSetting()
-        
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -104,13 +101,13 @@ final class MainCollectionViewCell: UICollectionViewCell {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         channelImage.contentMode = .scaleAspectFill
-        self.channelImage.layer.cornerRadius = self.channelImage.frame.width / 2
-        self.channelImage.clipsToBounds = true
+        channelImage.layer.cornerRadius = channelImage.frame.width / 2
+        channelImage.clipsToBounds = true
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        videoThumbnailImage.image = nil //UIImage(systemName: "square.and.arrow.up")
+        videoThumbnailImage.image = nil // UIImage(systemName: "square.and.arrow.up")
         channelImage.image = UIImage(systemName: "square.and.arrow.up")
         videoTitleLabel.text = nil
         channelNameLabel.text = nil
@@ -126,36 +123,31 @@ final class MainCollectionViewCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
     }
     
-    
     func makeCollectionViewUI() {
-        self.contentView.addSubview(videoThumbnailImage)
-        self.contentView.addSubview(labelCountstackView)
-        self.contentView.addSubview(labelsStackView)
-        self.contentView.addSubview(channelImage)
-        
+        contentView.addSubview(videoThumbnailImage)
+        contentView.addSubview(labelCountstackView)
+        contentView.addSubview(labelsStackView)
+        contentView.addSubview(channelImage)
         
         NSLayoutConstraint.activate([
-            videoThumbnailImage.widthAnchor.constraint(equalToConstant: self.contentView.bounds.width),
+            videoThumbnailImage.widthAnchor.constraint(equalToConstant: contentView.bounds.width),
             videoThumbnailImage.heightAnchor.constraint(equalToConstant: 240),
-            videoThumbnailImage.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
-            videoThumbnailImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
+            videoThumbnailImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            videoThumbnailImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             
-            
-            channelImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5),
-            channelImage.topAnchor.constraint(equalTo: self.videoThumbnailImage.bottomAnchor, constant: 5),
-            channelImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -2),
+            channelImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+            channelImage.topAnchor.constraint(equalTo: videoThumbnailImage.bottomAnchor, constant: 5),
+            channelImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
             channelImage.widthAnchor.constraint(equalTo: channelImage.heightAnchor),
             channelImage.heightAnchor.constraint(equalTo: channelImage.widthAnchor),
             
-            
             labelsStackView.leadingAnchor.constraint(equalTo: channelImage.trailingAnchor, constant: 5),
-            labelsStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5),
-            labelsStackView.topAnchor.constraint(equalTo: self.channelImage.topAnchor),
-            labelsStackView.bottomAnchor.constraint(equalTo: self.channelImage.bottomAnchor),
+            labelsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+            labelsStackView.topAnchor.constraint(equalTo: channelImage.topAnchor),
+            labelsStackView.bottomAnchor.constraint(equalTo: channelImage.bottomAnchor),
         
             videoTitleLabel.heightAnchor.constraint(equalToConstant: 20),
             labelCountstackView.heightAnchor.constraint(equalToConstant: 14)
         ])
-        
     }
 }

@@ -9,10 +9,11 @@ import UIKit
 
 final class RegistraionViewController: UIViewController {
     // MARK: - Properties
+
     static let storyboardName = "RegistrationScene"
     static let identifier = "RegistraionViewController"
-    var reuseTitle: String? = "회원가입"
-    var resueStartButton: String? = "시작하기"
+    var mainTitle: String? = "회원가입"
+    var startButtonTitle: String? = "시작하기"
     private var id: String?
     private var checkedDuplicateId: String?
     private var nickName: String?
@@ -23,41 +24,44 @@ final class RegistraionViewController: UIViewController {
     private var idIsValid: Bool {
         checkValidate(id: id)
     }
+
     private var idIsDuplicate: Bool?
     private var passWordIsValid: Bool {
         checkValidate(passWord: passWord)
     }
+
     private var checkPassWordIsValid: Bool {
         passWord == checkedPassWord
     }
+
     private var formIsValid: Bool {
         idIsValid == true &&
-        idIsDuplicate == false &&
-        id == checkedDuplicateId &&
-        passWordIsValid == true &&
-        checkPassWordIsValid == true
+            idIsDuplicate == false &&
+            id == checkedDuplicateId &&
+            passWordIsValid == true &&
+            checkPassWordIsValid == true
     }
+
     private var startButtonBackgroundColor: UIColor { formIsValid ? UIColor.red : UIColor.lightGray }
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var idTextField: UITextField!
-    @IBOutlet weak var checkDuplicateIdButton: UIButton!
-    @IBOutlet weak var idValidateLabel: UIButton!
-    @IBOutlet weak var checkDuplicateIdLabel: UIButton!
-    @IBOutlet weak var nickNameTextField: UITextField!
-    @IBOutlet weak var passWordTextField: UITextField!
-    @IBOutlet weak var passWordSecureButton: UIButton!
-    @IBOutlet weak var passWordValidateLabel: UIButton!
-    @IBOutlet weak var checkPassWordTextField: UITextField!
-    @IBOutlet weak var checkPassWordSecureButton: UIButton!
-    @IBOutlet weak var checkPassWordValidateLabel: UIButton!
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var idTextField: UITextField!
+    @IBOutlet var checkDuplicateIdButton: UIButton!
+    @IBOutlet var idValidateLabel: UIButton!
+    @IBOutlet var checkDuplicateIdLabel: UIButton!
+    @IBOutlet var nickNameTextField: UITextField!
+    @IBOutlet var passWordTextField: UITextField!
+    @IBOutlet var passWordSecureButton: UIButton!
+    @IBOutlet var passWordValidateLabel: UIButton!
+    @IBOutlet var checkPassWordTextField: UITextField!
+    @IBOutlet var checkPassWordSecureButton: UIButton!
+    @IBOutlet var checkPassWordValidateLabel: UIButton!
+    @IBOutlet var backButton: UIButton!
+    @IBOutlet var startButton: UIButton!
     
     // MARK: - Custom Component
-    lazy var accessoryView: UIView = {
-        return UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 55))
-    }()
+
+    lazy var accessoryView: UIView = .init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 55))
     
     lazy var inputCompletionButton: UIButton = {
         let button = UIButton()
@@ -69,6 +73,7 @@ final class RegistraionViewController: UIViewController {
     }()
     
     // MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -77,6 +82,7 @@ final class RegistraionViewController: UIViewController {
     }
     
     // MARK: - EditProfile Transition Setup
+
     func setupEditProfile() {
         setupUser()
         configure()
@@ -107,6 +113,7 @@ final class RegistraionViewController: UIViewController {
     }
 
     // MARK: - Configure
+
     private func configureUI() {
         configure(checkDuplicateIdButton)
         configure(backButton)
@@ -121,8 +128,8 @@ final class RegistraionViewController: UIViewController {
     }
     
     private func configure() {
-        titleLabel.text = self.reuseTitle
-        startButton.setTitle(resueStartButton, for: .normal)
+        titleLabel.text = title
+        startButton.setTitle(startButtonTitle, for: .normal)
         startButton.layer.borderColor = UIColor.clear.cgColor
     }
     
@@ -150,12 +157,13 @@ final class RegistraionViewController: UIViewController {
     }
     
     // MARK: - Constraints
+
     private func setConstraints() {
         inputCompletionButtonConstraints(inputCompletionButton)
     }
     
     private func inputCompletionButtonConstraints(_ button: UIButton) {
-        self.accessoryView.addSubview(button)
+        accessoryView.addSubview(button)
         guard let superView = button.superview else { return }
         button.translatesAutoresizingMaskIntoConstraints = false
         button.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 15).isActive = true
@@ -165,10 +173,11 @@ final class RegistraionViewController: UIViewController {
     }
     
     // MARK: - Register
+
     private func register() {
-        guard let id = self.id,
-              let nickNmae = self.nickName,
-              let passWord = self.passWord else { return }
+        guard let id = id,
+              let nickNmae = nickName,
+              let passWord = passWord else { return }
         let user = User(id: id, nickName: nickNmae, passWord: passWord)
         dataManager.createUser(user)
         dataManager.saveUser(id: id)
@@ -176,6 +185,7 @@ final class RegistraionViewController: UIViewController {
     }
     
     // MARK: - Update Form
+
     private func updateForm() {
         startButton.backgroundColor = startButtonBackgroundColor
         formIsValid ? (startButton.isEnabled = true) : (startButton.isEnabled = false)
@@ -218,6 +228,7 @@ final class RegistraionViewController: UIViewController {
     }
     
     // MARK: - Validation
+
     private func checkValidate(id: String?) -> Bool {
         guard let id = self.id else { return false }
         let pred = NSPredicate(format: "SELF MATCHES %@", RegistraionForm.idRegex)
@@ -242,6 +253,7 @@ final class RegistraionViewController: UIViewController {
     }
     
     // MARK: - Show Alert
+
     private func showAlert() {
         let alert = UIAlertController(title: "중복된 아이디", message: "아이디를 다시 입력해주세요.", preferredStyle: .alert)
         let ok = UIAlertAction(title: "확인", style: .cancel)
@@ -250,11 +262,12 @@ final class RegistraionViewController: UIViewController {
     }
     
     // MARK: - Actions
+
     @objc func textDidChange(_ textField: UITextField) {
-        if textField == idTextField { self.id = idTextField.text }
-        if textField == nickNameTextField { self.nickName = nickNameTextField.text }
-        if textField == passWordTextField { self.passWord = passWordTextField.text }
-        if textField == checkPassWordTextField { self.checkedPassWord = checkPassWordTextField.text }
+        if textField == idTextField { id = idTextField.text }
+        if textField == nickNameTextField { nickName = nickNameTextField.text }
+        if textField == passWordTextField { passWord = passWordTextField.text }
+        if textField == checkPassWordTextField { checkedPassWord = checkPassWordTextField.text }
         updateForm()
     }
     
@@ -304,14 +317,14 @@ final class RegistraionViewController: UIViewController {
     
     @IBAction func passWordSecureButtonTapped(_ sender: UIButton) {
         passWordTextField.isSecureTextEntry ?
-        enableSecureText(update: passWordTextField, passWordSecureButton) :
-        disableSecureText(update: passWordTextField, passWordSecureButton)
+            enableSecureText(update: passWordTextField, passWordSecureButton) :
+            disableSecureText(update: passWordTextField, passWordSecureButton)
     }
     
     @IBAction func checkPassWordSecureButtonTapped(_ sender: UIButton) {
         checkPassWordTextField.isSecureTextEntry ?
-        enableSecureText(update: checkPassWordTextField, checkPassWordSecureButton) :
-        disableSecureText(update: checkPassWordTextField, checkPassWordSecureButton)
+            enableSecureText(update: checkPassWordTextField, checkPassWordSecureButton) :
+            disableSecureText(update: checkPassWordTextField, checkPassWordSecureButton)
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -319,15 +332,15 @@ final class RegistraionViewController: UIViewController {
     }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
-        if reuseTitle == "회원가입" {
+        if title == "회원가입" {
             register()
-            let moveVC = ViewController()
+            let moveVC = TabbarViewController()
             guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
             sceneDelegate.changeRootViewController(moveVC, animation: true)
         } else {
-            guard let id = self.id,
-                  let nickName = self.nickName,
-                  let passWord = self.passWord else { return }
+            guard let id = id,
+                  let nickName = nickName,
+                  let passWord = passWord else { return }
             let user = User(id: id, nickName: nickName, passWord: passWord)
             dataManager.updateUser(user)
             dismiss(animated: true)
@@ -335,12 +348,14 @@ final class RegistraionViewController: UIViewController {
     }
     
     // MARK: - Touch
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 }
 
 // MARK: - UITextField Delegate
+
 extension RegistraionViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 1
@@ -358,24 +373,5 @@ extension RegistraionViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
         return text.count < maxTextCount
-    }
-}
-
-extension UIViewController {
-    func setKeyboardNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(showKeyboard(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func showKeyboard(_ notification: Notification) {
-        if self.view.frame.origin.y == 0.0 {
-                self.view.frame.origin.y -= 85
-        }
-    }
-
-    @objc private func hideKeyboard(_ notification: Notification) {
-        if self.view.frame.origin.y != 0.0 {
-                self.view.frame.origin.y += 85
-        }
     }
 }

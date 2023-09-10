@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Font {
+public enum Font {
     static let menuTitleFont = UIFont.boldSystemFont(ofSize: 30)
     static let mainTitleFont = UIFont.boldSystemFont(ofSize: 24)
     static let contentFont = UIFont.systemFont(ofSize: 16)
@@ -15,41 +15,27 @@ enum Font {
     static let commentFont = UIFont.boldSystemFont(ofSize: 12)
 }
 
-enum Margin {
+public enum Margin {
     static let defaultPadding: Int = 20
     static let spacing: Int = 10
 }
 
-enum Message {
+public enum Message {
     static let toast = """
-                                아이디와 비밀번호가
-                                일치하지 않습니다.
-                                """
+    아이디와 비밀번호가
+    일치하지 않습니다.
+    """
 }
 
-enum RegistraionForm {
+public enum RegistraionForm {
     static let idRegex = "[A-Za-z0-9]{4,20}"
     static let passWordRegex = "(?=.*[a-zA-Z])(?=.*\\d)(?=.*[$@$!%*?&#^().,])[A-Za-z\\d$@$!%*?&#^().,]{8,16}"
 }
-
-
-
-
-
-//https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&key=AIzaSyAFQfaz5R7bRzVdupElRJTY1E_Y0rho2EE&page=10&maxResults=20
-
-
-
-
-
 
 public enum YouTubeAPI {
     static let requestUrl = "https://youtube.googleapis.com/youtube/v3/videos?"
     static let reQuestInfo = "part=snippet%2Cstatistics"
     static let chart = "chart=mostPopular"
-//    static let apiKey = "key=AIzaSyB4mgZGx7am_zDKQr4I75nerrwG0KFZVeE"
-//    static let apiKey = "key=AIzaSyBeu_eK6eaWUr6yzpu_Ir7xozpS02rqHAw"
-    static let apiKey = "key=AIzaSyDZj6Feg2H_noeQuKgvILQYuKfTG1nnGAM"
     static let maxResults = "maxResults="
     static let regionCode = "regionCode=KR"
 }
@@ -73,22 +59,7 @@ public enum searchYouTubeAPI {
     static let resultOrder = "order=viewCount"
 }
 
-public struct Cell {
+public enum Cell {
     static let mainViewIdentifier: String = "MainCollectionViewCell"
     static let mainViewCategoryIdentifier: String = "MainViewCategoryCollectionViewCell"
 }
-
-//일반 URL
-//https://youtube.googleapis.com/youtube/v3/videos?
-//part=snippet%2Cstatistics
-//&
-//chart=mostPopular
-//&
-//key=AIzaSyB4mgZGx7am_zDKQr4I75nerrwG0KFZVeE
-//&
-//maxResults=50
-//&
-//regionCode=KR
-//&
-//videoCategoryId=17
-

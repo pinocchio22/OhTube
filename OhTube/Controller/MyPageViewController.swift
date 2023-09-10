@@ -7,18 +7,15 @@
 
 import UIKit
 
-
-
 class MyPageViewController: UIViewController {
+    @IBOutlet var MyPageCollectionView: UICollectionView!
+    @IBOutlet var profileImage: UIImageView!
     
-    @IBOutlet weak var MyPageCollectionView: UICollectionView!
-    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet var idLabel: UILabel!
+    @IBOutlet var nickNameLabel: UILabel!
     
-    @IBOutlet weak var idLabel: UILabel!
-    @IBOutlet weak var nickNameLabel: UILabel!
-    
-    @IBOutlet weak var profileButton: UIButton!
-    @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet var profileButton: UIButton!
+    @IBOutlet var logoutButton: UIButton!
     
     var reuseYoutubeData = DataManager.shared.getLikedVideoList()
     var getUserInformation = DataManager.shared.getUser()
@@ -31,14 +28,15 @@ class MyPageViewController: UIViewController {
         idLabel.text = getUserInformation?.id
         nickNameLabel.text = getUserInformation?.nickName
     }
+
     private func EditMyPage() {
         let storyBoard = UIStoryboard(name: "RegistrationScene", bundle: nil)
         let moveVC = storyBoard.instantiateViewController(withIdentifier: RegistraionViewController.identifier) as! RegistraionViewController
         moveVC.modalPresentationStyle = .fullScreen
         moveVC.modalTransitionStyle = .crossDissolve
-        moveVC.reuseTitle = "개인정보수정 페이지"
-        moveVC.resueStartButton = "수정하기"
-        self.present(moveVC, animated: true, completion: nil)
+        moveVC.mainTitle = "개인정보수정 페이지"
+        moveVC.startButtonTitle = "수정하기"
+        present(moveVC, animated: true, completion: nil)
         moveVC.setupEditProfile()
     }
     
@@ -81,12 +79,11 @@ class MyPageViewController: UIViewController {
     }
     
     @IBAction func logoutButtonTapped(_ sender: Any) {
-        
         let storyBoard = UIStoryboard(name: "LoginScene", bundle: nil)
         let moveVC = storyBoard.instantiateViewController(withIdentifier: LoginViewController.identifier)
         moveVC.modalPresentationStyle = .fullScreen
         moveVC.modalTransitionStyle = .crossDissolve
-        self.present(moveVC, animated: true, completion: nil)
+        present(moveVC, animated: true, completion: nil)
         DataManager.shared.saveIslogin(false)
     }
     
@@ -112,17 +109,16 @@ class MyPageViewController: UIViewController {
         userInformation()
         MyPageCollectionView.reloadData()
     }
-    
 }
 
+// MARK: extension
+
 extension MyPageViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.mainViewIdentifier, for: indexPath) as! MainCollectionViewCell
         let url = URL(string: reuseYoutubeData[indexPath.row].thumbNail)
         
-        cell.channelNameLabel.text = reuseYoutubeData[indexPath.row].channelId
+        cell.channelNameLabel.text = reuseYoutubeData[indexPath.row].channelName
         cell.videoThumbnailImage.load(url: url!)
         cell.channelImage.load(url: url!)
         cell.videoTitleLabel.text = reuseYoutubeData[indexPath.row].title
@@ -133,41 +129,40 @@ extension MyPageViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return DataManager.shared.getLikedVideoList().count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let selectedData = reuseYoutubeData[indexPath.item]
         
         let detailViewController = DetailViewController()
         
         detailViewController.selectedVideo = selectedData
 
-        self.navigationController?.pushViewController(detailViewController, animated: true)
+        navigationController?.pushViewController(detailViewController, animated: true)
     }
-    
 }
+
 extension MyPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
         let collectionViewHeight = collectionView.bounds.height
         return CGSize(width: collectionViewWidth, height: collectionViewHeight - 40)
-
     }
 
+    // 주석달아주십쇼
     func collectionView(_ collectionView: UICollectionView,
-            layout collectionViewLayout: UICollectionViewLayout,
-            minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-                return 5
-        }
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat
+    {
+        return 5
+    }
     
+    // 주석달아주십쇼
     func collectionView(_ collectionView: UICollectionView,
-            layout collectionViewLayout: UICollectionViewLayout,
-            minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-                return 5
-        }
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
+    {
+        return 5
+    }
 }
-
-

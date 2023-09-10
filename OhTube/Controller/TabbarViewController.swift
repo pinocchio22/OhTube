@@ -7,8 +7,7 @@
 
 import UIKit
 
-class ViewController: UITabBarController {
-    
+class TabbarViewController: UITabBarController {
     enum TabBarMenu: Int {
         case Main = 0
         case MyPage
@@ -16,9 +15,8 @@ class ViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setTabControllers()
+        self.setTabControllers()
         self.delegate = self
-        
     }
     
     func setTabControllers() {
@@ -48,20 +46,12 @@ class ViewController: UITabBarController {
         self.tabBar.items![1].selectedImage = UIImage(systemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysOriginal)
         self.tabBar.items![1].title = "마이페이지"
     }
-
 }
 
-extension ViewController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        let tabBarIndex = tabBarController.selectedIndex
-        if tabBarIndex == 0 {
-            // do your stuff
-        }
-    }
-    
+extension TabbarViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         guard let fromView = selectedViewController?.view, let toView = viewController.view else {
-            return false // Make sure you want this as false
+            return false
         }
 
         if fromView != toView {
