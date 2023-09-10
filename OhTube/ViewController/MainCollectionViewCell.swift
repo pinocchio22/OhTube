@@ -19,7 +19,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
     var channelImage: UIImageView = {
         let image = UIImageView()
         image.layer.borderWidth = 2.0 // 테두리 두께 설정
-        image.layer.borderColor = UIColor.blue.cgColor // 테두리 색상 설정
+        image.layer.borderColor = UIColor.systemRed.cgColor // 테두리 색상 설정
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -30,7 +30,6 @@ final class MainCollectionViewCell: UICollectionViewCell {
         title.textColor = UIColor.black
         title.backgroundColor = UIColor.clear
         title.numberOfLines = 0
-        //title.sizeToFit()
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
