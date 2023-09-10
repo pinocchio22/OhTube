@@ -37,7 +37,7 @@ class TabbarViewController: UITabBarController {
         // Main
         self.tabBar.items![0].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         self.tabBar.items![0].image = UIImage(systemName: "video")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
-        self.tabBar.items![0].selectedImage = UIImage(systemName: "video.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
+        self.tabBar.items![0].selectedImage = UIImage(systemName: "video.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.systemRed)
         self.tabBar.items![0].title = "동영상"
         
         // MyPage
