@@ -28,8 +28,9 @@ final class MainCollectionViewCell: UICollectionViewCell {
         let title = UILabel()
         title.font = UIFont.boldSystemFont(ofSize: 20)
         title.textColor = UIColor.black
+        title.backgroundColor = UIColor.clear
         title.numberOfLines = 0
-        title.sizeToFit()
+        //title.sizeToFit()
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
@@ -47,6 +48,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
     
     var videoViewCountLabel: UILabel = {
         let title = UILabel()
+        title.backgroundColor = UIColor.clear
         title.font = Font.contentFont
         title.textColor = UIColor.black
         title.numberOfLines = 0
@@ -152,8 +154,8 @@ final class MainCollectionViewCell: UICollectionViewCell {
             labelsStackView.topAnchor.constraint(equalTo: self.channelImage.topAnchor),
             labelsStackView.bottomAnchor.constraint(equalTo: self.channelImage.bottomAnchor),
         
-            videoTitleLabel.heightAnchor.constraint(equalToConstant: 22),
-            labelCountstackView.heightAnchor.constraint(equalToConstant: 12)
+            videoTitleLabel.heightAnchor.constraint(equalToConstant: 20),
+            labelCountstackView.heightAnchor.constraint(equalToConstant: 14)
         ])
         
     }
