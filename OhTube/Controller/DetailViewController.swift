@@ -521,7 +521,7 @@ class DetailViewController: UIViewController {
         toastView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -130),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
             toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
             toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
         ])
@@ -573,6 +573,7 @@ class DetailViewController: UIViewController {
                 DataManager.shared.createComment(Comment(nickName: currentUser!.nickName, content: content, date: Util.util.getDate(), videoId: selectedVideo!.id, userId: currentUser!.id))
 
                 // 완료 Toast
+                editCommentContent.text = nil
                 showToast(message: "댓글 완료!")
                 
                 // reload tableView

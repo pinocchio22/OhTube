@@ -230,6 +230,7 @@ extension MainViewController: UICollectionViewDelegate {
             let selectedData = youtubeArray[indexPath.item]
             let detailViewController = DetailViewController()
             detailViewController.selectedVideo = selectedData
+            detailViewController.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(detailViewController, animated: true)
             
         } else if collectionView.tag == 2 {
