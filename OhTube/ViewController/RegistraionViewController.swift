@@ -81,14 +81,18 @@ final class RegistraionViewController: UIViewController {
         setupUser()
         configure()
         idTextField.isEnabled = false
+        idValidateLabel.isHidden = true
+        checkDuplicateIdLabel.isHidden = true
+        checkDuplicateIdButton.isHidden = true
+        idIsDuplicate = false
         idTextField.backgroundColor = .lightGray.withAlphaComponent(0.5)
         idTextField.layer.borderColor = UIColor.clear.cgColor
-        idValidateLabel.isHidden = true
     }
     
     private func setupUser() {
         guard let user = dataManager.getUser() else { return }
         id = user.id
+        checkedDuplicateId = user.id
         nickName = user.nickName
         passWord = user.passWord
         checkedPassWord = user.passWord
