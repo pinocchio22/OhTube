@@ -60,6 +60,10 @@ final class DataManager {
         }
     }
     
+    func removeUser() {
+        userDefaults.removeObject(forKey: userKey)
+    }
+    
     func isLoginState() -> Bool {
         return userDefaults.bool(forKey: isLoginKey)
     }

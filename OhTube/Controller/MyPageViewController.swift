@@ -20,6 +20,29 @@ class MyPageViewController: UIViewController {
     var reuseYoutubeData = DataManager.shared.getLikedVideoList()
     var getUserInformation = DataManager.shared.getUser()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        customProfileButton()
+        customLogoutButton()
+        userInformation()
+        
+        IdImage()
+        
+        MyPageCollectionView.dataSource = self
+        MyPageCollectionView.delegate = self
+        MyPageCollectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "MainCollectionViewCell")
+        
+        profileImage.layer.cornerRadius = 50
+        profileImage.layer.masksToBounds = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        reuseYoutubeData = DataManager.shared.getLikedVideoList()
+        getUserInformation = DataManager.shared.getUser()
+        userInformation()
+        MyPageCollectionView.reloadData()
+    }
+    
     private func IdImage() {
         profileImage.image = Util.util.imageWith(name: getUserInformation?.id)
     }
@@ -34,7 +57,7 @@ class MyPageViewController: UIViewController {
         let moveVC = storyBoard.instantiateViewController(withIdentifier: RegistraionViewController.identifier) as! RegistraionViewController
         moveVC.modalPresentationStyle = .fullScreen
         moveVC.modalTransitionStyle = .crossDissolve
-        moveVC.mainTitle = "개인정보수정 페이지"
+        moveVC.mainTitle = "프로필 수정"
         moveVC.startButtonTitle = "수정하기"
         present(moveVC, animated: true, completion: nil)
         moveVC.setupEditProfile()
@@ -43,7 +66,7 @@ class MyPageViewController: UIViewController {
     private func customProfileButton() {
         profileButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         profileButton.backgroundColor = UIColor.red
-        profileButton.setTitle("계정 정보 수정", for: .normal)
+        profileButton.setTitle("프로필 수정", for: .normal)
         profileButton.setTitleColor(UIColor.white, for: .normal)
         
         profileButton.layer.cornerRadius = 5
@@ -85,29 +108,7 @@ class MyPageViewController: UIViewController {
         moveVC.modalTransitionStyle = .crossDissolve
         present(moveVC, animated: true, completion: nil)
         DataManager.shared.saveIslogin(false)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        customProfileButton()
-        customLogoutButton()
-        userInformation()
-        
-        IdImage()
-        
-        MyPageCollectionView.dataSource = self
-        MyPageCollectionView.delegate = self
-        MyPageCollectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "MainCollectionViewCell")
-        
-        profileImage.layer.cornerRadius = 50
-        profileImage.layer.masksToBounds = true
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        reuseYoutubeData = DataManager.shared.getLikedVideoList()
-        getUserInformation = DataManager.shared.getUser()
-        userInformation()
-        MyPageCollectionView.reloadData()
+        DataManager.shared.removeUser()
     }
 }
 
