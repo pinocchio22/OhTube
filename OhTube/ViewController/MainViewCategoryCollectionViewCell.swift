@@ -12,7 +12,7 @@ final class MainViewCategoryCollectionViewCell: UICollectionViewCell {
     
     var categoryLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = UIColor.white
+        label.layer.backgroundColor = UIColor.black.cgColor
         label.tintColor = UIColor.black
         label.textAlignment = .center
         label.layer.borderColor = UIColor.black.cgColor
@@ -20,6 +20,7 @@ final class MainViewCategoryCollectionViewCell: UICollectionViewCell {
         label.layer.cornerRadius = 15.0
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .boldSystemFont(ofSize: 14)
+        label.textColor = .white
         return label
     }()
     
