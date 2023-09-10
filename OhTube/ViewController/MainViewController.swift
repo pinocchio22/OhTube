@@ -78,7 +78,6 @@ final class MainViewController: UIViewController {
     }
     
     private func naviBarSetting() {
-        self.title = "Video Search"
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .clear
         appearance.shadowColor = .none
@@ -86,7 +85,18 @@ final class MainViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        let logoButton = UIBarButtonItem(image: UIImage(named: "logo"), style: .done, target: self, action: #selector(homeButtonTapped))
+        logoButton.tintColor = UIColor.black
+        navigationItem.leftBarButtonItem = logoButton
     }
+    
+    @objc func homeButtonTapped() {
+        youtubeArray.shuffle()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
     
     private func searchBarSetting() {
         searchController.searchBar.delegate = self
