@@ -578,6 +578,7 @@ class DetailViewController: UIViewController {
                 
                 // reload tableView
                 commentList.insert(Comment(nickName: currentUser!.nickName, content: content, date: Util.util.getDate(), videoId: selectedVideo!.id, userId: currentUser!.id), at: 0)
+                commentCount.text = "\(commentList.count)개"
                 commentTableView.reloadData()
             }
         }
