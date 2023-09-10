@@ -27,7 +27,7 @@ class MyPageViewController: UIViewController {
         userInformation()
         
         IdImage()
-        
+        navigationController?.navigationBar.tintColor = .red
         MyPageCollectionView.dataSource = self
         MyPageCollectionView.delegate = self
         MyPageCollectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "MainCollectionViewCell")

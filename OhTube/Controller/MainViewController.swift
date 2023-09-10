@@ -79,6 +79,7 @@ final class MainViewController: UIViewController {
         appearance.backgroundColor = .clear
         appearance.shadowColor = .none
         navigationItem.hidesSearchBarWhenScrolling = false
+        navigationController?.navigationBar.tintColor = .red
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
