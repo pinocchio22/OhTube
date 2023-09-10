@@ -57,7 +57,7 @@ final class RegistraionViewController: UIViewController {
     @IBOutlet var checkPassWordSecureButton: UIButton!
     @IBOutlet var checkPassWordValidateLabel: UIButton!
     @IBOutlet var backButton: UIButton!
-    @IBOutlet var startButton: UIButton!
+    @IBOutlet weak var startButton: UIButton!
     
     // MARK: - Custom Component
 
