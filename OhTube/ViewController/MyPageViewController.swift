@@ -21,7 +21,7 @@ class MyPageViewController: UIViewController {
     @IBOutlet weak var logoutButton: UIButton!
     
     var reuseYoutubeData = DataManager.shared.getLikedVideoList()
-    let getUserInformation = DataManager.shared.getUser()
+    var getUserInformation = DataManager.shared.getUser()
     
     private func IdImage() {
         profileImage.image = Util.util.imageWith(name: getUserInformation?.id)
@@ -61,12 +61,12 @@ class MyPageViewController: UIViewController {
     
     private func customLogoutButton() {
         logoutButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        logoutButton.backgroundColor = UIColor.red
+        logoutButton.backgroundColor = UIColor.white
         logoutButton.setTitle("로그아웃", for: .normal)
-        logoutButton.setTitleColor(UIColor.white, for: .normal)
+        logoutButton.setTitleColor(UIColor.red, for: .normal)
         
         logoutButton.layer.cornerRadius = 5
-        logoutButton.layer.borderWidth = 5
+        logoutButton.layer.borderWidth = 1
         logoutButton.layer.borderColor = UIColor.red.cgColor
         
         logoutButton.layer.shadowColor = UIColor.black.cgColor
@@ -108,6 +108,8 @@ class MyPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         reuseYoutubeData = DataManager.shared.getLikedVideoList()
+        getUserInformation = DataManager.shared.getUser()
+        userInformation()
         MyPageCollectionView.reloadData()
     }
     
