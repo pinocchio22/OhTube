@@ -228,34 +228,49 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.tag == 1 {
-            let selectedData = youtubeArray[indexPath.item]
-            let detailViewController = DetailViewController()
-            detailViewController.selectedVideo = selectedData
-            detailViewController.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(detailViewController, animated: true)
-            
+            if isFiltering() {
+                let selectedData = searchResultArray[indexPath.item]
+                let detailViewController = DetailViewController()
+                detailViewController.selectedVideo = selectedData
+                detailViewController.hidesBottomBarWhenPushed = true
+                navigationController?.pushViewController(detailViewController, animated: true)
+            } else {
+                let selectedData = youtubeArray[indexPath.item]
+                let detailViewController = DetailViewController()
+                detailViewController.selectedVideo = selectedData
+                detailViewController.hidesBottomBarWhenPushed = true
+                navigationController?.pushViewController(detailViewController, animated: true)
+            }
         } else if collectionView.tag == 2 {
-            current = 0
-            currentCategory = category[indexPath.item]
-            let indexPath = IndexPath(item: 0, section: 0)
-            self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-            switch currentCategory {
-            case "전체":
-                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
-            case "예능":
-                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.entertainment)
-            case "스포츠":
-                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.sport)
-            case "음악":
-                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.music)
-            case "게임":
-                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.gaming)
-            case "영화":
-                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.filmAndAnimation)
-            case "재미":
-                networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.comedy)
-            default:
-                break
+            if isFiltering() {
+                let selectedData = searchResultArray[indexPath.item]
+                let detailViewController = DetailViewController()
+                detailViewController.selectedVideo = selectedData
+                detailViewController.hidesBottomBarWhenPushed = true
+                navigationController?.pushViewController(detailViewController, animated: true)
+            } else {
+                current = 0
+                currentCategory = category[indexPath.item]
+                let indexPath = IndexPath(item: 0, section: 0)
+                self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+                switch currentCategory {
+                case "전체":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
+                case "예능":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.entertainment)
+                case "스포츠":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.sport)
+                case "음악":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.music)
+                case "게임":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.gaming)
+                case "영화":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.filmAndAnimation)
+                case "재미":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.comedy)
+                default:
+                    break
+                }
             }
         }
     }
