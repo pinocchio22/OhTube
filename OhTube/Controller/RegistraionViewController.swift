@@ -93,6 +93,7 @@ final class RegistraionViewController: UIViewController {
         idIsDuplicate = false
         idTextField.backgroundColor = .lightGray.withAlphaComponent(0.5)
         idTextField.layer.borderColor = UIColor.clear.cgColor
+        titleLabel.text = mainTitle
     }
     
     private func setupUser() {
@@ -128,7 +129,7 @@ final class RegistraionViewController: UIViewController {
     }
     
     private func configure() {
-        titleLabel.text = title
+        titleLabel.text = mainTitle
         startButton.setTitle(startButtonTitle, for: .normal)
         startButton.layer.borderColor = UIColor.clear.cgColor
     }
@@ -332,7 +333,7 @@ final class RegistraionViewController: UIViewController {
     }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
-        if title == "회원가입" {
+        if mainTitle == "회원가입" {
             register()
             let moveVC = TabbarViewController()
             guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
