@@ -39,7 +39,7 @@ class MyPageViewController: UIViewController {
         moveVC.reuseTitle = "개인정보수정 페이지"
         moveVC.resueStartButton = "수정하기"
         self.present(moveVC, animated: true, completion: nil)
-        moveVC.setupData()
+        moveVC.setupEditProfile()
     }
     
     private func customProfileButton() {

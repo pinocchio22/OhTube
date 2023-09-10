@@ -29,7 +29,7 @@ enum Message {
 
 enum RegistraionForm {
     static let idRegex = "[A-Za-z0-9]{4,20}"
-    static let passWordRegex = "(?=.*[a-zA-Z])(?=.*\\d)(?=.*[$@$!%*?&#])[A-Za-z\\d$@$!%*?&#]{8,16}"
+    static let passWordRegex = "(?=.*[a-zA-Z])(?=.*\\d)(?=.*[$@$!%*?&#^().,])[A-Za-z\\d$@$!%*?&#^().,]{8,16}"
 }
 
 

@@ -63,10 +63,10 @@ final class LoginViewController: UIViewController {
         passWordTextField.textContentType = .newPassword
     }
     
-    private func updateForm(button: UIButton) {
-        button.backgroundColor = loginButtonBackgroundColor
-        if formIsValid { button.isEnabled = true }
-        if formIsValid == false { button.isEnabled = false }
+    private func updateForm() {
+        loginButton.backgroundColor = loginButtonBackgroundColor
+        if formIsValid { loginButton.isEnabled = true }
+        if formIsValid == false { loginButton.isEnabled = false }
     }
     
     private func userValidation() -> Bool {
@@ -102,7 +102,7 @@ final class LoginViewController: UIViewController {
     @objc private func textDidChange(_ textField: UITextField) {
         if textField == idTextField { self.id = idTextField.text }
         if textField == passWordTextField { self.passWord = passWordTextField.text }
-        updateForm(button: loginButton)
+        updateForm()
     }
     
     @IBAction func passWordSecureButtonTapped(_ sender: UIButton) {
