@@ -521,9 +521,9 @@ class DetailViewController: UIViewController {
         toastView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -130),
             toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
-            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 10),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
         ])
         UIView.animate(withDuration: 2.5, delay: 0.2) {
             toastView.alpha = 0
@@ -569,6 +569,7 @@ class DetailViewController: UIViewController {
                 showToast(message: "내용을 입력하세요.")
             } else {
                 // save comment
+                editCommentContent.resignFirstResponder()
                 DataManager.shared.createComment(Comment(nickName: currentUser!.nickName, content: content, date: Util.util.getDate(), videoId: selectedVideo!.id, userId: currentUser!.id))
 
                 // 완료 Toast
@@ -579,6 +580,7 @@ class DetailViewController: UIViewController {
                 commentTableView.reloadData()
             }
         }
+        
     }
 }
 

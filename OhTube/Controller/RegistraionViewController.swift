@@ -342,7 +342,7 @@ final class RegistraionViewController: UIViewController {
             guard let id = id,
                   let nickName = nickName,
                   let passWord = passWord else { return }
-            let user = User(id: id, nickName: nickName, passWord: passWord)
+            let user = User(id: id, nickName: nickName, passWord: passWord, likedVideoList: dataManager.getLikedVideoList())
             dataManager.updateUser(user)
             dismiss(animated: true)
         }
