@@ -137,7 +137,7 @@ extension MyPageViewController: UICollectionViewDataSource, UICollectionViewDele
         let selectedData = reuseYoutubeData[indexPath.item]
         
         let detailViewController = DetailViewController()
-        
+        detailViewController.hidesBottomBarWhenPushed = true
         detailViewController.selectedVideo = selectedData
 
         navigationController?.pushViewController(detailViewController, animated: true)
