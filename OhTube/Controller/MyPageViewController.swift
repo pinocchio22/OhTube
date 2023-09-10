@@ -147,7 +147,7 @@ extension MyPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
         let collectionViewHeight = collectionView.bounds.height
-        return CGSize(width: collectionViewWidth, height: collectionViewHeight - 40)
+        return CGSize(width: collectionViewWidth, height: collectionViewHeight - 20)
     }
 
     // 주석달아주십쇼
@@ -155,14 +155,7 @@ extension MyPageViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat
     {
-        return 5
+        return 30
     }
-    
-    // 주석달아주십쇼
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
-    {
-        return 5
-    }
+
 }

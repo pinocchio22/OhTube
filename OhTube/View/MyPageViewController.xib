@@ -89,7 +89,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="zwC-ho-cK5">
-                    <rect key="frame" x="20" y="398.66666666666674" width="353" height="419.33333333333326"/>
+                    <rect key="frame" x="20" y="398.66666666666674" width="353" height="414.33333333333326"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="i6e-x4-i6j">
                         <size key="itemSize" width="128" height="128"/>
@@ -111,7 +111,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zwC-ho-cK5" secondAttribute="trailing" constant="20" id="HdU-XJ-CvY"/>
                 <constraint firstItem="ISh-bW-MZe" firstAttribute="top" secondItem="GM8-Ek-TrQ" secondAttribute="bottom" constant="10" id="HoG-9F-ekh"/>
                 <constraint firstItem="kTB-M9-8eg" firstAttribute="top" secondItem="uqQ-Aq-otQ" secondAttribute="bottom" constant="30" id="IX6-3O-HQ2"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="zwC-ho-cK5" secondAttribute="bottom" id="L2N-DQ-F8X"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="zwC-ho-cK5" secondAttribute="bottom" constant="5" id="L2N-DQ-F8X"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uqQ-Aq-otQ" secondAttribute="trailing" constant="20" id="QqF-Bg-o1t"/>
                 <constraint firstItem="cEy-9B-89X" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="XaY-98-O0S"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4n2-gb-Pwo" secondAttribute="trailing" constant="20" id="YWk-Gy-E5r"/>
