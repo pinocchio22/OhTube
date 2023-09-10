@@ -85,8 +85,7 @@ final class MainViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        let logoButton = UIBarButtonItem(image: UIImage(named: "logo"), style: .done, target: self, action: #selector(homeButtonTapped))
-        logoButton.tintColor = UIColor.black
+        let logoButton = UIBarButtonItem(image: UIImage(named: "logo")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(homeButtonTapped))
         navigationItem.leftBarButtonItem = logoButton
     }
     
