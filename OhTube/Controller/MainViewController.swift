@@ -7,14 +7,16 @@
 import UIKit
 
 final class MainViewController: UIViewController {
+    
     private var youtubeArray: [Video] = []
-
     private var searchResultArray: [Video] = []
-    
     private let category: [String] = ["전체", "예능", "스포츠", "음악", "게임", "영화", "재미"]
-    
     private var currentCategory: String = "전체"
     private var current = 0
+    var isSearching = false
+    
+    private var categoryCollectionViewHeightConstraint: NSLayoutConstraint!
+    private var collectionViewTopConstraint: NSLayoutConstraint!
     
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -38,6 +40,7 @@ final class MainViewController: UIViewController {
     private lazy var categoryCollectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.showsHorizontalScrollIndicator = false // 스크롤바 삭제
+        collection.backgroundColor = .clear
         categoryCollectionHorizontal.scrollDirection = .horizontal
         collection.collectionViewLayout = categoryCollectionHorizontal
         collection.translatesAutoresizingMaskIntoConstraints = false
@@ -112,19 +115,23 @@ final class MainViewController: UIViewController {
         collectionView.refreshControl = refreshControl
     }
     
+    
     private func collectionMakeUI() {
         view.addSubview(categoryCollectionView)
         view.addSubview(collectionView)
+        
+        collectionViewTopConstraint = collectionView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor, constant: 0)
+        categoryCollectionViewHeightConstraint = categoryCollectionView.heightAnchor.constraint(equalToConstant: 40.0)
         
         NSLayoutConstraint.activate([
             categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
             categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
             categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            categoryCollectionView.heightAnchor.constraint(equalToConstant: 40),
+            categoryCollectionViewHeightConstraint,
             
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            collectionView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor, constant: 0),
+            collectionViewTopConstraint,
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
         ])
     }
@@ -152,6 +159,9 @@ final class MainViewController: UIViewController {
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
+    
+
+
 }
 
 extension MainViewController: UICollectionViewDataSource {
@@ -207,7 +217,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
             if isFiltering() {
                 let collectionViewWidth = collectionView.bounds.width
                 let collectionViewHeight = collectionView.bounds.height
-                return CGSize(width: collectionViewWidth, height: (collectionViewHeight + 40)/2)
+                return CGSize(width: collectionViewWidth, height: collectionViewHeight/2)
             } else {
                 let collectionViewWidth = collectionView.bounds.width
                 let collectionViewHeight = collectionView.bounds.height
@@ -241,13 +251,26 @@ extension MainViewController: UICollectionViewDelegate {
                 detailViewController.hidesBottomBarWhenPushed = true
                 navigationController?.pushViewController(detailViewController, animated: true)
             }
-        } else if collectionView.tag == 2 {
-            if isFiltering() {
-                let selectedData = searchResultArray[indexPath.item]
-                let detailViewController = DetailViewController()
-                detailViewController.selectedVideo = selectedData
-                detailViewController.hidesBottomBarWhenPushed = true
-                navigationController?.pushViewController(detailViewController, animated: true)
+        } else if collectionView.tag == 2 { //카테고리
+            if isFiltering() { //검색시
+                switch currentCategory {
+                case "전체":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
+                case "예능":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.entertainment)
+                case "스포츠":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.sport)
+                case "음악":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.music)
+                case "게임":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.gaming)
+                case "영화":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.filmAndAnimation)
+                case "재미":
+                    networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.comedy)
+                default:
+                    break
+                }
             } else {
                 current = 0
                 currentCategory = category[indexPath.item]
@@ -300,30 +323,43 @@ extension MainViewController: UICollectionViewDelegate {
 }
 
 extension MainViewController: UISearchBarDelegate, UISearchResultsUpdating {
+    
     func updateSearchResults(for searchController: UISearchController) {
+       
         guard let searchText = searchController.searchBar.text?.lowercased() else { return }
-
+        isSearching = searchController.isActive && !searchBarIsEmpty()
+        categoryCollectionViewHeightConstraint.constant = isSearching ? 0 : 40
         searchResultArray = youtubeArray.filter { $0.title.lowercased().contains(searchText) }
-
-        collectionView.reloadData()
+        
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     // 검색창 클릭 시 키보드 올리기
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(true, animated: true)
+        categoryCollectionViewHeightConstraint.constant = 0
+        categoryCollectionView.isHidden = true
+        collectionViewTopConstraint.constant = 0
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
-    // 캔슬 버튼
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-    }
-    
-    // 캔슬버튼 보이게 하기
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
     }
 
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        isSearching = false
+        categoryCollectionView.isHidden = false
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
     // 검색 결과를 업데이트하는 코드
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         updateSearchResults(for: searchController)
