@@ -105,7 +105,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
         channelImage.clipsToBounds = true
     }
     
-    override func prepareForReuse() {
+    override func prepareForReuse() { 
         super.prepareForReuse()
         videoThumbnailImage.image = nil // UIImage(systemName: "square.and.arrow.up")
         channelImage.image = UIImage(systemName: "square.and.arrow.up")

@@ -8,16 +8,26 @@ import UIKit
 
 final class MainViewController: UIViewController {
     
+    // MARK: - 프로퍼티
+
+    //api를 받을 데이터 배열
     private var youtubeArray: [Video] = []
+    //결과값을 저장할 데이터 배열
     private var searchResultArray: [Video] = []
+    // 카테고리 배열
     private let category: [String] = ["전체", "예능", "스포츠", "음악", "게임", "영화", "재미"]
+    //카테고리를 받을 변수
     private var currentCategory: String = "전체"
+    //페이징네이션에 쓰기 위한 변수
     private var current = 0
+    //검색창에서 카테고리컬렉션뷰를 없앨 때 사용하기 위한 변수
     var isSearching = false
     
+    //검색창 누르면 카테고리 사라지게 하기 위한 제약 설정 변수
     private var categoryCollectionViewHeightConstraint: NSLayoutConstraint!
     private var collectionViewTopConstraint: NSLayoutConstraint!
     
+    //서치바
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색어를 입력해주세요"
@@ -29,24 +39,29 @@ final class MainViewController: UIViewController {
         return searchController
     }()
     
+    //컬렉션뷰
     private var collectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
     
+    // 카테고리 수평(가로)으로 하기 위함
     private let categoryCollectionHorizontal = UICollectionViewFlowLayout()
     
+    
+    //카테고리 컬렉션뷰
     private lazy var categoryCollectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.showsHorizontalScrollIndicator = false // 스크롤바 삭제
         collection.backgroundColor = .clear
         categoryCollectionHorizontal.scrollDirection = .horizontal
-        collection.collectionViewLayout = categoryCollectionHorizontal
+        collection.collectionViewLayout = categoryCollectionHorizontal //수평으로 바꿈
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
     
+    //리프레쉬컨트롤: 테이블뷰도는 컬렉션뷰 상단 스와이프 시 새로 고침
     private let refreshControl: UIRefreshControl = {
         let refresh = UIRefreshControl()
         refresh.tintColor = UIColor.lightGray
@@ -56,13 +71,15 @@ final class MainViewController: UIViewController {
     }()
     
     @objc private func refreshData() {
-        youtubeArray.shuffle()
+        youtubeArray.shuffle() //배열 랜덤
         DispatchQueue.main.async {
+            self.refreshControl.endRefreshing() // 스와이프 끝내기
             self.collectionView.reloadData()
         }
-        refreshControl.endRefreshing()
     }
     
+    // MARK: - viewdidLoad
+
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionViewSetting()
@@ -72,11 +89,19 @@ final class MainViewController: UIViewController {
         networkingMakeUI(categoryId: YouTubeApiVideoCategoryId.all)
     }
     
+    
+    // MARK: - viewWillAppear
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         categoryCollectionView.reloadData()
     }
     
+    
+    // MARK: - 메서드
+
+    
+    //네비게이션바 세팅
     private func naviBarSetting() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .clear
@@ -97,6 +122,7 @@ final class MainViewController: UIViewController {
         }
     }
     
+    //서치바 세팅
     private func searchBarSetting() {
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
@@ -105,6 +131,7 @@ final class MainViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .always
     }
     
+    //컬렉션뷰 세팅
     private func collectionViewSetting() {
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -115,7 +142,7 @@ final class MainViewController: UIViewController {
         collectionView.refreshControl = refreshControl
     }
     
-    
+    //제약 설정
     private func collectionMakeUI() {
         view.addSubview(categoryCollectionView)
         view.addSubview(collectionView)
@@ -136,6 +163,9 @@ final class MainViewController: UIViewController {
         ])
     }
 
+    // MARK: - NetworkManager.shared.fetchVideo(category: String, maxResult: Int, completion: ([video])-> void)
+
+    //api 네트워크 통신
     private func networkingMakeUI(categoryId: String) {
         let next = current + 3
         NetworkManager.shared.fetchVideo(category: categoryId, maxResult: next) { result in
@@ -145,6 +175,7 @@ final class MainViewController: UIViewController {
                 self.youtubeArray += tubedata
                 self.current = next
                 DispatchQueue.main.async {
+                    self.refreshControl.endRefreshing()
                     self.collectionView.reloadData()
                 }
             case .failure: break
@@ -152,10 +183,11 @@ final class MainViewController: UIViewController {
         }
     }
 
+    // 서치바 비어있으면 true
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
-
+    // 서치바 활성화 되어있으면 true
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
@@ -164,7 +196,11 @@ final class MainViewController: UIViewController {
 
 }
 
+
+
 extension MainViewController: UICollectionViewDataSource {
+    
+    //셀 몇개?
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 1 {
             return isFiltering() ? searchResultArray.count : youtubeArray.count
@@ -173,6 +209,7 @@ extension MainViewController: UICollectionViewDataSource {
         }
     }
     
+    //셀 어떤 식으로 보여줘? -> 컬렉션뷰가 2개면 여기서 셀을 등록해야 한다⭐️⭐️⭐️⭐️⭐️
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == 2 { // 2: 카테고리 컬렉션
             categoryCollectionView.register(MainViewCategoryCollectionViewCell.self, forCellWithReuseIdentifier: "MainViewCategoryCollectionViewCell")
@@ -196,7 +233,7 @@ extension MainViewController: UICollectionViewDataSource {
                 cell.videoViewCountLabel.text = "\(searchResultArray[indexPath.row].formatViewCount) 조회"
                 cell.videoDateLabel.text = searchResultArray[indexPath.row].uploadDateString
                 return cell
-            } else if !isFiltering() {
+            } else if !isFiltering() { //검색 시가 아니면
                 let url = URL(string: youtubeArray[indexPath.row].thumbNail)
                 cell.videoThumbnailImage.load(url: url!)
                 cell.channelImage.load(url: url!)
@@ -211,6 +248,7 @@ extension MainViewController: UICollectionViewDataSource {
     }
 }
 
+// 셀 크기 조정
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView.tag == 1 {
@@ -227,7 +265,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
             let category = category[indexPath.item]
             let label = UILabel()
             label.text = category
-            label.sizeToFit()
+            label.sizeToFit()// 라벨안에 있는 텍스트 크기에 맞춰 셀크기 조정⭐️⭐️⭐️⭐️⭐️
             let labelSize = label.frame.size
             return CGSize(width: labelSize.width + 20, height: labelSize.height + 10)
         }
@@ -236,15 +274,17 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension MainViewController: UICollectionViewDelegate {
+    
+    //셀을 클릭하면
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.tag == 1 {
-            if isFiltering() {
+            if isFiltering() { //검색 시
                 let selectedData = searchResultArray[indexPath.item]
                 let detailViewController = DetailViewController()
                 detailViewController.selectedVideo = selectedData
                 detailViewController.hidesBottomBarWhenPushed = true
                 navigationController?.pushViewController(detailViewController, animated: true)
-            } else {
+            } else { // 검색이 아닐 시
                 let selectedData = youtubeArray[indexPath.item]
                 let detailViewController = DetailViewController()
                 detailViewController.selectedVideo = selectedData
@@ -274,7 +314,7 @@ extension MainViewController: UICollectionViewDelegate {
             } else {
                 current = 0
                 currentCategory = category[indexPath.item]
-                let indexPath = IndexPath(item: 0, section: 0)
+                let indexPath = IndexPath(item: 0, section: 0) // indexPath을 0섹션에 0번째 셀로 만들어 클릭 시 맨 위로 이동
                 self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
                 switch currentCategory {
                 case "전체":
@@ -297,7 +337,7 @@ extension MainViewController: UICollectionViewDelegate {
             }
         }
     }
-
+    //willDisplay: 페이징네이션을 위함
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.item == youtubeArray.count - 1 && current < 50 {
             switch currentCategory {
@@ -324,39 +364,43 @@ extension MainViewController: UICollectionViewDelegate {
 
 extension MainViewController: UISearchBarDelegate, UISearchResultsUpdating {
     
+    //검색 구현 함수
     func updateSearchResults(for searchController: UISearchController) {
        
         guard let searchText = searchController.searchBar.text?.lowercased() else { return }
-        isSearching = searchController.isActive && !searchBarIsEmpty()
+        isSearching = searchController.isActive && !searchBarIsEmpty() // false이면 카테고리보임
         categoryCollectionViewHeightConstraint.constant = isSearching ? 0 : 40
         searchResultArray = youtubeArray.filter { $0.title.lowercased().contains(searchText) }
         
         DispatchQueue.main.async {
+            self.refreshControl.endRefreshing()
             self.collectionView.reloadData()
         }
     }
     
-    // 검색창 클릭 시 키보드 올리기
+    // 검색버튼을 클릭했을 때
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        searchBar.setShowsCancelButton(true, animated: true)
+        searchBar.setShowsCancelButton(true, animated: true) // 캔슬버튼 나옴
         categoryCollectionViewHeightConstraint.constant = 0
-        categoryCollectionView.isHidden = true
+        categoryCollectionView.isHidden = true //컬렉션뷰 숨김
         collectionViewTopConstraint.constant = 0
         DispatchQueue.main.async {
+            self.refreshControl.endRefreshing()
             self.collectionView.reloadData()
         }
     }
-    
+    //서치바텍스트에 입력하면
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
     }
-
+    // 서치바 캔슬 버튼 클릭 시
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
-        isSearching = false
-        categoryCollectionView.isHidden = false
+        isSearching = false //false 이면 카테고리컬렉션뷰 보임
+        categoryCollectionView.isHidden = false //컬렉션뷰 보임
         DispatchQueue.main.async {
+            self.refreshControl.endRefreshing()
             self.collectionView.reloadData()
         }
     }
