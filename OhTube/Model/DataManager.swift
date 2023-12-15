@@ -21,7 +21,7 @@ final class DataManager {
     private init() {}
     
     // MARK: - User
-
+    //검색
     private func searchUser(_ id: String) -> User {
         let userList = getUserList()
         for user in userList {
@@ -31,13 +31,13 @@ final class DataManager {
         }
         return User(id: "", nickName: "", passWord: "")
     }
-    
+    //저장
     private func updateUserDefaults(_ user: User) {
         if let encodedUser = try? JSONEncoder().encode(user) {
             userDefaults.set(encodedUser, forKey: userKey)
         }
     }
-    
+    //가져오기
     func getUser() -> User? {
         if let encodedUser = userDefaults.object(forKey: userKey) as? Data,
            let user = try? JSONDecoder().decode(User.self, from: encodedUser)
@@ -46,7 +46,7 @@ final class DataManager {
         }
         return nil
     }
-    
+    //업데이트
     func updateUser(_ user: User) {
         let userList = getUserList()
         let nowUser = getUser()
@@ -59,7 +59,7 @@ final class DataManager {
             }
         }
     }
-    
+    //삭제
     func removeUser() {
         userDefaults.removeObject(forKey: userKey)
     }
@@ -67,7 +67,7 @@ final class DataManager {
     func isLoginState() -> Bool {
         return userDefaults.bool(forKey: isLoginKey)
     }
-    
+    //추가
     func saveUser(id: String) {
         let user = searchUser(id)
         updateUserDefaults(user)

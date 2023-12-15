@@ -28,7 +28,7 @@ final class MainViewController: UIViewController {
     private var collectionViewTopConstraint: NSLayoutConstraint!
     
     //서치바
-    private let searchController: UISearchController = {
+    private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색어를 입력해주세요"
         searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
@@ -45,6 +45,7 @@ final class MainViewController: UIViewController {
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
+
     
     // 카테고리 수평(가로)으로 하기 위함
     private let categoryCollectionHorizontal = UICollectionViewFlowLayout()
@@ -65,8 +66,8 @@ final class MainViewController: UIViewController {
     private let refreshControl: UIRefreshControl = {
         let refresh = UIRefreshControl()
         refresh.tintColor = UIColor.lightGray
-        refresh.translatesAutoresizingMaskIntoConstraints = false
         refresh.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refresh.translatesAutoresizingMaskIntoConstraints = false
         return refresh
     }()
     
@@ -191,8 +192,6 @@ final class MainViewController: UIViewController {
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
-    
-
 
 }
 

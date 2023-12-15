@@ -515,17 +515,17 @@ class DetailViewController: UIViewController {
     
     func showToast(message: String) {
         let toastView = ToastView()
-        toastView.configure()
-        toastView.text = message
+        toastView.configure() //configure() 메서드를 호출하여 ToastView의 스타일과 설정을 구성
+        toastView.text = message //재사용성을 위해 사용하는 곳마다 값을 넣을 수 있음
         view.addSubview(toastView)
         toastView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        NSLayoutConstraint.activate([ //레이아웃잡기
             toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
             toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
             toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
         ])
-        UIView.animate(withDuration: 2.5, delay: 0.2) {
+        UIView.animate(withDuration: 2.5, delay: 0.2) {//2.5초
             toastView.alpha = 0
         } completion: { _ in
             toastView.removeFromSuperview()

@@ -61,7 +61,9 @@ struct Statistics: Codable {
     let viewCount: String
 }
 
-// 데이터 가공 구조체
+// MARK: - 데이터 가공 처리 모델
+
+
 struct Video: Codable {
     var id: String
     var title: String
